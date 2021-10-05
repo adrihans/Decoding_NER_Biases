@@ -56,18 +56,18 @@ The main inspiration for this project comes from [this article](https://arxiv.or
 Spacy v3.1 is used to complete the task. 
 Following the [Spacy installation guide](https://spacy.io/usage), this is the lines you need to enter to install Spacy: 
 
-'''
+```
 pip install -U pip setuptools wheel
 pip install -U spacy
-'''
+```
 
 Note that version > 3.0 is needed to use the transformer model.
 
 To install the models inside spacy: 
 
-'''
+```
 python -m spacy download en_core_web_sm
-'''
+```
 
 You just have to replace the model name by the one you want to install. A list of the models avaiblable in Sapcy is available [here](https://spacy.io/usage/models).
 
