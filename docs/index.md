@@ -2,7 +2,7 @@
 
 This repository is used for a Sciences Po group project for the course '*Decoding Biases in AI*'.
 
-## Group Members:
+**Group Members:**
 
 - Eleanora BONEL
 - Ryan HACHEM
@@ -25,12 +25,30 @@ The main goal is to analyze those biases through several datasets and tests.
 The main inspiration for this project comes from [this article](https://arxiv.org/pdf/2008.03415.pdf).
 
 
-### Models to be tested: 
+### Models: 
+
+For this project, we are testing the hypothesis of biases for different models, all implemented in Spacy. 
+
+These models are:
 
 - en_core_web_sm
+  Trained on 
 - en_core_web_md
 - en_core_web_lg
 - en_core_web_trf (model based on roberta)
+
+**Why do we need to test all of these models?**
+
+When we perform a simple test on all of these models, we can clearly see that the results are quite different. 
+For instance, on the test text : `I think Barack Obama met the founder of Facebook at the occasion of a release of a new NLP algorithm.`, we obtain the results below for each model: 
+
+#### sm:
+
+#### md:
+
+#### lg:
+
+#### trf:
 
 
 ### Steps to be followed:
