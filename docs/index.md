@@ -10,9 +10,9 @@ This repository is used for a Sciences Po group project for the course '*Decodin
 - Sara KEMPPAINEN
 - Pablo PIGUET
 
-## Goals of the project: 
+## Abstract:
 
-We want to explore the existing biases in NER (Named-Entity Recognition) models. 
+This project aims at exploring the existing biases in NER (Named-Entity Recognition) models. NER models are algorithms made to recognize Named Enity in texts, such as names of persons, of companies, of cities, of countries, times...
 
 Those biases can be based on :
 - Gender
