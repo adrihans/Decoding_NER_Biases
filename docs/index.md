@@ -43,13 +43,13 @@ When we perform a simple test on all of these models, we can clearly see that th
 For instance, on the test text : `I think Barack Obama met the founder of Facebook at the occasion of a release of a new NLP algorithm.`, we obtain the results below for each model: 
 
 #### sm:
-![Image](Decoding_NER_Biases/images/sm.JPG)
+![Image](images/sm.JPG)
 #### md:
-
+![Image](images/md.JPG)
 #### lg:
-
+![Image](images/lg.JPG)
 #### trf:
-
+![Image](images/trf.JPG)
 
 ### Steps to be followed:
 
