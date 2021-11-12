@@ -51,7 +51,7 @@ For instance, on the test text : `I think Barack Obama met the founder of Facebo
 #### trf:
 ![Image](images/trf.JPG)
 
-### Steps to be followed:
+### Main steps to be followed:
 
 - Constructing the dataframes 
   - Sentence templates
@@ -60,7 +60,22 @@ For instance, on the test text : `I think Barack Obama met the founder of Facebo
 - Analyzing the results 
 - re-training the algorithms to see if the biases can be reduced
 
+
+Averaging the means. 
+
+
 ## Results
+
+### First names
+#### Names based on the article
+
+#### US Baby names - nation wise
+
+#### 
+
+### Geographical named entities
+
+### Company names
 
 
 ## Implications of this kind of biases
