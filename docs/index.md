@@ -62,6 +62,10 @@ For instance, on the test text : `I think Barack Obama met the founder of Facebo
 
 ## Results
 
+
+## Implications of this kind of biases
+
+
 ## Possible improvements
 
 We have been given restricted time for this project and therefore could not apply everything we wanted but here are some of the main possible improvements :
