@@ -12,40 +12,40 @@ This repository is used for a Sciences Po group project for the course '*Decodin
 
 ## Goals of the project: 
 
+The project is described with more precision on this GitHub page, but it consists in exploring the biases present in Named Entity Recognition (NER) models. 
 We want to explore the existing biases in NER (Named-Entity Recognition) models. 
 
-Those biases can be based on :
-- Gender
-- Ethnicity
-- Area for city names
-- ...
+To do so, we explore three main named entities, with specific possible biases: 
 
-The main goal is to analyze those biases through several datasets and tests. 
+1. First names
+  - Ethnical popularity ?
+  - Birthyear popularity ? 
+  - Geographical ? 
+  - Gender ? 
+3. Geographical named entities
+  - City
+  - Country
+5. Company names
 
-The main inspiration for this project comes from [this article](https://arxiv.org/pdf/2008.03415.pdf).
+The main inspiration for this project comes from [this article](https://arxiv.org/pdf/2008.03415.pdf), but we thought researchers were not going far enough and moreover that they did not very defined how they can say that the specific first names they test the models on are only associated with a certain ethnical category. 
+Therefore, as a first step for the first names, we followed the exact same procedure as them, but we then tried to go further using additional datasets, mentionned below or in more detailed on the GitHub page. 
 
+## Content of this repository
 
-### Models to be tested: 
+### Notebook
 
-- en_core_web_sm
-- en_core_web_md
-- en_core_web_lg
-- en_core_web_trf (model based on roberta)
+This repo consists in 4 main notebooks : 
 
+1. models comparison 
+2. Exploration of the first names
+3. 
 
-### Steps to be followed:
+### Additional content
 
-- Constructing the dataframes 
-  - Sentence templates
-  - Content to be tested on the models
-- Testing the newly built sentences 
-- Analyzing the results 
-- re-training the algorithms to see if the biases can be reduced
+The file `requirements.txt` contains the libraries to be installed to run the code. 
 
-## Areas of study for the biases in NER algorithms: 
-### Gender and Ethnicity biases when applying a NER model on first names:
+## Main results
 
-### Location biases when applying a NER model on city names -given the country or the continent:
 
 
 
@@ -84,14 +84,13 @@ pip install wikipedia
 This package is helping us to build templates for the sentences, in order to use real sentences to test the model. 
 
 
-
 #### Geopandas 
 
 Geopandas is useful when dealing with geographic datasets. 
 
 It is used inside this project :
 1) To plot some maps 
-2) To access geo datasets - made available inside the package. 
+2) To access geo datasets made available inside the package. 
 
 
 You can also use pip to install it : 
@@ -99,7 +98,6 @@ You can also use pip to install it :
 !pip install --upgrade geopandas
 ```
 If using Google collab, you may want to add these lines - and these packages - to make it work : 
-
 ```
 !pip install --upgrade pyshp
 !pip install --upgrade shapely
