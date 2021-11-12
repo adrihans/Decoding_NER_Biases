@@ -60,10 +60,25 @@ For instance, on the test text : `I think Barack Obama met the founder of Facebo
 - Analyzing the results 
 - re-training the algorithms to see if the biases can be reduced
 
-## Areas of study for the biases in NER algorithms: 
-### Gender and Ethnicity biases when applying a NER model on first names:
+## Results
 
-### Location biases when applying a NER model on city names -given the country or the continent:
+## Possible improvements
+
+We have been given restricted time for this project and therefore could not apply everything we wanted but here are some of the main possible improvements :
+
+1. Applying the models to every possible sentences. 
+
+This has been developped inside the notebooks, but given our computational power we could not apply the model to every possible sentences for most of the explored biases. 
+
+Indeed, 
+
+2. Exploring the label of the results. 
+
+The other main improvement could have been to check if the named entity were recognized as what they actually are. 
+
+For instance, a person name could be recognized by the algorithm as a company name, but given our procedure we give a score of one to the algorithm. 
+
+Exploring the label could add different elements to the project. Possible new biases could emerge : are white people first names recognized by the algorithm more recognized as a person names than those of a different ethnicity for instance ? Another metric could also have been implemented. 
 
 
 
