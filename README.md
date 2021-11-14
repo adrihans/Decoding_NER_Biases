@@ -34,15 +34,27 @@ Therefore, as a first step for the first names, we followed the exact same proce
 
 ### Notebook
 
-This repo consists in 4 main notebooks : 
+This repo consists in four main notebooks : 
 
-1. models comparison 
-2. Exploration of the first names
-3. 
+1. [basic_NER_models_comparison.ipynb](https://github.com/adrihans/Decoding_NER_Biases/blob/main/basic_NER_models_comparison.ipynb)
+
+Exploring the models integrated in Spacy with tests on a simple sentence. 
+
+1. [complete_exploration_first_names.ipynb](https://github.com/adrihans/Decoding_NER_Biases/blob/main/complete_exploration_first_names.ipynb)
+
+Exploring the possible biases with NER algorithms depending on the models and on several points like ethnicity, gender, age...
+
+3. [exploration_geographical.ipynb](https://github.com/adrihans/Decoding_NER_Biases/blob/main/exploration_geographical.ipynb)
+
+Exploring the possible geographical biases, testing geographical named entities like city or country names. 
+
+4. [exploration_companies.ipynb](https://github.com/adrihans/Decoding_NER_Biases/blob/main/exploration_companies.ipynb)
+
+Exploring the possible biases with company names. 
 
 ### Additional content
 
-The file `requirements.txt` contains the libraries to be installed to run the code. 
+The folder contains the datasets used, when they were not too heavy to post them on github. 
 
 ## Main results
 
