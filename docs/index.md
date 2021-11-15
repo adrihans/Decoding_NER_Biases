@@ -3,28 +3,16 @@
 This repository is used for a Sciences Po group project for the course '*Decoding Biases in AI*'.
 
 **Group Members:**
-
-- Eleanora BONEL
-- Ryan HACHEM
-- Adrien HANS
-- Sara KEMPPAINEN
-- Pablo PIGUET
-
-## Abstract:
-
-This project aims at exploring the existing biases in NER (Named-Entity Recognition) models. NER models are algorithms made to recognize Named Enity in texts, such as names of persons, of companies, of cities, of countries, times...
-
-Those biases can be based on :
-- Gender
-- Ethnicity
-- Area for city names
-- ...
-
-The main goal is to analyze those biases through several datasets and tests. 
-
-The main inspiration for this project comes from [this article](https://arxiv.org/pdf/2008.03415.pdf).
+> Eleanora BONEL
+> Ryan HACHEM
+> Adrien HANS
+> Sara KEMPPAINEN
+> Pablo PIGUET
 
 
+
+
+---------------------------
 
 ## Methodology and application
 
@@ -92,7 +80,9 @@ We used the same kind of method for city names, with ... sentences.
 
 
 We used two different datasets: 
+
 **For country names**: 
+
 world by Geopandas 
 
 **For city names**:
@@ -116,17 +106,25 @@ The templates have been built up using the same method.
 ## Results
 
 ### First names
+
+
 #### Names based on the article
 
 #### US Baby names - nation wise
 
-#### 
-
 ### Geographical named entities
+
+The issue we had with country names is that there is not only one name for each country. For instance, in the `world` dataset from geopandas, the name of USA was 'United States of America', but running a simple test we can clearly see that the results are quite different depending on how the name is implemented. 
+We then don't think that the results obtained for country names are not really ... 
+
+This is why we also tested the hypothesis on city names. 
 
 ### Company names
 
-## Possible improvements
+
+
+
+### Possible improvements
 
 We have been given restricted time for this project and therefore could not apply everything we wanted but here are some of the main possible improvements :
 
@@ -213,46 +211,4 @@ The basic (free) one is used.
 
 
 
---------------------
-# Draft/examples
 -------------------
-
-
-
-## Welcome to GitHub Pages
-
-You can use the [editor on GitHub](https://github.com/adrihans/Decoding_NER_Biases/edit/main/docs/index.md) to maintain and preview the content for your website in Markdown files.
-
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
-
-### Markdown
-
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/adrihans/Decoding_NER_Biases/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
