@@ -3,11 +3,7 @@
 This repository is used for a Sciences Po group project for the course '*Decoding Biases in AI*'.
 
 **Group Members:**
-> Eleanora BONEL
-> Ryan HACHEM
-> Adrien HANS
-> Sara KEMPPAINEN
-> Pablo PIGUET
+> Eleanora BONEL, Ryan HACHEM, Adrien HANS, Sara KEMPPAINEN, Pablo PIGUET
 
 
 
@@ -102,27 +98,45 @@ The templates have been built up using the same method.
 
 ### Averaging the means. 
 
-
+---------------------
 ## Results
 
 ### First names
 
 
-#### Names based on the article
-
-#### US Baby names - nation wise
-
 ### Geographical named entities
+The first geopgraphical named entity test we computed is on country names. 
+The results are shown below, with average results on country names by country and by continent. 
 
-The issue we had with country names is that there is not only one name for each country. For instance, in the `world` dataset from geopandas, the name of USA was 'United States of America', but running a simple test we can clearly see that the results are quite different depending on how the name is implemented. 
+![Results on country names by country]()
+
+![Results on country names by continent]()
+
+We can clearly see that there does not exist a real difference between those results.  
+
+Moreover, we are not completly sure about these results from a scientifical standpoint. 
+
+Indeed, the main issue we had with country names is that there is not only one name for each country. For instance, in the `world` dataset from geopandas, the name of USA was 'United States of America', but running a simple test we can clearly see that the results are quite different depending on how the name is implemented. 
+
+![Image of different results depending on the way the country name is computed]()
+
 We then don't think that the results obtained for country names are not really ... 
+This is why we also tested the hypothesis on city names, as described in the methodology part of this page. 
 
-This is why we also tested the hypothesis on city names. 
+The results on city names are quite convincing that there exists a bias. 
+Indeed, if we plot the mean scores by continent, we can clearly see that the best results are obtained for North America, with around 5 points better than Africa, South America and Europe. 
+
+![Image results for city names by continent]()
+
+Additionally, the same kind of results are obtained for every models. 
 
 ### Company names
 
+The same kind of method has been used on company names. 
 
+Possible biases in this field could have great consequences because it would mean that if non-western company names are less recognized by these algorithms than western ones, those companies could end up being less tagged on press article for instance. 
 
+Obtaining results for company names was actually very difficult, for different reasons. Indeed, one should not compare companies which are too different. For instance, just like we saw that californian first names were the most recognized in America, we could think - from who is actually training the models - that tech companies are more recognized than construction ones. The other thing that could bias the search for these biases is the choice of company depending on the size of it. 
 
 ### Possible improvements
 
