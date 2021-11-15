@@ -126,7 +126,7 @@ This is why we also tested the hypothesis on city names, as described in the met
 The results on city names are quite convincing that there exists a bias. 
 Indeed, if we plot the mean scores by continent, we can clearly see that the best results are obtained for North America, with around 5 points better than Africa, South America and Europe. 
 
-![Image results for city names by continent](images/results/avg_score_country_names_by_continent.png)
+![Image results for city names by continent](avg_score_city_names_continent.png)
 
 Additionally, the same kind of results are obtained for every models. 
 
