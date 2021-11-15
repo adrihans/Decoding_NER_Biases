@@ -12,6 +12,10 @@ This repository is used for a Sciences Po group project for the course '*Decodin
 
 ## Methodology and application
 
+The main inspiration for this project comes from this article. 
+
+
+
 In order to look for biases and to test the fairness of NER algorithms, we had to get two main things for each application: a dataset containing what we had to test with detailed information when useful (i.e first names, city names ... with their respective ethnicity, birth year, population...), and a templates with real sentences in which we could test the names entities. Indeed, we had to test the hypothesis on real life sentences. 
 
 With this template, we could then replace the named entities by the ones of the dataframe and get the results by applying the models. 
@@ -73,7 +77,8 @@ for each year:
 
 We did this not only for year babies were born in but also for the US states and the ethnical categories. 
 
-Then, we applied the models on several datasets: 
+Then, we applied the models on several datasets, but given our computational power we were not able to compute the results over every possible sentences. 
+Indeed, it already lasted around two hours for 100 000 exemples. We computed the sentences randomly. Considering that we did not use a lot of first names, we think that it is quite sufficient. 
 
 1. Same first names as in the article
 
@@ -153,14 +158,16 @@ The same kind of methodology that we described for city and country names have b
 The templates have been built up using the same method. 
 
 
-
-
-### Averaging the means. 
-
 ---------------------
+
 ## Results
 
 ### First names
+
+
+#### On the year with US baby names dataset
+
+![Results of the four models by year](images/results/)
 
 
 ### Geographical named entities
@@ -190,7 +197,15 @@ Indeed, if we plot the mean scores by continent, we can clearly see that the bes
 
 ![Image results for city names by continent](images/results/avg_score_city_names_continent.png)
 
-Additionally, the same kind of results are obtained for every models. 
+Additionally, the same kind of results are obtained for every models : 
+
+
+**Conclusion of the geographical named entites**
+
+We did not obtain consequent results with country names, but this seems logical because the models can have learned every country names since there is a few of them and this seems like a very basic thing.
+
+At the opposite, we were able to see that there were real biases with city names. 
+
 
 ### Company names
 
@@ -305,3 +320,7 @@ The basic (free) one is used.
 
 
 -------------------
+
+
+[^note] Article 
+
