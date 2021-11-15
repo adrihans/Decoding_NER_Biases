@@ -26,36 +26,91 @@ For this project, we are testing the hypothesis of biases for different models, 
 These models are:
 
 - en_core_web_sm
-  Trained on 
+> This model was trained on ....
 - en_core_web_md
+> This was ...
 - en_core_web_lg
-- en_core_web_trf (model based on roberta)
+> It consists
+- en_core_web_trf
+> trf is the transformers one, based on roberta. It is only available with Spacy version superior to 3.0. 
 
 **Why do we need to test all of these models?**
 
-When we perform a simple test on all of these models, we can clearly see that the results are quite different. 
+Firstly, as said above, the models are not trained using the exact same method and moreover using the same datasets, so we can expect different results. Additionnaly, if we perform a simple test on all of these models, we can clearly see that the results are quite different. 
 For instance, on the test text : `I think Barack Obama met the founder of Facebook at the occasion of a release of a new NLP algorithm.`, we obtain the results below for each model: 
 
 #### sm:
-![Image](images/sm.JPG)
+> ![Image](images/sm.JPG)
 #### md:
-![Image](images/md.JPG)
+> ![Image](images/md.JPG)
 #### lg:
-![Image](images/lg.JPG)
+> ![Image](images/lg.JPG)
 #### trf:
-![Image](images/trf.JPG)
+> ![Image](images/trf.JPG)
+
+
+We can see that only two models -lg and trf- have the same -and the good- results, while for instance sm and md models have recognized `NLP` as an organization name. This will be detailed in the next parts on the applications, but then the results depend greatly on the kind of model being used. 
+This is why we also computed the average score of model on each tested bias. 
 
 
 ### First names 
 
 Firstly, since we were really inspired by the article, but also because we thought they were not going far enough, we tested our hypothesis of existing biases in NER models on first names. 
 
-The template was not hard to find, and we used the winogender one. It consists of ... We had to clean the sentences, here again quite inspring ourself with the article. 
+The template was not hard to find, and we used the winogender one. It consists of ... We had to clean the sentences, here again quite inspring ourself with the article.
+
+Then, when we found datasets with first names and some additional information, we could replace the blanks by real first names and then compute statistics. 
+
+For other datasets than the one coming from the article, we had a list of babies born in NYC or in the US, with information about their ethnicities, the year they were born or the US states they were born in. Since first names are not exclusive to each ethnical category or year, we computed a mean score averaged by the weights of the the first names in the considered category. 
+
+For instance, we used this kind of pseudo-code to compute the score for each year:
+
+```
+for each year:
+  for each name:
+    return $$\frac{a}{n}$$
+```
+
+We did this not only for year babies were born in but also for the US states and the ethnical categories. 
 
 Then, we applied the models on several datasets: 
-1. Same first names as in the article 
+
+1. Same first names as in the article
+
+The first dataset we applied the models on is the oned coming from the article. We thought this would be a good starting point to compute their results. 
+
+It consists in a list of first names for each ethnical category and each gender. 
+
+There are four ethnical categories:
+- Black
+- White
+- Muslim
+- Hispanic
+
+But it seemed quite to say that a first name is mainly used by only one ethnical category. Furthermore, they don't really explain how they chose those first names. We could actually think there is a bias in they computed them. 
+
+This is why - additionaly to looking for other biases - we also used other datasets. 
+
 2. US Baby names
+
+The second dataset was a famously known one. As a first experiment with this dataset, we used the nation one, consisting in a list of first names given to babies in the us, the count of each first names depending on the year they were born in. 
+
+This enabled us to compute a score for each year, using the method described above in the pseudo-code. We wanted to see if depending on the popularity of the name the results would be different. 
+
+It was not useful to use every first names of this dataset. This is why we only used .....
+
+
 3. NYC opendata
+
+The third dataset we used for this exploration of biases on first names in NER models is one containing ethnical information about babies born in NYC. We thought this was a more correct way to check for ethnical biases than the method they used in the article. 
+Again, we could not compute the results for each first names in the dataset and we thought it was not useful to test names used by very little people to check for biases. 
+Instead, we only used ..... .
+
+4. US Baby names - sates
+
+Finally for this exploration of biases in the results of NER models over first names we wanted to see if the names were more recognized if people were born in some US sates than if they were born in other states. The possible biases we wanted to check were mainly over GDP, Income, non caucasian presences in the state... 
+
+Then again, we have not used every first names..
 
 ### Geographical biased ? 
 
@@ -66,7 +121,11 @@ So we applied the same kind of methodology we used for the first names but on tw
 Here, we did not find any available templates for this kind of application. We then had to build them ourselves. 
 Instead of writing basic sentences, we thought it would be more accurate to use real-life sentences. In order to do that, we decided to use sentences containing the named entity from wikipedia pages summaries. 
 
-For instance, to get sentences for country names we used Wikipedia API to get wikipedia pages and then summaries. We split the summaries by sentences. Looping on each sentences we looked for sentences containing the country name - of the wikipedia page - and then we replace the country name by `$COUNTRY` to build the template. 
+For instance, to get sentences for country names we used Wikipedia API to get wikipedia pages and then summaries. 
+
+>```Wikipedia Code```
+
+We split the summaries by sentences. Looping on each sentences we looked for sentences containing the country name - of the wikipedia page - and then we replace the country name by `$COUNTRY` to build the template. 
 
 This gave for country names ... sentences. 
 Some example of the sentences: 
@@ -121,6 +180,9 @@ Indeed, the main issue we had with country names is that there is not only one n
 ![Image of different results depending on the way the country name is computed](images/results/score_us_america_usa.JPG)
 
 We then don't think that the results obtained for country names are not really ... 
+
+This comes mainly from the fact there exists several names for countries, depending on the fact it is the official one, its abbreviate form... The other issue is that if the name of country is very long and the algorithm is just recognizing a part of it, the way we computed the validation makes it false. 
+
 This is why we also tested the hypothesis on city names, as described in the methodology part of this page. 
 
 The results on city names are quite convincing that there exists a bias. 
@@ -138,17 +200,25 @@ Possible biases in this field could have great consequences because it would mea
 
 Obtaining results for company names was actually very difficult, for different reasons. Indeed, one should not compare companies which are too different. For instance, just like we saw that californian first names were the most recognized in America, we could think - from who is actually training the models - that tech companies are more recognized than construction ones. The other thing that could bias the search for these biases is the choice of company depending on the size of it. 
 
-### Possible improvements
+### Limits / Possible improvements
 
-We have been given restricted time for this project and therefore could not apply everything we wanted but here are some of the main possible improvements :
+Additionnaly, we have been given restricted time for this project and therefore could not apply everything we wanted but here are some of the main possible improvements :
 
 1. Applying the models to every possible sentences. 
 
 This has been developped inside the notebooks, but given our computational power we could not apply the model to every possible sentences for most of the explored biases. 
 
-Indeed, 
+Indeed, this is what they were doing in the article, but our computational power allowed us to compute the results for the four models in about 2 hours. 
 
-2. Exploring the label of the results. 
+2. Using another validation method. 
+
+As we said, we validated the models if and only if the complete substring consisting in the named entity was indeed contained inside the spacy prediction string. This method seems correct, but it can worsen the results of long named entity strings. 
+
+But there is a tradeoff because if the complete named entity is not recognized it's not good either. 
+
+We could have computed some kind F_beta score, but in order to do that we would have to make sure there wasn't any other named entity inside the sentence. This was not possible for most of our experimentations, especially with the first names since it consisted in three first names per sentence. 
+
+3. Exploring the label of the results. 
 
 The other main improvement could have been to check if the named entity were recognized as what they actually are. 
 
@@ -214,6 +284,15 @@ If using Google collab, you may want to add these lines - and these packages - t
 !pip install --upgrade shapely
 !pip install --upgrade descartes
 ```
+
+#### Other libraries
+
+We also used other packages available in Python, but quite common ones. 
+
+For instance, we used `tqdm` to be able to check the process and its final time. 
+
+
+
 
 ### Datasets used for this project: 
 
