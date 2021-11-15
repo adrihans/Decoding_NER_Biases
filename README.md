@@ -117,11 +117,3 @@ If using Google collab, you may want to add these lines - and these packages - t
 !pip install --upgrade shapely
 !pip install --upgrade descartes
 ```
-
-### Datasets used for this project: 
-
-#### World Cities Dataset by `simplemaps`
-
-This dataset can be found [here](https://simplemaps.com/data/world-cities). 
-
-The basic (free) one is used.
