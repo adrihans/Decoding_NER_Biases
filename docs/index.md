@@ -25,6 +25,16 @@ The main goal is to analyze those biases through several datasets and tests.
 The main inspiration for this project comes from [this article](https://arxiv.org/pdf/2008.03415.pdf).
 
 
+
+## Methodology and application
+
+In order to look for biases and to test the fairness of NER algorithms, we had to get two main things for each application: a dataset containing what we had to test with detailed information when useful (i.e first names, city names ... with their respective ethnicity, birth year, population...), and a templates with real sentences in which we could test the names entities. Indeed, we had to test the hypothesis on real life sentences. 
+
+With this template, we could then replace the named entities by the ones of the dataframe and get the results by applying the models. 
+
+We describe below the methodology for each application, after explaining what models we are testing the hypothesis on and why we are testing several ones. 
+
+
 ### Models: 
 
 For this project, we are testing the hypothesis of biases for different models, all implemented in Spacy. 
@@ -51,17 +61,56 @@ For instance, on the test text : `I think Barack Obama met the founder of Facebo
 #### trf:
 ![Image](images/trf.JPG)
 
-### Main steps to be followed:
 
-- Constructing the dataframes 
-  - Sentence templates
-  - Content to be tested on the models
-- Testing the newly built sentences 
-- Analyzing the results 
-- re-training the algorithms to see if the biases can be reduced
+### First names 
+
+Firstly, since we were really inspired by the article, but also because we thought they were not going far enough, we tested our hypothesis of existing biases in NER models on first names. 
+
+The template was not hard to find, and we used the winogender one. It consists of ... We had to clean the sentences, here again quite inspring ourself with the article. 
+
+Then, we applied the models on several datasets: 
+1. Same first names as in the article 
+2. US Baby names
+3. NYC opendata
+
+### Geographical biased ? 
 
 
-Averaging the means. 
+Then, we asked ourseleves if we could find the same kind of results on other applications like geographical named entities. We wondered if western geographical named entities were more recognized by non-western ones for instance. 
+So we applied the same kind of methodology we used for the first names but on two things : City names and Country names. 
+
+Here, we did not find any available templates for this kind of application. We then had to build them ourselves. 
+Instead of writing basic sentences, we thought it would be more accurate to use real-life sentences. In order to do that, we decided to use sentences containing the named entity from wikipedia pages summaries. 
+
+For instance, to get sentences for country names we used Wikipedia API to get wikipedia pages and then summaries. We split the summaries by sentences. Looping on each sentences we looked for sentences containing the country name - of the wikipedia page - and then we replace the country name by `$COUNTRY` to build the template. 
+
+This gave for country names ... sentences. 
+Some example of the sentences: 
+
+
+We used the same kind of method for city names, with ... sentences.
+
+
+We used two different datasets: 
+**For country names**: 
+world by Geopandas 
+
+**For city names**:
+
+At the end, we applied the 4 models, using the same validation method we used for the first names. 
+Since we are here not really interested in actual results for each city but more global results, we computed the results for country and continent by grouping by the scores. 
+This enabled us top plot some maps we are detailing in the `Results` part of this page. 
+
+### Company names 
+
+The same kind of methodology that we described for city and country names have been used for company names. 
+
+The templates have been built up using the same method. 
+
+
+
+
+### Averaging the means. 
 
 
 ## Results
@@ -76,10 +125,6 @@ Averaging the means.
 ### Geographical named entities
 
 ### Company names
-
-
-## Implications of this kind of biases
-
 
 ## Possible improvements
 
