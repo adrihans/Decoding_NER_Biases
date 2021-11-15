@@ -108,9 +108,9 @@ The templates have been built up using the same method.
 The first geopgraphical named entity test we computed is on country names. 
 The results are shown below, with average results on country names by country and by continent. 
 
-![Results on country names by country]()
+![Results on country names by country](images/results/avg_score_country_names.png)
 
-![Results on country names by continent]()
+![Results on country names by continent](images/results/avg_score_country_names_by_continent.png)
 
 We can clearly see that there does not exist a real difference between those results.  
 
@@ -118,7 +118,7 @@ Moreover, we are not completly sure about these results from a scientifical stan
 
 Indeed, the main issue we had with country names is that there is not only one name for each country. For instance, in the `world` dataset from geopandas, the name of USA was 'United States of America', but running a simple test we can clearly see that the results are quite different depending on how the name is implemented. 
 
-![Image of different results depending on the way the country name is computed]()
+![Image of different results depending on the way the country name is computed](images/results/score_us_america_usa.JPG)
 
 We then don't think that the results obtained for country names are not really ... 
 This is why we also tested the hypothesis on city names, as described in the methodology part of this page. 
@@ -126,7 +126,7 @@ This is why we also tested the hypothesis on city names, as described in the met
 The results on city names are quite convincing that there exists a bias. 
 Indeed, if we plot the mean scores by continent, we can clearly see that the best results are obtained for North America, with around 5 points better than Africa, South America and Europe. 
 
-![Image results for city names by continent]()
+![Image results for city names by continent](images/results/avg_score_country_names_by_continent.png)
 
 Additionally, the same kind of results are obtained for every models. 
 
