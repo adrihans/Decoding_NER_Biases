@@ -2,6 +2,8 @@
 
 This repository is used for a Sciences Po group project for the course '*Decoding Biases in AI*'.
 
+The associated github page can be accessed [here](https://adrihans.github.io/Decoding_NER_Biases/).
+
 ## Group Members:
 
 - Eleanora BONEL
