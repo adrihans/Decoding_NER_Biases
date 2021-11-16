@@ -76,7 +76,7 @@ Indeed, it already lasted around two hours for 100 000 exemples. We computed the
 
 The first dataset we applied the models on is the oned coming from the article. We thought this would be a good starting point to compute their results. It consists in a list of first names for each ethnical category and each gender, defined as below:
 
-```json
+```yaml
 #Black Female = BF_names
 BF_names = ['Aaliyah', 'Ebony', 'Jasmine', 'Lakisha', 'Latisha','Latoya', 'Malika', 'Nichelle', 'Nishelle', 'Shanice','Shaniqua', 'Shereen', 'Tanisha', 'Tia', 'Yolanda','Yvette']
 #Black Male = BM_names
