@@ -10,15 +10,15 @@ This repository is used for a Sciences Po group project for the course '*Decodin
 
 ## Methodology and application
 
+
 The main inspiration for this project comes from this article. 
 
 
+SOME RESULTS OF ARTICLE
 
-In order to look for biases and to test the fairness of NER algorithms, we had to get two main things for each application: a dataset containing what we had to test with detailed information when useful (i.e first names, city names ... with their respective ethnicity, birth year, population...), and a templates with real sentences in which we could test the names entities. Indeed, we had to test the hypothesis on real life sentences. 
 
-With this template, we could then replace the named entities by the ones of the dataframe and get the results by applying the models. 
 
-We describe below the methodology for each application, after explaining what models we are testing the hypothesis on and why we are testing several ones. 
+In order to look for biases and to test the fairness of NER algorithms, we had to get two main things for each application: a dataset containing what we had to test with detailed information when useful (i.e first names, city names ... with their respective ethnicity, birth year, population...), and a templates with real-life sentences in which we could test the names entities. Indeed, we had to test the hypothesis on real life sentences to achieve a real test. With this template, we could then replace the named entities by the ones of the dataframe and get the results by applying the models. We are describing below the methodology for each application, after explaining what models we are testing the hypothesis on and why we are testing several ones. 
 
 
 ### Models: 
@@ -49,7 +49,7 @@ We can see that only two models -md and trf- have the same -and the good- result
 At the end, to get a measure of the average bias - if there is one - we also computed the average score of model on each test. 
 
 
-### First names 
+### :baby: First names 
 
 Firstly, since we were really inspired by the article, but also because we thought they were not going far enough, we tested our hypothesis of existing biases in NER models on first names. 
 
@@ -74,47 +74,29 @@ Indeed, it already lasted around two hours for 100 000 exemples. We computed the
 
 1. Same first names as in the article
 
-The first dataset we applied the models on is the oned coming from the article. We thought this would be a good starting point to compute their results. 
+The first dataset we applied the models on is the oned coming from the article. We thought this would be a good starting point to compute their results. It consists in a list of first names for each ethnical category and each gender, defined as below:
 
-It consists in a list of first names for each ethnical category and each gender, defined as below:
-
-```
+```json
 #Black Female = BF_names
-BF_names = ['Aaliyah', 'Ebony', 'Jasmine', 'Lakisha', 'Latisha',
-'Latoya', 'Malika', 'Nichelle', 'Nishelle', 'Shanice',
-'Shaniqua', 'Shereen', 'Tanisha', 'Tia', 'Yolanda','Yvette']
+BF_names = ['Aaliyah', 'Ebony', 'Jasmine', 'Lakisha', 'Latisha','Latoya', 'Malika', 'Nichelle', 'Nishelle', 'Shanice','Shaniqua', 'Shereen', 'Tanisha', 'Tia', 'Yolanda','Yvette']
 #Black Male = BM_names
-BM_names = ['Alonzo', 'Alphonse', 'Darnell', 'Deion', 'Jamel',
-'Jerome', 'Lamar', 'Lamont', 'Leroy', 'Lionel', 'Malik',
-'Terrence', 'Theo', 'Torrance', 'Tyree']
+BM_names = ['Alonzo', 'Alphonse', 'Darnell', 'Deion', 'Jamel','Jerome', 'Lamar', 'Lamont', 'Leroy', 'Lionel', 'Malik','Terrence', 'Theo', 'Torrance', 'Tyree']
 #Hispanic Female = HF_names
-HF_names=['Ana', 'Camila', 'Elena', 'Isabella', 'Juana', 'Luciana', 'Luisa', 'Maria', 'Mariana', 'Martina', 'Sofia',
-'Valentina', 'Valeria', 'Victoria', 'Ximena']
+HF_names=['Ana', 'Camila', 'Elena', 'Isabella', 'Juana', 'Luciana', 'Luisa', 'Maria', 'Mariana', 'Martina', 'Sofia','Valentina', 'Valeria', 'Victoria', 'Ximena']
 #Hispanic Male = HM_names
-HM_names = ['Alejandro', 'Daniel', 'Diego', 'Jorge', 'Jose', 'Juan',
-'Luis', 'Mateo', 'Matias', 'Miguel', 'Nicolas', 'Samuel',
-'Santiago', 'Sebastian', 'Tomas']
+HM_names = ['Alejandro', 'Daniel', 'Diego', 'Jorge', 'Jose', 'Juan','Luis', 'Mateo', 'Matias', 'Miguel', 'Nicolas', 'Samuel','Santiago', 'Sebastian', 'Tomas']
 #Muslim Female = MF_names
-MF_names = ['Alya', 'Ayesha', 'Fatima', 'Jana', 'Lian', 'Malak',
-'Mariam', 'Maryam', 'Nour', 'Salma', 'Sana', 'Shaista',
-'Zahra', 'Zara', 'Zoya']
+MF_names = ['Alya', 'Ayesha', 'Fatima', 'Jana', 'Lian', 'Malak','Mariam', 'Maryam', 'Nour', 'Salma', 'Sana', 'Shaista','Zahra', 'Zara', 'Zoya']
 #Muslim Male = MM_names
-MM_names = ['Abdullah', 'Ahmad', 'Ahmed', 'Ali', 'Ayaan', 'Hamza',
-'Mohammed', 'Omar', 'Rayyan', 'Rishaan', 'Samar',
-'Syed', 'Yasin', 'Youssef', 'Zikri']
+MM_names = ['Abdullah', 'Ahmad', 'Ahmed', 'Ali', 'Ayaan', 'Hamza','Mohammed', 'Omar', 'Rayyan', 'Rishaan', 'Samar','Syed', 'Yasin', 'Youssef', 'Zikri']
 #White Female = WF_names
-WF_names = ['Amanda', 'Betsy', 'Colleen', 'Courtney', 'Ellen',
-'Emily', 'Heather', 'Katie', 'Kristin', 'Lauren', 'Megan',
-'Melanie', 'Nancy', 'Rachel', 'Stephanie']
+WF_names = ['Amanda', 'Betsy', 'Colleen', 'Courtney', 'Ellen','Emily', 'Heather', 'Katie', 'Kristin', 'Lauren', 'Megan','Melanie', 'Nancy', 'Rachel', 'Stephanie']
 #White Male = WM_names
-WM_names = ['Adam', 'Alan', 'Andrew', 'Brad', 'Frank', 'Greg',
-'Harry', 'Jack', 'Josh', 'Justin', 'Matthew', 'Paul', 'Roger',
-'Ryan', 'Stephen']
+WM_names = ['Adam', 'Alan', 'Andrew', 'Brad', 'Frank', 'Greg','Harry', 'Jack', 'Josh', 'Justin', 'Matthew', 'Paul', 'Roger','Ryan', 'Stephen']
 ```
 Thus, there are four ethnical and two gender categories, each of them containing around 15 first names.
 We could not apply the four models on each possible sentences. 
-Indeed, there are 89 sentences in the template and 121 different first names. This number of first names would have given 1 727 880 three ordered permutations, so at the end 89 * 1 727 880 = 153 781 320 possible sentences. 
-This was not possible given the computational power we had access to. 
+Indeed, there are 89 sentences in the template and 121 different first names. This number of first names would have given 1 727 880 three ordered permutations, so at the end 89 * 1 727 880 = 153 781 320 possible sentences. This was not possible given the computational power we had access to. 
 
 We then computed random sentences - the sentence was chosen at random and the three first names for each sentence too. We ran the test on 100 000 sentences. This method already allowed us to apply the four models for a runtime of approximatively 2 hours. This runtime is mainly explained because we had to make a call to the spacy models for each sentence. 
 The results we obtained are available below, in the `results` part of this page. 
@@ -142,7 +124,7 @@ Finally for this exploration of biases in the results of NER models over first n
 
 Then again, we have not used every first names..
 
-### Geographical biased ? 
+### :earth_americas: Geographical biases ? 
 
 
 Then, we asked ourseleves if we could find the same kind of results on other applications like geographical named entities. We wondered if western geographical named entities were more recognized by non-western ones for instance. 
@@ -176,7 +158,7 @@ At the end, we applied the 4 models, using the same validation method we used fo
 Since we are here not really interested in actual results for each city but more global results, we computed the results for country and continent by grouping by the scores. 
 This enabled us top plot some maps we are detailing in the `Results` part of this page. 
 
-### Company names 
+### :convenience_store: Company names 
 
 The same kind of methodology that we described for city and country names have been used for company names. 
 
@@ -345,20 +327,17 @@ This package is helping us to build templates for the sentences, in order to use
 
 
 #### Geopandas 
-
 Geopandas is useful when dealing with geographic datasets. 
 
 It is used inside this project :
 1) To plot some maps 
 2) To access geo datasets - made available inside the package. 
 
-
 You can also use pip to install it : 
 ```
 !pip install --upgrade geopandas
 ```
 If using Google collab, you may want to add these lines - and these packages - to make it work : 
-
 ```
 !pip install --upgrade pyshp
 !pip install --upgrade shapely
