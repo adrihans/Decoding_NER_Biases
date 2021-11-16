@@ -184,7 +184,7 @@ The templates have been built up using the same method.
 
 ---------------------
 
-## Results
+## :bar_chart: Results
 
 ### First names
 
@@ -377,9 +377,23 @@ We also used other packages available in Python, but quite common ones.
 For instance, we used `tqdm` to be able to check the process and its final time. 
 
 
+-------------------------
 
 
-### Datasets used for this project: 
+### :file_cabinet: Datasets used for this project: 
+
+|Field|Name|Description|Source|
+|-----|----|-----------|------|
+|First names|list of first names given in the article|the dataset consisted in 15 or 16 first names for each ethnical and gender category. This dataset was completely described in the above `methodology` part of this page. |[Article](https://arxiv.org/pdf/2008.03415.pdf)|
+|First names|`Winogender Schemas`|This dataset provided us with a sentence template. Each sentence contained three possible entities: `OCCUPATION`, `PARTICIPANT` and a `PRONOUN`. After cleaning the dataset to avoid mistakes, it enabled us to build 89 correct sentences to test the models on. The specific dataset we used was [this one](https://github.com/rudinger/winogender-schemas/blob/master/data/templates.tsv). |[Winogender-Schemas on Github]()|
+|First names|US baby names - nation|We used the dataset at the national level| Transformed version on [Kaggle](https://www.kaggle.com/kaggle/us-baby-names). Raw one coming from Data.gov|
+|First names|US baby names - states|The dataset at the state level was used ||
+|First names|NYC|||
+|Additional dataset for first names|Median income per state||||
+|Additional dataset for first names|GDP per capita per state||||
+|Geographical named entities|`naturalearth_lowres`|The dataset consists in a list of the countries with their associated countours, continent and estimated population. This dataset can be accessed symply by computing this code: `world=geopandas.read_file(gpd.datasets.get_path('naturalearth_lowres'))` when Geopandas is installed in the distribution|[Geopandas](https://geopandas.org/en/stable/)|
+|Geographical named entities|`World Cities Database`|The dataset used for this project was the basic - and thus free - one. It consists in prominent cities (large, capitals etc.), with around 40 thousands entities. There are also the GPS coordinates of the city, its associated country and population.|[simplemaps](https://simplemaps.com/data/world-cities)|
+|Companies|`7+ Million Company Dataset`|This dataset provided us with a very large list of companies, with some additional information, such as their specific industry, their size, their country or their estimated number of employees. Given the size of this dataset (around 1.09GB), it has not been posted on GitHub |[People Data Labs](https://www.kaggle.com/peopledatalabssf/free-7-million-company-dataset)|
 
 
 -------------------
