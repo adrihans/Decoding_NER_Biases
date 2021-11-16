@@ -176,7 +176,7 @@ The templates have been built up using the same method.
 
 #### On the year with US baby names dataset
 
-![Results of the four models by year](images/results/)
+![Results of the four models by year](images/results/score_each_models_first_names_year.png)
 
 We can clearly see that the scores depend on the years. 
 
@@ -184,13 +184,22 @@ Moreovre, those results are quite interesting, we could almost say we could tell
 
 We can plot the same graph giving there the average result of the four algorithms for each year:
 
+![Average results year](images/results/avg_score_first_names_year.png)
 
 We can also check for which years the algorithms were given the best results on average:
 
-![Best results years](images/results/)
+|![Best results years](images/results/best_average_scores_years.JPG)|
+|:--:| 
+| *Figure n - best average scores depending on the year* |
 
 We can clearly see that the best results were obtained for years just after WW2. 
 
+
+The last plot we can perform is one giving the age in 2021 instead of the year of birth. 
+
+|![Avg results year](images/results/avg_score_first_names_year_AGE.png)|
+|:--:| 
+| *Figure n - Average result of the four models depending on the age of people in 2021* |
 
 #### On ethnicity and gender thanks to the NYC dataset
 
