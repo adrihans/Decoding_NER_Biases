@@ -49,7 +49,7 @@ We can see that only two models -md and trf- have the same -and the good- result
 At the end, to get a measure of the average bias - if there is one - we also computed the average score of model on each test. 
 
 
-### :baby: First names 
+### :passport_control: First names 
 
 Firstly, since we were really inspired by the article, but also because we thought they were not going far enough, we tested our hypothesis of existing biases in NER models on first names. 
 
@@ -72,7 +72,7 @@ We did this not only for year babies were born in but also for the US states and
 Then, we applied the models on several datasets, but given our computational power we were not able to compute the results over every possible sentences. 
 Indeed, it already lasted around two hours for 100 000 exemples. We computed the sentences randomly. Considering that we did not use a lot of first names, we think that it is quite sufficient. 
 
-1. Same first names as in the article
+1. :spiral_notepad: Same first names as in the article
 
 The first dataset we applied the models on is the oned coming from the article. We thought this would be a good starting point to compute their results. It consists in a list of first names for each ethnical category and each gender, defined as below:
 
@@ -112,13 +112,13 @@ Then again, the number of possible was too high to compute every models on every
 This enabled us to compute a score for each year, using the method described above in the pseudo-code. We wanted to see if depending on the popularity of the name the results would be different. 
 
 
-3. NYC opendata
+3. :baby: NYC opendata
 
 The third dataset we used for this exploration of biases on first names in NER models is one containing ethnical information about babies born in NYC. We thought this was a more correct way to check for ethnical biases than the method they used in the article. 
 Again, we could not compute the results for each first names in the dataset and we thought it was not useful to test names used by very little people to check for biases. 
 Instead, we only used ..... .
 
-4. US Baby names - sates
+4. :us: US Baby names - sates
 
 Finally for this exploration of biases in the results of NER models over first names we wanted to see if the names were more recognized if people were born in some US sates than if they were born in other states. The possible biases we wanted to check were mainly over GDP, Income, non caucasian presences in the state... 
 
