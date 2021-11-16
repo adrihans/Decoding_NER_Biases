@@ -164,10 +164,49 @@ The templates have been built up using the same method.
 
 ### First names
 
+#### On the same first names than the article
+
 
 #### On the year with US baby names dataset
 
 ![Results of the four models by year](images/results/)
+
+We can clearly see that the scores depend on the years. 
+
+Moreovre, those results are quite interesting, we could almost say we could tell on what datasets the algorithms were trained on, especially the TRF one. 
+
+We can plot the same graph giving there the average result of the four algorithms for each year:
+
+
+We can also check for which years the algorithms were given the best results on average:
+
+![Best results years](images/results/)
+
+We can clearly see that the best results were obtained for years just after WW2. 
+
+
+#### On ethnicity and gender thanks to the NYC dataset
+
+
+
+#### On US states with the US baby names dataset
+
+
+We can also compute the list of the best results:
+
+Firstly, we can say that it's interesting, given that companies training and developing those algorithms mainly come from California, that this is for this state that the best results are obtained. Secondly, we could say that the best states are kind of the richest ones. 
+
+Indeed, we could find some similarities with this kind of map([^source_map]): 
+
+
+We tried to compute the correlation coefficient with two things : median income and GDP per capita depending on the state. 
+Those two datasets come respectively from ...... and from .... . 
+
+The results of the correlation coefficient were not really interpretable.
+
+Yet, the sm model gives a quite interesting correlation coefficient. 
+
+Therefore, this is not a really good result from a scientific standpoint and we can not really draw a conclusion from that. Yet, one could argue that this is already quite surprising that this coefficient is that high, given the fact that scores from a NER algorithm and GDP per capita are very different things.  
 
 
 ### Geographical named entities
@@ -311,16 +350,8 @@ For instance, we used `tqdm` to be able to check the process and its final time.
 
 ### Datasets used for this project: 
 
-#### World Cities Dataset by `simplemaps`
-
-This dataset can be found [here](https://simplemaps.com/data/world-cities). 
-
-The basic (free) one is used.
-
-
 
 -------------------
 
 
-[^note] Article 
-
+([^source_map]) Article 

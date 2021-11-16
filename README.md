@@ -6,16 +6,11 @@ The associated github page can be accessed [here](https://adrihans.github.io/Dec
 
 ## Group Members:
 
-- Eleanora BONEL
-- Ryan HACHEM
-- Adrien HANS
-- Sara KEMPPAINEN
-- Pablo PIGUET
+>Eleanora BONEL, Ryan HACHEM, Adrien HANS, Sara KEMPPAINEN, Pablo PIGUET
 
 ## Goals of the project: 
 
-The project is described with more precision on this GitHub page, but it consists in exploring the biases present in Named Entity Recognition (NER) models. 
-We want to explore the existing biases in NER (Named-Entity Recognition) models. 
+The project is described with more precision on [the GitHub page](https://adrihans.github.io/Decoding_NER_Biases/) and in the notebooks, but it consists in exploring the possible biases in Named Entity Recognition (NER) models.  
 
 To do so, we explore three main named entities, with specific possible biases: 
 
@@ -28,9 +23,11 @@ To do so, we explore three main named entities, with specific possible biases:
   - City
   - Country
 5. Company names
+  - Western vs non-western
+  - Size ?
 
-The main inspiration for this project comes from [this article](https://arxiv.org/pdf/2008.03415.pdf), but we thought researchers were not going far enough and moreover that they did not very defined how they can say that the specific first names they test the models on are only associated with a certain ethnical category. 
-Therefore, as a first step for the first names, we followed the exact same procedure as them, but we then tried to go further using additional datasets, mentionned below or in more detailed on the GitHub page. 
+The main inspiration for this project comes from [this article](https://arxiv.org/pdf/2008.03415.pdf), but we thought researchers were not going far enough in their exploration - they were only testing biases depending on gender and ethnical groups. Moreover, the way they defined the first names was not really satisfying. Indeed, we were not satisfied with the fact they defined specific first names for each ethnicity while we know that there is no such thing as first names exclusively associated with one ethnicity.
+Therefore, as a first step for the whole project and particurally for the *first names* part, we followed the exact same procedure as them, but we then tried to go further using additional datasets, mentionned below or in more detailed on [the GitHub page](https://adrihans.github.io/Decoding_NER_Biases/). 
 
 ## Content of this repository
 
@@ -117,3 +114,20 @@ If using Google collab, you may want to add these lines - and these packages - t
 !pip install --upgrade shapely
 !pip install --upgrade descartes
 ```
+
+### Complete list of the datasets used for this project:
+
+#### Winogender 
+
+The dataset we used the most is the winogender schemas. It consists
+It can be accessed on [this Github Page](). 
+
+Specifically, the one we used is [this one](). 
+
+
+#### US Baby names
+
+We used two versions of the US Baby names datasets: ([nation]) and ([state]). 
+It made us able to explore biases depending on the state and the year people were born in. 
+
+#### NYC 
