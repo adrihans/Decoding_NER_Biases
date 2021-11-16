@@ -318,57 +318,15 @@ Exploring the label could add different elements to the project. Possible new bi
 
 ## Technical information
 
+------------------------------------
+
 ### Installations
 
-#### Spacy (v3.0 or superior)
-
-Spacy v3.1 is used to complete the task. 
-Following the [Spacy installation guide](https://spacy.io/usage), this is the lines you need to enter to install Spacy: 
-
-```
-pip install -U pip setuptools wheel
-pip install -U spacy
-```
-
-Note that version 3.0 or superior is needed to use the transformer model.
-
-To install the models inside spacy: 
-
-```
-python -m spacy download en_core_web_sm
-```
-
-You just have to replace the model name by the one you want to install. A list of the models avaiblable in Sapcy is available [here](https://spacy.io/usage/models).
-
-#### Wikipedia package
-
-To install the wikipedia package, you cas use pip, following this [installation guide](https://pypi.org/project/wikipedia/).
-
-```
-pip install wikipedia 
-```
-
-This package is helping us to build templates for the sentences, in order to use real sentences to test the model. 
-
-
-
-#### Geopandas 
-Geopandas is useful when dealing with geographic datasets. 
-
-It is used inside this project :
-1) To plot some maps 
-2) To access geo datasets - made available inside the package. 
-
-You can also use pip to install it : 
-```
-!pip install --upgrade geopandas
-```
-If using Google collab, you may want to add these lines - and these packages - to make it work : 
-```
-!pip install --upgrade pyshp
-!pip install --upgrade shapely
-!pip install --upgrade descartes
-```
+|Package name|Description and ways to install it|Doc link|
+|------------|----------------------------------|--------|
+|Spacy (v3.0 or superior)|Spacy v3.1 is used to complete the task. Following the [Spacy installation guide](https://spacy.io/usage), this is the lines you need to enter to install Spacy: <br/>```pip install -U pip setuptools wheel``` <br/> ```pip install -U spacy ```<br/>Note that version 3.0 or superior is needed to use the transformer model.To install the models inside spacy: <br/> ```python -m spacy download en_core_web_sm```<br/>You just have to replace the model name by the one you want to install. <br/> A list of the models avaiblable in Sapcy is available [here](https://spacy.io/usage/models).|[Spacy Documentation](https://spacy.io/)|
+|Wikipedia|To install the wikipedia package, you cas use pip, following this [installation guide](https://pypi.org/project/wikipedia/).<br/>```pip install wikipedia```<br/>This package is helping us to build templates for the sentences, in order to use real sentences to test the model.|[Wikipedia API documentation for Python](https://pypi.org/project/wikipedia/)|
+|Geopandas|Geopandas is useful when dealing with geographic datasets.<br/>It is used inside this project :<br/>1) To plot some maps <br/>2) To access geo datasets - made available inside the package. <br/>You can also use pip to install it : <br/>```!pip install --upgrade geopandas```<br/>If using Google collab, you may want to add these lines - and these packages - to make it work : <br/>```!pip install --upgrade pyshp```<br/>```!pip install --upgrade shapely```<br/>```!pip install --upgrade descartes```<br/>|[Geopandas Documentation](https://geopandas.org/)|
 
 #### Other libraries
 
