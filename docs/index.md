@@ -11,12 +11,16 @@ This repository is used for a Sciences Po group project for the course '*Decodin
 ## Methodology and application
 
 
-The main inspiration for this project comes from this article. 
+The main inspiration for this project comes from an article entitled *Assessing Demographic Bias in Named Entity Recognition*. 
 
+This article can be found [here](https://arxiv.org/pdf/2008.03415.pdf). 
 
-SOME RESULTS OF ARTICLE
+We show below some results described in this article:
+|![Some results of the article](images/results_article.JPG)|
+|:--:|
+|*Figure n - Some results described in the article*|
 
-
+We wanted to compute the same kind of results, but going further because we thought that some of the methodology they used was not really good enough, for instance because they were defining some first names associated exclusively to specific ethical groups, while it is obviously quite different in real life. 
 
 In order to look for biases and to test the fairness of NER algorithms, we had to get two main things for each application: a dataset containing what we had to test with detailed information when useful (i.e first names, city names ... with their respective ethnicity, birth year, population...), and a templates with real-life sentences in which we could test the names entities. Indeed, we had to test the hypothesis on real life sentences to achieve a real test. With this template, we could then replace the named entities by the ones of the dataframe and get the results by applying the models. We are describing below the methodology for each application, after explaining what models we are testing the hypothesis on and why we are testing several ones. 
 
