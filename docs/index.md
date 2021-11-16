@@ -23,36 +23,30 @@ We describe below the methodology for each application, after explaining what mo
 
 ### Models: 
 
-For this project, we are testing the hypothesis of biases for different models, all implemented in Spacy. 
+For this project, we are testing the hypothesis of biases for different models, all implemented in Spacy. These models are:
 
-These models are:
-
-- en_core_web_sm
-> This model was trained on ....
-- en_core_web_md
-> This was ...
-- en_core_web_lg
-> It consists
-- en_core_web_trf
-> trf is the transformers one, based on roberta. It is only available with Spacy version superior to 3.0. 
+|Model name|Description|
+|-----|------|
+|`en_core_web_sm`||
+|`en_core_web_md`||
+|`en_core_web_lg`||
+|`en_core_web_trf`|It is only available with Spacy version superior to 3.0. |
 
 **Why do we need to test all of these models?**
 
 Firstly, as said above, the models are not trained using the exact same method and moreover using the same datasets, so we can expect different results. Additionnaly, if we perform a simple test on all of these models, we can clearly see that the results are quite different. 
 For instance, on the test text : `I think Barack Obama met the founder of Facebook at the occasion of a release of a new NLP algorithm.`, we obtain the results below for each model: 
 
-#### sm:
-> ![Image](images/sm.JPG)
-#### md:
-> ![Image](images/md.JPG)
-#### lg:
-> ![Image](images/lg.JPG)
-#### trf:
-> ![Image](images/trf.JPG)
+|Model name|Result of the test|Correct result ?|
+|-----|------|------|
+|`en_core_web_sm`|![Image](images/sm.JPG)| :x: |
+|`en_core_web_md`|![Image](images/md.JPG)| :ballot_box_with_check: |
+|`en_core_web_lg`|![Image](images/lg.JPG)| :x: |
+|`en_core_web_trf`|![Image](images/trf.JPG)| :ballot_box_with_check: |
 
 
-We can see that only two models -lg and trf- have the same -and the good- results, while for instance sm and md models have recognized `NLP` as an organization name. This will be detailed in the next parts on the applications, but then the results depend greatly on the kind of model being used. 
-This is why we also computed the average score of model on each tested bias. 
+We can see that only two models -md and trf- have the same -and the good- results, recognizing `Barack Obama` as a *person* and `Facebook` as an *organization* while for instance sm and md models have recognized `NLP` as an organization name. This will be detailed in the next parts on the applications, but then the results depend greatly on the kind of model being used. 
+At the end, to get a measure of the average bias - if there is one - we also computed the average score of model on each test. 
 
 
 ### First names 
@@ -127,7 +121,7 @@ The results we obtained are available below, in the `results` part of this page.
 
 The main limit of this experimentation is that it is quite strange to say that a first name is mainly used by only one ethnical category. Furthermore, they don't really explain how they chose those first names. We could then actually think there is a bias in the way they computed them. This is why - additionaly to looking for other biases - we also used other datasets. 
 
-2. US Baby names
+2. :date: US Baby names
 
 The second dataset was a famously known one. As a first experiment with this dataset, we used the nation one, consisting in a list of first names given to babies in the us and the count of each first names depending on the year they were born in. 
 
