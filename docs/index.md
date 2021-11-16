@@ -6,8 +6,6 @@ This repository is used for a Sciences Po group project for the course '*Decodin
 > Eleanora BONEL, Ryan HACHEM, Adrien HANS, Sara KEMPPAINEN, Pablo PIGUET
 
 
-
-
 ---------------------------
 
 ## Methodology and application
@@ -84,25 +82,58 @@ Indeed, it already lasted around two hours for 100 000 exemples. We computed the
 
 The first dataset we applied the models on is the oned coming from the article. We thought this would be a good starting point to compute their results. 
 
-It consists in a list of first names for each ethnical category and each gender. 
+It consists in a list of first names for each ethnical category and each gender, defined as below:
 
-There are four ethnical categories:
-- Black
-- White
-- Muslim
-- Hispanic
+```
+#Black Female = BF_names
+BF_names = ['Aaliyah', 'Ebony', 'Jasmine', 'Lakisha', 'Latisha',
+'Latoya', 'Malika', 'Nichelle', 'Nishelle', 'Shanice',
+'Shaniqua', 'Shereen', 'Tanisha', 'Tia', 'Yolanda','Yvette']
+#Black Male = BM_names
+BM_names = ['Alonzo', 'Alphonse', 'Darnell', 'Deion', 'Jamel',
+'Jerome', 'Lamar', 'Lamont', 'Leroy', 'Lionel', 'Malik',
+'Terrence', 'Theo', 'Torrance', 'Tyree']
+#Hispanic Female = HF_names
+HF_names=['Ana', 'Camila', 'Elena', 'Isabella', 'Juana', 'Luciana', 'Luisa', 'Maria', 'Mariana', 'Martina', 'Sofia',
+'Valentina', 'Valeria', 'Victoria', 'Ximena']
+#Hispanic Male = HM_names
+HM_names = ['Alejandro', 'Daniel', 'Diego', 'Jorge', 'Jose', 'Juan',
+'Luis', 'Mateo', 'Matias', 'Miguel', 'Nicolas', 'Samuel',
+'Santiago', 'Sebastian', 'Tomas']
+#Muslim Female = MF_names
+MF_names = ['Alya', 'Ayesha', 'Fatima', 'Jana', 'Lian', 'Malak',
+'Mariam', 'Maryam', 'Nour', 'Salma', 'Sana', 'Shaista',
+'Zahra', 'Zara', 'Zoya']
+#Muslim Male = MM_names
+MM_names = ['Abdullah', 'Ahmad', 'Ahmed', 'Ali', 'Ayaan', 'Hamza',
+'Mohammed', 'Omar', 'Rayyan', 'Rishaan', 'Samar',
+'Syed', 'Yasin', 'Youssef', 'Zikri']
+#White Female = WF_names
+WF_names = ['Amanda', 'Betsy', 'Colleen', 'Courtney', 'Ellen',
+'Emily', 'Heather', 'Katie', 'Kristin', 'Lauren', 'Megan',
+'Melanie', 'Nancy', 'Rachel', 'Stephanie']
+#White Male = WM_names
+WM_names = ['Adam', 'Alan', 'Andrew', 'Brad', 'Frank', 'Greg',
+'Harry', 'Jack', 'Josh', 'Justin', 'Matthew', 'Paul', 'Roger',
+'Ryan', 'Stephen']
+```
+Thus, there are four ethnical and two gender categories, each of them containing around 15 first names.
+We could not apply the four models on each possible sentences. 
+Indeed, there are 89 sentences in the template and 121 different first names. This number of first names would have given 1 727 880 three ordered permutations, so at the end 89 * 1 727 880 = 153 781 320 possible sentences. 
+This was not possible given the computational power we had access to. 
 
-But it seemed quite to say that a first name is mainly used by only one ethnical category. Furthermore, they don't really explain how they chose those first names. We could actually think there is a bias in they computed them. 
+We then computed random sentences - the sentence was chosen at random and the three first names for each sentence too. We ran the test on 100 000 sentences. This method already allowed us to apply the four models for a runtime of approximatively 2 hours. This runtime is mainly explained because we had to make a call to the spacy models for each sentence. 
+The results we obtained are available below, in the `results` part of this page. 
 
-This is why - additionaly to looking for other biases - we also used other datasets. 
+The main limit of this experimentation is that it is quite strange to say that a first name is mainly used by only one ethnical category. Furthermore, they don't really explain how they chose those first names. We could then actually think there is a bias in the way they computed them. This is why - additionaly to looking for other biases - we also used other datasets. 
 
 2. US Baby names
 
-The second dataset was a famously known one. As a first experiment with this dataset, we used the nation one, consisting in a list of first names given to babies in the us, the count of each first names depending on the year they were born in. 
+The second dataset was a famously known one. As a first experiment with this dataset, we used the nation one, consisting in a list of first names given to babies in the us and the count of each first names depending on the year they were born in. 
+
+Then again, the number of possible was too high to compute every models on every sentences so we computed them using a random method as described above. Moreover, it was not very useful to use every first names - for instance if a first name was only given to 10 people on a specific year. This is why for each gender and year we took the `10` most present first names. This resulted in a list of 129 considered first names. This was a good number (not too large but not too small) and approximatively the same number as the experiment with the first names of the article. 
 
 This enabled us to compute a score for each year, using the method described above in the pseudo-code. We wanted to see if depending on the popularity of the name the results would be different. 
-
-It was not useful to use every first names of this dataset. This is why we only used .....
 
 
 3. NYC opendata
@@ -281,6 +312,7 @@ For instance, a person name could be recognized by the algorithm as a company na
 Exploring the label could add different elements to the project. Possible new biases could emerge : are white people first names recognized by the algorithm more recognized as a person names than those of a different ethnicity for instance ? Another metric could also have been implemented. 
 
 
+--------------------------------------------
 
 ## Technical information
 
