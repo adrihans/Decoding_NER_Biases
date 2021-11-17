@@ -235,11 +235,25 @@ Indeed, we could find some similarities with this kind of map([^source_map]):
 We tried to compute the correlation coefficient with two things : median income and GDP per capita depending on the state. 
 Those two datasets come respectively from ...... and from .... . 
 
-The results of the correlation coefficient were not really interpretable.
+|![Correlation with GDP per capita](images/results/correlation_score_states_gdp_per_capita_2015.JPG)|
+|:---:|
+|*Correlation coefficients between the scores of the models and the GDP per capita in 2015 for each US state*|
 
-Yet, the sm model gives a quite interesting correlation coefficient. 
 
-Therefore, this is not a really good result from a scientific standpoint and we can not really draw a conclusion from that. Yet, one could argue that this is already quite surprising that this coefficient is that high, given the fact that scores from a NER algorithm and GDP per capita are very different things.  
+|![Correlation with Income](images/results/correlation_score_states_median_income_2020.JPG)|
+|:---:|
+|*Correlation coefficients between the scores of the models and the median income in 2020 for each US state*|
+
+The results of the correlation coefficient were not really interpretable. Yet, the sm model gives a quite interesting correlation coefficient, giving a coorelation coefficient of 0.33 for GDP and 0.40 for median income. We now this is not a really good result from a scientific standpoint and we can not really draw a conclusion from that. Yet, one could argue that this is already quite surprising that this coefficient is that high, given the fact that scores from a NER algorithm and GDP per capita are very different things. Additionally to those correlation coefficients, we can also plot the data: 
+
+|![Plot correlation GDP - SM](images/results/plot_correlation_sm_GDP_per_capita.png)|
+|:---:|
+|*Correlation bewteen the sm model score and the GDP per capita in 2015 for each US state*|
+
+
+|![Plot correlation Income - SM](images/results/plot_correlation_sm_median_income.png)|
+|:---:|
+|*Correlation bewteen the sm model score and the median income in 2020 for each US state*|
 
 
 ### Geographical named entities
