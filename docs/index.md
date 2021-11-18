@@ -21,21 +21,32 @@ The conclusion of the paper is mainly that white first names are oftenly the bes
 
 Based on that, we wanted to compute the same kind of results, but going further because we thought that some of the methodology they used was not really good enough. For instance, they are defining some first names associated exclusively to specific ethical groups, while it is obviously quite different in real life - and actually they explain that in the article.[^limits_article]
 
-Thus, we thought of testing biases ........................
+Thus, we thought of testing biases firstly one first names, with the dataset they used to begin, but then with other datasets, from the US governement or the open data website of the city of New York. Then, we wanted to see if we could get the same kind of results, which is to say identifying biases in the results of the algorithms, but on other types of named entities : geographical named entites like city or country names, and company names. While there are little possible discriminations if the models are biased towards some geographical named entities, with company names it could end up discriminating some companies based on the fact their names do not soud western - at least that's what we want to check - because NER models are used sometimes to tag articles for example. 
 
 In order to look for biases and to test the fairness of NER algorithms, we had to get two main things for each application: 
-- a dataset 
->containing what we had to test with detailed information when useful (i.e first names, city names ... with their respective ethnicity, birth year, population...)
-- a sentence templates
-> with real-life sentences in which we could test the names entities. Indeed, we had to test the hypothesis on real life sentences to achieve a real test. 
+- a dataset containing what we had to test with detailed information when useful (i.e first names, city names ... with their respective ethnicity, birth year, population...)
+- a sentence templates with real-life sentences in which we could test the names entities. Indeed, we had to test the hypothesis on real life sentences to achieve a real test. 
 
-With a template and a dataset, we could then replace the named entities by the ones of the dataframe and get the results by applying the models. We are describing below the methodology for each application, after explaining what models we are testing the hypothesis on and why we are testing several ones. 
+With a template and a dataset, we could then replace the named entities by the ones of the dataframe, before applying the model. To make things simpler, we give a concrete example below:
+
+**For example:**
+>The Winogender Schemas gives this type of sentence:
+
+>*```$OCCUPATION recommended a new shampoo to $PARTICIPANT because $NOM_PRONOUN wanted to be helpful.```*
+
+>If in the dataframe we have those three first names: `Adam`, `Camila` and `Latisha`. 
+
+>We can build this sentence by replacing `$OCCUPATION`, `$PARTICIPANT`, `NOM_PRONOUN` by the first names: 
+>```Adam recommended a new shampoo to Camila because Latisha wanted to be helpful.```
+
+>At the end, we can get the result of the algorithm by applying the model on that sentence. We can score the result based on a simple evaluation - is the name in the prediction of the model ?
+
+Thus, by doing so on a lot of sentences and a lot of first names, we can compute the scores of each categories (gender, ethicity....) we are interested in and compare the results. We are describing below a more detailed methodology for each application, after explaining what models we are testing the hypothesis on and why we are testing several ones. 
 
 
 ### Models: 
 
 For this project, we are testing the hypothesis of biases for [different models](https://spacy.io/models/en), all implemented in Spacy. These models are:
-
 
 |Model name|Size|Sources of training data|
 |-----|------|-----|
@@ -62,19 +73,44 @@ For instance, on the test text : `I think Barack Obama met the founder of Facebo
 | *Comparison of basic model performances on a test sentence.* |
 
 
-We can see that only two models -md and trf- have the same -and the good- results, recognizing `Barack Obama` as a *person* and `Facebook` as an *organization* while for instance sm and md models have recognized `NLP` as an organization name. This will be detailed in the next parts on the applications, but then the results depend greatly on the kind of model being used. 
+We can see that only two models -`md` and `trf`- have the same -and the good- results, recognizing `Barack Obama` as a *person* and `Facebook` as an *organization* while for instance `sm` and `md` models have recognized `NLP` as an organization name. This will be detailed in the next parts on the applications, but then the results depend greatly on the kind of model being used. 
 At the end, to get a measure of the average bias - if there is one - we also computed the average score of model on each test. 
 
 
 ### :passport_control: First names 
 
-Firstly, since we were really inspired by the article, but also because we thought they were not going far enough, we tested our hypothesis of existing biases in NER models on first names. 
+Firstly, since we were really inspired by [the article](https://arxiv.org/pdf/2008.03415.pdf), but also because, as we explained, we thought they were not going far enough, we tested our hypothesis of existing biases in NER models on first names. 
 
-The template was not hard to find, and we used the winogender one. It consists of ... We had to clean the sentences, here again quite inspring ourself with the article.
+We used the same template as in the article: the [Winogender Schemas]. It is a quite famous one, developped at the beginning to !!!!!!!!!!!!!!!!!!!!!!!!
 
-Then, when we found datasets with first names and some additional information, we could replace the blanks by real first names and then compute statistics. 
+It consists of 120 sentences with possible named entites: `Participant`, `Occupation` and a `Pronoun`. Yet, we have to clean the sentences, firstly by deleting the possible `the` before `Participant` or `Occupation`. 
 
-For other datasets than the one coming from the article, we had a list of babies born in NYC or in the US, with information about their ethnicities, the year they were born or the US states they were born in. Since first names are not exclusive to each ethnical category or year, we computed a mean score averaged by the weights of the the first names in the considered category. 
+For instance, this original winogender sentence : `'The $PARTICIPANT left the $OCCUPATION a big tip because $NOM_PRONOUN had made the drink very strong.'` was replaced by this one: `$PARTICIPANT left $OCCUPATION a big tip because $NOM_PRONOUN had made the drink very strong.`. 
+
+Secondly, we wanted to make sure there were three named entities in each sentence to make things simpler, and, at the end, we made sure the `pronoun` was a nominative one, to avoid any english mistakes when building the sentences with real names. This cleaning process was really inspired by the article. We ended up with **89 sentences**, and this was good enough for our experiments. 
+
+
+Having a cleaned and good sentence template, we could then look for datasets containing first names and some atteched information relative to the fields we wanted to study. We used four different datasets:
+- The one of the article, giving, as we said, a list of first names for each gender and ethnical categories. 
+- The US baby names at the national level
+- The made available by the Open Data Website of New York City. 
+- The US baby names dataset at the state level. 
+
+
+With those datasets, we could get a random sentence from the template, and replace `$Occupation`, `$Participant` and the `Pronoun` by three random first names from the dataset for each test. We could repeat that process *n* times in order to make our results significant. 
+
+>*note*: At the beginning, we wanted to apply this process to every possible sentences, but as we will explain later, it was not possible given our computanional power. This is why, for most of our test, we ran the test on **100 000 sentences**.
+
+**Validation process**
+
+After appplying the models on each sentence, it would return a prediction. This prediction takes the form of a list. 
+
+
+We computed kind of a accuracy one. 
+
+
+
+Since first names are not exclusive to each ethnical category or year, we computed a mean score averaged by the weights of the the first names in the considered category. 
 
 For instance, we used this kind of pseudo-code to compute the score for each year:
 
@@ -224,6 +260,15 @@ The last plot we can perform is one giving the age in 2021 instead of the year o
 
 #### On US states with the US baby names dataset
 
+|![MAP of the scores US states](images/results/)|
+|:---:|
+|*Map of the scores for each model depending on the US states*|
+
+
+
+|![MAP average results US states](images/results/avg_scoremap_us_states.png)|
+|:---:|
+|*Map of the average score of the models depending on the US states*|
 
 We can also compute the list of the best results:
 
