@@ -207,6 +207,8 @@ Obviously, considering the results of the article, we wanted to check for exampl
 
 The results of our tests on the first names are presented in the `Results` part below. We are now going to explain what we did to assess biases towards geographical named entites like city or country names. 
 
+
+
 ### :earth_americas: Geographical biases ? 
 
 Then, having studying biases towards first names, we wondered about biases of NER algorithms on other types of named entites like geographical ones. For instance, xe wondered if western geographical named entities were more recognized than non-western ones. Therefore, we applied the same kind of methodology we used for first names but on two other things : **city** and **country** names.
@@ -217,7 +219,7 @@ Compared to the first names analysis, our main issue was that there does not exi
 
 In order to perform that, we used the python version of the wikipedia api. To describe the methodology used to build the templates, we will take the example of country names - but the same one was used for the cities. Firstly, we had to get the list of the country names. Then, we were able to loop over that list to get the associated wikipedia page and more precisely its summary. We splitted each summary into sentences and looping over those sentences we were able to select only the ones containing the country names. 
 
-Only `12` country wikipedia page over the `177` country names we had in the list were not found, giving us at the end `1623` sentences in total. This was a bit too much and not very useful. Moreover, we noticed that the first sentence for each country often was not natural at all. For instance, the first sentence for Fiji is : `bldjdlkjslksdklhsckjhfjkgqdgfqgdfhqdgfkjgqlkgfqjhkjqhdjdhslk`. Hence, we only selected the last sentence of each found country. This would avoid any bias in the selection - some western countries having a large number of sentences comparing to non-western ones - and having unnatural sentences in the template. At the end, we were able to replace the country name of the associated wikipedia page by `$COUNTRY`, providing us with a complete template of **159 sentences** for the country names. 
+Only `12` country wikipedia page over the `177` country names we had in the list were not found, giving us at the end `1623` sentences in total. This was a bit too much and not very useful. Moreover, we noticed that the first sentence for each country often was not natural at all. For instance, the first sentence for Fiji is : `'Fiji ( (listen) FEE-jee; Fijian: Viti, [ˈβitʃi]; Fiji Hindi: फ़िजी, Fijī), officially the Republic of Fiji, is an island country in Melanesia, part of Oceania in the South Pacific Ocean'`. Hence, we only selected the last sentence of each found country. This would avoid any bias in the selection - some western countries having a large number of sentences comparing to non-western ones - and having unnatural sentences in the template. At the end, we were able to replace the country name of the associated wikipedia page by `$COUNTRY`, providing us with a complete template of **159 sentences** for the country names. 
 
 Having explained the methodology used to get templates, we will now describe the detailed methodology and datasets we used on country and city names:
 
@@ -282,13 +284,15 @@ We can also detail the results for each category - ethnicity and gender:
 |:--:|
 |*Results for each ethnicity for the first names of the article*|
 
+We can observe that the results are quite different than the one got in the article. For instance, `sm` scores are way higher in our test that in their. Yet, if we only compare each ethnicity, we can see that for `sm` the best results were obtained with `white` first names, and the lowest score for `black` first names. On average, `Muslim`, `Hispanic` and `White` performances were very close, and `Black` ones were quite lower, with at least a 3 points drop down. **Therefore, our test quite moderates the results obtained in the article**. This difference can be explained by the fact we could not apply the models on every possible sentences, but also maybe because the models were trained a bit more since it was published in 2020.  
+
 |![Results gender](images/results/article_gender.JPG)|
 |:--:|
 |*Results for each gender for the first names of the article*|
 
+Apart from that, we can notice the same kind of gender-based biases on gender, every model performing better on `male` first names than on `female` ones. 
 
-
-We can observe that the results are quite different than the one got in the article. 
+Anyway, given the limits of this tests we highlighted before, we are now going to perform the same kind of tests on ver datasets. 
 
 
 #### On the year with US baby names dataset
@@ -357,22 +361,32 @@ Here, the results we obtain are very different from what the article had underli
 
 The final experimentation we conducted on first names was also on the US baby names dataset, but on state level, to check if the results were different depending on the states people were born in, resulting in a bias. 
 
-|![MAP of the scores US states](images/results/)|
+|![MAP of the scores US states](images/results/score_each_models_first_names_us_state.png)|
 |:---:|
 |*Map of the scores for each model depending on the US states*|
 
 
+We can plot the average score map too:
 
 |![MAP average results US states](images/results/avg_scoremap_us_states.png)|
 |:---:|
 |*Map of the average score of the models depending on the US states*|
 
-We can also compute the list of the best results:
+We can also compute the list of the best results for each model:
 
-Firstly, we can say that it's interesting, given that companies training and developing those algorithms mainly come from California, that this is for this state that the best results are obtained. 
+|model|sm|md|lg|trf|
+|-----|---|---|---|---|
+|Best 5 scores|![best sm](images/results/rank_us_state_sm.JPG)|![best md](images/results/rank_us_state_md.JPG)|![best lg](images/results/rank_us_state_lg.JPG)|![best trf](images/results/rank_us_state_trf.JPG)|
 
+Firstly, we can say that it's interesting, given that companies training and developing those algorithms mainly come from California, that this is for this state that the best results are obtained for most models. Morover, New York and Pennsylvania are often in first positions too. 
 
-**We can also check where the datasets the models were trained on come from**.
+We can now see the results for average scores:
+
+|![avg score state](images/results/rank_us_state_avg.JPG)|
+|:--:|
+|*5 best average scores on US states*|
+
+Then, we can go a bit further in our analysis. This is why **we can also check where the datasets the models were trained on come from**.
 
 |Dataset|University/company|State|
 |-------|----------|-----|
@@ -382,22 +396,23 @@ Firstly, we can say that it's interesting, given that companies training and dev
 |Glove| Stanford |**California**|
 |roberta-base|huggingface|New York|
 
-The three best results are obtained for three states the companies or universities developping the datasets come from.
+The three best results are obtained for three states the companies or universities developping the datasets come from.Moreover, over the 15 best results - of the average score - 6 (California, New York, Pennsylvania, New Jersey, Massachusetts, Georgia) of the 7 states the datasets come from are present, with only Colorado missing. 
+
+|![avg score state](images/results/15_rank_us_state_avg.JPG)|
+|:--:|
+|*15 best average scores on US states*|
 
 
-Moreover, over the 15 best results - of the average score - 6 (California, New York, Pennsylvania, New Jersey, Massachusetts, Georgia) of the 7 states the datasets come from are present, with only Colorado missing. 
-
-We feel that this is quite remarkable, because yes, the texts the datasets were built on to come from various places (wikipedia articles for instance), but a NLP dataset is not only made of texts - especially when we talk about NER processes - but it is also made of labels. We could then argue - and actually that's the all point of this paper - that people labelling the datasets have an influence of possible biases. 
+We feel that this is quite remarkable, because yes, the texts the datasets were built on come from various places (wikipedia articles for instance), but a NLP dataset is not only made of texts - especially when we talk about NER processes - but it is also made of labels. We could then argue - and actually that's the all point of this paper - that people labelling the datasets have an influence of possible biases. 
 
 
 
 Yet, one could say that these states are also the most influent ones traditionally. Thus, secondly, we wanted to check wether or not those results were correlated with state wealth. This was encouraged considering our hypothesis, but also by the fact California and New York where the states with the best results. Moreover, we could find some similarities with this kind of map([^source_map]):  This is why we ran simple linear correlation with two datasets: 
 
-- median income per state. The dataset comes from 
+- Median income per state. 
+- GDP per capita per state.
 
-
-- GDP per capita per state. The dataset comes from 
-
+*You can find the source of the datasets at the end of the page.*
 
 We were then able to get correlation coefficient between our results and both datasets. We firstly show the table of the correlation with GDP per capita:
 
@@ -411,7 +426,9 @@ Secondly, we plot the table of correlation with median incomes:
 |:---:|
 |*Correlation coefficients between the scores of the models and the median income in 2020 for each US state*|
 
-The results of the correlation coefficient were not really interpretable, and we are aware of that. Yet, the sm model gives a quite interesting correlation coefficient, with a correlation coefficient of 0.33 for GDP and 0.40 for median income. We know this is not a really good result from a scientific standpoint and we can not really draw a conclusion from that. Yet, one could argue that this is already quite surprising that this coefficient is that high, given the fact that scores from a NER algorithm and GDP per capita are very different things. Additionally to those correlation coefficients, we can also plot the scatterplot along with the regression line: 
+The results of the correlation coefficient were not really interpretable, and we are aware of that. Yet, the sm model gives a quite interesting correlation coefficient, with a correlation coefficient of 0.33 for GDP and 0.40 for median income. We know this is not a really good result from a scientific standpoint and we can not really draw a conclusion from that. Yet, one could argue that this is already quite surprising that this coefficient is that high, given the fact that scores from a NER algorithm and GDP per capita are very different things. 
+
+<!---Additionally to those correlation coefficients, we can also plot the scatterplot along with the regression line: 
 
 |![Plot correlation GDP - SM](images/results/plot_correlation_sm_GDP_per_capita.png)|
 |:---:|
@@ -422,39 +439,34 @@ The results of the correlation coefficient were not really interpretable, and we
 |:---:|
 |*Correlation bewteen the sm model score and the median income in 2020 for each US state*|
 
-
+Again, we are aware that those correlations are not really robust ones. Yet, it is quite -->
 
 
 **Conclusion of the first names results:**
 
 
+We observed that the results we obtained on the same first names as in the article were quite different than thos of the paper. Yet, we were able to highligh some other and different biases, especially using other datasets: geographically-based, age-based and ethnically-based biases. Those biases can result in discriminations when using NER models. 
 
-
-
-
-
-
-
-
-
-
-
-
-
+--------------------
 
 ### Geographical named entities
 
 **Country names**
 
 The first geopgraphical named entity test we computed is on country names. 
-The results are shown below, firstly with the results for each model. Then with average results on country names by country and by continent. 
+The results are shown below, firstly with the results for each model. 
 
+|![Results each model country](images/results/score_each_models_country_name.png)|
+|:--:|
+|*Results on country names by country*|
 
-
+Then with average results on country names by country. 
 
 |![Results on country names by country](images/results/avg_score_country_names.png)|
 |:--:|
 |*Average results on country names by country*|
+
+By continent:
 
 |![Results on country names by continent](images/results/avg_score_country_names_by_continent.png)|
 |:--:|
@@ -477,29 +489,30 @@ Indeed, if we plot the mean scores by continent, we can clearly see that the bes
 |:--:|
 |*Average score of the four models on city names by continent*|
 
-Additionally, the same kind of results are obtained for every models : 
 
-|![Results for each model on city names by continent](images/results/)|
+|![](images/results/rank_city_names_continent_avg.JPG)|
+|:--:|
+|*Average scores for each continent on city names*|
+
+Additionally, the same kind of results are obtained for every models, apart from the trf one - South America outperforming North America-, but with very close scores: 
+
+|![Results for each model on city names by continent](images/results/score_each_models_city_names_continent.png)|
 |:--:|
 |*Scores of each of the four models on city names by continent*|
 
-
-
+This kind of biases does not highligh ones which could not really lead to real-life discriminations, but it could underline geographical differences in the way models were trained. 
 
 **Conclusion of the geographical named entites**
 
-We did not obtain consequent results with country names, but this seems logical because the models can have learned every country names since there is a few of them and it seems like a very basic thing. At the opposite, we were able to see that there were real biases with city names. 
+We did not obtain consequent results with country names, but this seems logical because the models can have learned every country names since there is a few of them and it seems like a very basic thing. At the opposite, we were able to see that there were real biases with city names. Even if they don't really lead to discriminations, it is still interesting because this could lead to invisibilizing some places if NER algorithms are used on some websites - to tag cities automatically for instance. 
 
 
 ### Company names
 
 ![In progress](images/gifs/work-in-progress-gif-12.gif)
 
-The same kind of method has been used on company names. 
-
-Possible biases in this field could have great consequences because it would mean that if non-western company names are less recognized by these algorithms than western ones, those companies could end up being less tagged on press article for instance. 
-
-Obtaining results for company names was actually very difficult, for different reasons. Indeed, one should not compare companies which are too different. For instance, just like we saw that californian first names were the most recognized in America, we could think - from who is actually training the models - that tech companies are more recognized than construction ones. The other thing that could bias the search for these biases is the choice of company depending on the size of it. 
+<!-------The same kind of method has been used on company names. Possible biases in this field could have great consequences because it would mean that if non-western company names are less recognized by these algorithms than western ones, those companies could end up being less tagged on press article for instance. Obtaining results for company names was actually very difficult, for different reasons. Indeed, one should not compare companies which are too different. For instance, just like we saw that californian first names were the most recognized in America, we could think - from who is actually training the models - that tech companies are more recognized than construction ones. The other thing that could bias the search for these biases is the choice of company depending on the size of it. 
+--->
 
 ----------------------------------------
 
@@ -509,27 +522,15 @@ Additionnaly, we have been given restricted time for this project and therefore 
 
 - 1. Applying the models to every possible sentences. 
 
-This has been developped inside the notebooks, but given our computational power we could not apply the model to every possible sentences for most of the explored biases. 
-
-Indeed, this is what they were doing in the article, but our computational power allowed us to compute the results for the four models in about 2 hours. 
+This has been developped inside the notebooks, but given our computational power we could not apply the model to every possible sentences for most of the explored biases. Indeed, this is what they were doing in the article, but our computational power allowed us to compute the results on 100 000 sentences for the four models in about 2 hours. 
 
 - 2. Using another validation method. 
 
-As we said, we validated the models if and only if the complete substring consisting in the named entity was indeed contained inside the spacy prediction string. This method seems correct, but it can worsen the results of long named entity strings. 
-
-But there is a tradeoff because if the complete named entity is not recognized it's not good either. 
-
-We could have computed some kind F_beta score, but in order to do that we would have to make sure there wasn't any other named entity inside the sentence. This was not possible for most of our experimentations, especially with the first names since it consisted in three first names per sentence. 
+As we said, we validated the models if and only if the complete substring consisting in the named entity was indeed contained inside the spacy prediction string. This method seems correct, but it can worsen the results of long named entity strings. Yet, it is a quite difficult issue, because one could argue that if the complete named entity is not recognized it's not good either. We could have computed some kind F_beta score, but in order to do that we would have to make sure there wasn't any other named entity inside the sentence. This was not possible for most of our experimentations, especially with the first names since it consisted in three first names per sentence. 
 
 - 3. Exploring the label of the results. 
 
-The other main improvement could have been to check if the named entity were recognized as what they actually are. 
-
-For instance, a person name could be recognized by the algorithm as a company name, but given our procedure we give a score of one to the algorithm. 
-
-Exploring the label could add different elements to the project. Possible new biases could emerge : are white people first names recognized by the algorithm more recognized as a person names than those of a different ethnicity for instance ? Another metric could also have been implemented. 
-
-
+The other main improvement could have been to check if the named entity were recognized as what they actually are. For instance, a person name could be recognized by the algorithm as a company name, but given our validation procedure we did not check that. Exploring the label could add different elements to the project. Possible new biases could emerge : are white people first names recognized by the algorithm more recognized as a person names than those of a different ethnicity for instance ? Another metric could also have been implemented. 
 
 ------------------------------------------------------------
 
