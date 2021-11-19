@@ -74,16 +74,14 @@ For instance, on the test text : `I think Barack Obama met the founder of Facebo
 
 
 We can see that only two models -`md` and `trf`- have the same -and the correct- results, recognizing `Barack Obama` as a *person* and `Facebook` as an *organization* while for instance `sm` and `md` models have recognized `NLP` as an organization name. This will be detailed in the next parts on the applications, but then the results depend greatly on the kind of model being used. 
-At the end, to get a measure of the average bias - if there is one - we also computed the average score of model on each test. 
+At the end, to get a measure of the average bias - if there is one - we also computed the average score of the four models for each test. 
 
 
 ### :passport_control: First names 
 
 Firstly, since we were really inspired by [the article](https://arxiv.org/pdf/2008.03415.pdf), but also because, as we explained, we thought they were not going far enough, we tested our hypothesis of existing biases in NER models on first names. 
 
-We used the same template as in the article: the [Winogender Schemas]. It is a quite famous one, developped at the beginning to !!!!!!!!!!!!!!!!!!!!!!!!
-
-It consists of 120 sentences with possible named entites: `Participant`, `Occupation` and a `Pronoun`. Yet, we have to clean the sentences, firstly by deleting the possible `the` before `Participant` or `Occupation`. 
+We used the same template as in the article: the [Winogender Schemas](https://github.com/rudinger/winogender-schemas). It is a quite famous one, developped at the beginning to *"test for the presence of gender bias in automated coreference resolution systems."* It consists of 120 sentences with possible named entites: `Participant`, `Occupation` and a `Pronoun`. Yet, we have to clean the sentences, firstly by deleting the possible `the` before `Participant` or `Occupation`. 
 
 For instance, this original winogender sentence : `'The $PARTICIPANT left the $OCCUPATION a big tip because $NOM_PRONOUN had made the drink very strong.'` was replaced by this one: `$PARTICIPANT left $OCCUPATION a big tip because $NOM_PRONOUN had made the drink very strong.`. 
 
@@ -93,19 +91,17 @@ Secondly, we wanted to make sure there were three named entities in each sentenc
 Having a cleaned and good sentence template, we could then look for datasets containing first names and some attached information relative to the fields we wanted to study. We used four different datasets:
 - The one of the article, giving, as we said, a list of first names for each gender and ethnical categories. 
 - The US baby names at the national level
-- The made available by the Open Data Website of New York City. 
+- The `Popular Baby Names` dataset made available by the Open Data Website of New York City. 
 - The US baby names dataset at the state level. 
 
 
-With those datasets, we could get a random sentence from the template, and replace `$Occupation`, `$Participant` and the `Pronoun` by three random first names from the dataset for each test. We could repeat that process *n* times in order to make our results significant. 
+With those datasets, we could get a random sentence from the template, and replace `$Occupation`, `$Participant` and `$NOM_PRONOUN` by three random first names from the dataset for each test. We could repeat that process *n* times in order to make our results significant. 
 
->*note*: At the beginning, we wanted to apply this process to every possible sentences, but as we will explain later, it was not possible given our computanional power. This is why, for most of our test, we ran them on **100 000 sentences**.
+>*note*: At the beginning, we wanted to apply this process to every possible sentences, but as we will explain later, it was not possible given our computational power. This is why, for most of our test, we ran them on **100 000 sentences**.
 
 **Validation process**
 
-After appplying the models on each sentence, it would return a prediction. This prediction takes the form of a list, like that:
-
-If the named was completely in the prediction, we attributed `1` as a score for the named entity and `0` if it was not in the prediction. This is some kind of accuracy for each first names. 
+After appplying the models on each sentence, it would return a prediction. This prediction takes the form of a list. If the named entity was completely contained inside the prediction, we attributed `1` as a score for the named entity and `0` if it was not in the prediction. This gave a score close to the accuracy for each first name. 
 
 >**For instance**: 
 >> With this kind of sentence:
@@ -113,11 +109,11 @@ If the named was completely in the prediction, we attributed `1` as a score for 
 >> We can apply the model `en_core_web_lg`, and it returns this list:<br/>
 >> `['Camila', 'Latisha']`<br/>
 >> Thus, the score for this model of each named entity is:<br/>
->> |Named entity|Score|
->> |------------|-----|
->> |Adam|0|
->> |Camila|1|
->> |Latisha|1|
+|Named entity|Score|
+|------------|-----|
+|Adam|0|
+|Camila|1|
+|Latisha|1|
 
 
 For the article, first names were exclusively associated to one ethnicity and one gender, so it was easy to compute the score of each category by just getting the mean of the results for each first names attributed to that category. Yet, for the other datasets, **the first names were not exclusive to only one category**. 
@@ -140,9 +136,9 @@ This is why we had to find a way for every category to compute a mean score aver
 >>  score_ethnicity = sum_score/n_people
 >>```
 
-Therefore, we just explained the general methodology used for first names. We are now going to detail the specific process we had to perform on every datasets. 
+Since we just explained the general methodology used for first names,  we are now going to detail the specific process we had to perform on every datasets. 
 
-1. :spiral_notepad: Same first names as in the article
+- 1. :spiral_notepad: Same first names as in the article
 
 The first dataset we applied the models on is the one coming from the article. We thought this would be a good starting point to compute their results. It consists in a list of first names for each ethnical category and each gender, defined as below:
 
@@ -173,7 +169,7 @@ The results we obtained are available below, in the `results` part of this page.
 
 As we have already explained, this test is quite limited, mainly because it is quite strange to say that a first name is mainly used by only one ethnical category. This is why - additionaly to looking for other biases - we also used other datasets. 
 
-2. :date: US Baby names - national level
+- 2. :date: US Baby names - national level
 
 The second dataset was a famously known one. It comes from ... . A cleaned version of it is available on [kaggle](). As a first experimentation with this dataset, we used the national level one, to see if the results were equally distributed over the years, or if there was a bias towards - to put it simply - people having an *old* or *modern* first name. The dataset is consisting in a list of first names given to babies in the us and the count of each first names depending on the year they were born in. The considered years were the ones between 1880 and 2014. We are showing below the head of the dataset:
 
