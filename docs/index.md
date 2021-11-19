@@ -17,7 +17,7 @@ The conclusion of the paper is mainly that white first names are oftenly the bes
 
 |![Some results of the article](images/results_article.JPG)|
 |:--:| 
-| *Figure n - Some results described in the article* |
+| *Some results described in the article* |
 
 Based on that, we wanted to compute the same kind of results, but going further because we thought that some of the methodology they used was not really good enough. For instance, they are defining some first names associated exclusively to specific ethical groups, while it is obviously quite different in real life - and actually they explain that in the article.[^limits_article]
 
@@ -113,21 +113,31 @@ If the named was completely in the prediction, we attributed `1` as a score for 
 >> We can apply the model `en_core_web_lg`, and it returns this list:<br/>
 >> `['Camila', 'Latisha']`<br/>
 >> Thus, the score for this model of each named entity is:<br/>
->>|Named entity|Score|
->>|------------|-----|
->>|Adam|0|
->>|Camila|1|
->>|Latisha|1|
+>> |Named entity|Score|
+>> |------------|-----|
+>> |Adam|0|
+>> |Camila|1|
+>> |Latisha|1|
 
 
 For the article, first names were exclusively associated to one ethnicity and one gender, so it was easy to compute the score of each category by just getting the mean of the results for each first names attributed to that category. Yet, for the other datasets, **the first names were not exclusive to only one category**. 
->For instance for the NYC dataset, after cleaning, the first name `` was given by ... mothers of ethnicity ``, ... of ethnicity `` and .... of ethnicity ``. 
+>For instance for the NYC dataset, after cleaning, the first name `Ethan` was given by 4324 mothers of ethnicity `Hispanic` but also by 2270 of ethnicity `Black non hispanic`. 
+
+|![Description of Ethan](images/datasets/first_names/Ethan_NYC.JPG)|
+|:--:|
+|*`Ethan` was given by various ethnicities*|
+
+
 This is why we had to find a way for every category to compute a mean score averaged by the weights of the first names inside it.
 >For example, still on the NYC dataset, we used this kind of pseudo-code to compute the score for each ethnicity:
 >>```
 >>for each ethnicity:
+>>  n_total=0
 >>  for each name:
->>    return $$\frac{a}{n}$$
+>>          n = number of people wearing this first name in ethnicity
+>>          n_total += n
+>>          sum_score += result*n
+>>  score_ethnicity = sum_score/n_people
 >>```
 
 Therefore, we just explained the general methodology used for first names. We are now going to detail the specific process we had to perform on every datasets. 
@@ -167,9 +177,7 @@ As we have already explained, this test is quite limited, mainly because it is q
 
 The second dataset was a famously known one. It comes from ... . A cleaned version of it is available on [kaggle](). As a first experimentation with this dataset, we used the national level one, to see if the results were equally distributed over the years, or if there was a bias towards - to put it simply - people having an *old* or *modern* first name. The dataset is consisting in a list of first names given to babies in the us and the count of each first names depending on the year they were born in. The considered years were the ones between 1880 and 2014. We are showing below the head of the dataset:
 
-![US baby names national - head](images/datasets/first_names/US_baby_names_national_head.JPG)
-
-||
+|![US baby names national - head](images/datasets/first_names/US_baby_names_national_head.JPG)|
 |:--:|
 |*Head of the US baby names dataset - National level*|
 
@@ -180,9 +188,7 @@ This dataset was already quite clean and ready to use. Yet, there were `93889` d
 
 After exploring possible biases of NER models on first names depending on the time they were the most popular, we wanted to assert what was done by the article, but on another dataset and by considering weight of each name inside each ethnicity rather than considering exclusive first names for each ethnical category. This why we used the Popular Baby Names dataset made available by New York City. It consists in several attributes, like the `Child's First Name`, the mother's ethnicity, and the gender.
 
-![NYC babies head](images/datasets/first_names/babies_nyc_head_raw.JPG)
-
-||
+|![NYC babies head](images/datasets/first_names/babies_nyc_head_raw.JPG)|
 |:--:|
 |*Head of the Popular Baby Names dataset - raw*|
 
@@ -192,9 +198,7 @@ We had to clean this dataset a little, firstly by making sure the first names we
 
 To complete our exploration of possible biases in the use of NER algorithms on first names, we wanted to know if the results were different towards the places people were born in. In order to do that, we used again the US baby names dataset, but for this case on the state level. It is the exact same dataset as before, but with an additional column: the US state babies were born in. 
 
-![head of US baby names - state level](images/datasets/first_names/)
-
-||
+|![head of US baby names - state level](images/datasets/first_names/US_baby_names_state_head.JPG)|
 |:--:|
 |*Head of the US baby names dataset - state level*|
 
@@ -224,9 +228,7 @@ To have a list of country names, we used the `naturalearth_lowres` dataset avail
 It consists in a list of countries with some additional information like estimated population or their respective geometry. 
 
 
-![Head Geopandas Dataset](images/datasets/geo/head_natural_geopandas.JPG)
-
-||
+|![Head Geopandas Dataset](images/datasets/geo/head_natural_geopandas.JPG)|
 |:--:|
 |*Head of the `naturalearth_lowres` dataset of Geopandas*|
 
@@ -239,9 +241,7 @@ We have already explained how we built the template, resulting in 159 sentences.
 
 For city names, we did not use directly a Geopandas dataset but the `World Cities Database` made available by `simplemaps`. We used the basic - and thus free - one. It consists in a set of `37 499` unique cities in `237` countries. The additional information accessible through this dataset can be seen below:
 
-![Head of the World Cities database](images/dataset/geo/head_worldcities.JPG)
-
-||
+|![Head of the World Cities database](images/datasets/geo/head_worldcities.JPG)|
 |:--:|
 |*Head of the World Cities Database by simplemaps*|
 
@@ -271,29 +271,34 @@ We are recalling that firstly we wanted to check the results of the article and 
 
 We are showing below the results we got on **100 000** random sentences, which seemed quite significant already. Note that `avg_score` corresponds to the average score of the four models on each category, in order to have kind of the general bias of NER models. 
 
-![Results first names article - raw](images/results/)
+|![Results first names article - raw](images/results/article_complete_scores.JPG)|
+|:--:|
+|*Raw results of the models on the same first names as in the article*|
 
-We can also detail the results for each category:
+We can also detail the results for each category - ethnicity and gender:
 
 
-![Results ethnicity](images/results/)
+|![Results ethnicity](images/results/article_ethnicity.JPG)|
+|:--:|
+|*Results for each ethnicity for the first names of the article*|
 
-![Results gender](images/results/)
+|![Results gender](images/results/article_gender.JPG)|
+|:--:|
+|*Results for each gender for the first names of the article*|
 
 
 
 We can observe that the results are quite different than the one got in the article. 
 
 
-
-
-
-
 #### On the year with US baby names dataset
 
 Then, we wanted to check if popularity of the names along the years could have an impact on the results of the NER models. We used the US baby names dataset at the national level. We show below the results for each model:
 
-![Results of the four models by year](images/results/score_each_models_first_names_year.png)
+|![Results of the four models by year](images/results/score_each_models_first_names_year.png)|
+|:--:|
+|*Results of each models over time*|
+
 
 We can notice large differences depending on the years people were born in, but we can also see that those results depend vastly on the model used for the NER tasks. This confirms that depending on the year people were born in, on average, they would get very different recognition by this type of algorithm. 
 
@@ -301,8 +306,8 @@ We can notice large differences depending on the years people were born in, but 
 Maybe the most interesting graph is the one of the `trf` model, because we can there clearly notice a bias on the recognition of first names towards the years, with an all time high arround 1980. We can therefore take a closer look on what datasets this model was trained on. The `trf` model was mainly trained on [roberta-base](https://huggingface.co/roberta-base). On the website, they are saying tha *'The RoBERTa model was pretrained on the reunion of five datasets'*. Yet, in those 5 datasets, most of them are quite modern ones, for instance: 
 
 - **Bookcorpus** is a collection of 11 038 open books from [Smashwords](https://www.smashwords.com/about), a plateform launched in **2008**.
-- **CC-News** is *'a dataset containing 63 millions English news articles crawled between September 2016 and February 2019.'*
-- **OpenWebText** consists mainly in reddit posts. 
+- **CC-News** is *'a dataset containing 63 millions English news articles crawled between September **2016** and February **2019**.'*
+- **OpenWebText** consists mainly in **reddit** posts. 
 
 Therefore, this is very intersting to see how the choice of datasets can have a great impact on the results of such a quite simple test, which is to say recognizing first names through NER models.
 
@@ -311,7 +316,9 @@ On the other hand, the `sm` model for instance was mainly trained on `OntoNotes 
 
 We can also plot the same graph giving there the average result of the four algorithms for each year:
 
-![Average results year](images/results/avg_score_first_names_year.png)
+|![Average results year](images/results/avg_score_first_names_year.png)|
+|:--:|
+|*Average results of the results over time*|
 
 We can see that it's fluctuating arround the same value from 1940 to today. Therefore, using different models for a NER task could be a good option in order to avoid age-based discrimination in the process first names recognition through NER models. 
 
@@ -329,7 +336,7 @@ Yet, we can clearly see that the best results were obtained for years just after
 We made the same kind of experimentations on the NYC dataset to check wether or not we could draw the same conclusions as the article, but based on an other dataset. 
 We firstly show the results we got on ethnicity:
 
-|![Results ethnicity NYC](images/results/)|
+|![Results ethnicity NYC](images/results/NYC_ethnicity.JPG)|
 |:--:|
 |*Scores of the models depending on ethnicity*|
 
@@ -338,7 +345,7 @@ Therefore, we can say we can observe the same kind of biases the article had und
 
 Let's now check for the results over the gender:
 
-|![Results gender NYC](images/results/)|
+|![Results gender NYC](images/results/NYC_Gender.JPG)|
 |:--:|
 |*Scores of the models depending on gender*|
 
@@ -445,21 +452,19 @@ The results are shown below, firstly with the results for each model. Then with 
 
 
 
-![Results on country names by country](images/results/avg_score_country_names.png)
-
-||
+|![Results on country names by country](images/results/avg_score_country_names.png)|
 |:--:|
 |*Average results on country names by country*|
 
-![Results on country names by continent](images/results/avg_score_country_names_by_continent.png)
-
-||
+|![Results on country names by continent](images/results/avg_score_country_names_by_continent.png)|
 |:--:|
 |*Average results on country names by continent*|
 
 We can clearly see that there does not exist real differences between those results. Moreover, we are not completly sure about these results from a scientifical standpoint. Indeed, the main issue we had with country names is that there is not only one name for each country. For instance, in the `world` dataset from geopandas, the name of the USA was 'United States of America', but running a simple test we can clearly see that the results are quite different depending on how the name is implemented. 
 
-![Image of different results depending on the way the country name is computed](images/results/score_us_america_usa.JPG)
+|![Image of different results depending on the way the country name is computed](images/results/score_us_america_usa.JPG)|
+|:--:|
+|*Differences in the results of the models depending on the way the named entity is computed.*|
 
 We then don't think that the results obtained for country names are not really trustworthy. The other issue is that if the name of country is very long and the algorithm is just recognizing a part of it, the way we computed the validation makes it false. Moreover, one could think that the fact there is no real bias in the results of country names makes sense because there is not a lot of country, so the models could have learned them all. This is why we also tested the hypothesis on city names, as described in the methodology part of this page. 
 
@@ -468,11 +473,15 @@ We then don't think that the results obtained for country names are not really t
 The results on city names are quite convincing that there exists a bias. 
 Indeed, if we plot the mean scores by continent, we can clearly see that the best results are obtained for North America, with around 5 points better than Africa, South America and Europe. 
 
-![Image results for city names by continent](images/results/avg_score_city_names_continent.png)
+|![Image results for city names by continent](images/results/avg_score_city_names_continent.png)|
+|:--:|
+|*Average score of the four models on city names by continent*|
 
 Additionally, the same kind of results are obtained for every models : 
 
-![Results for each model on city names by continent](images/results/)
+|![Results for each model on city names by continent](images/results/)|
+|:--:|
+|*Scores of each of the four models on city names by continent*|
 
 
 
