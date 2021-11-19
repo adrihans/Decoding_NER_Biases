@@ -290,9 +290,9 @@ We can observe that the results are quite different than the one got in the arti
 |:--:|
 |*Results for each gender for the first names of the article*|
 
-Apart from that, we can notice the same kind of gender-based biases on gender, every model performing better on `male` first names than on `female` ones. 
+Apart from that, we can notice the same kind of gender-based biases as they did in the article, every model performing better on `male` first names than on `female` ones. 
 
-Anyway, given the limits of this tests we highlighted before, we are now going to perform the same kind of tests on ver datasets. 
+Anyway, given the limits of this experimentation we highlighted before, we are now going to perform the same kind of tests on over datasets. 
 
 
 #### On the year with US baby names dataset
@@ -304,10 +304,10 @@ Then, we wanted to check if popularity of the names along the years could have a
 |*Results of each models over time*|
 
 
-We can notice large differences depending on the years people were born in, but we can also see that those results depend vastly on the model used for the NER tasks. This confirms that depending on the year people were born in, on average, they would get very different recognition by this type of algorithm. 
+We can notice large differences depending on the years people were born in, but we can also see that those results depend vastly on the model used for the NER tasks. This confirms that depending on the year people were born in, on average, they would get very different recognition by this type of algorithm. Hence confirming a potential age-based discrimination. 
 
 
-Maybe the most interesting graph is the one of the `trf` model, because we can there clearly notice a bias on the recognition of first names towards the years, with an all time high arround 1980. We can therefore take a closer look on what datasets this model was trained on. The `trf` model was mainly trained on [roberta-base](https://huggingface.co/roberta-base). On the website, they are saying tha *'The RoBERTa model was pretrained on the reunion of five datasets'*. Yet, in those 5 datasets, most of them are quite modern ones, for instance: 
+Maybe the most interesting graph is the one of the `trf` model, because we can there clearly notice a bias on the recognition of first names towards the years, with an all time high arround 1980. We can therefore take a closer look on what datasets this model was trained on. The `trf` model was mainly trained on [roberta-base](https://huggingface.co/roberta-base). On the website, they are saying that *'The RoBERTa model was pretrained on the reunion of five datasets'*. Yet, in those 5 datasets, most of them are quite modern ones, for instance: 
 
 - **Bookcorpus** is a collection of 11 038 open books from [Smashwords](https://www.smashwords.com/about), a plateform launched in **2008**.
 - **CC-News** is *'a dataset containing 63 millions English news articles crawled between September **2016** and February **2019**.'*
@@ -315,7 +315,7 @@ Maybe the most interesting graph is the one of the `trf` model, because we can t
 
 Therefore, this is very intersting to see how the choice of datasets can have a great impact on the results of such a quite simple test, which is to say recognizing first names through NER models.
 
-On the other hand, the `sm` model for instance was mainly trained on `OntoNotes 5`, and looking at its complete [documentation](https://catalog.ldc.upenn.edu/docs/LDC2013T19/OntoNotes-Release-5.0.pdf), and especially pages 5 and 6, we can clearly notice it was mainly trained on older datasets, which can explain the differences in the scores we got between `sm` and `trf`. Moreover, the increase from 1990 could also be explained by the fact `OntoNotes 5` also contains a small ammount of web texts. 
+On the other hand, the `sm` model for instance was mainly trained on `OntoNotes 5`, and looking at its complete [documentation](https://catalog.ldc.upenn.edu/docs/LDC2013T19/OntoNotes-Release-5.0.pdf), and especially pages 5 and 6, we can clearly notice it was mainly trained on older datasets, which can explain the differences in the scores we got between `sm` and `trf`. Moreover, the increase from 1990 could be explained by the fact `OntoNotes 5` also contains a small ammount of web texts. 
 
 
 We can also plot the same graph giving there the average result of the four algorithms for each year:
@@ -324,7 +324,7 @@ We can also plot the same graph giving there the average result of the four algo
 |:--:|
 |*Average results of the results over time*|
 
-We can see that it's fluctuating arround the same value from 1940 to today. Therefore, using different models for a NER task could be a good option in order to avoid age-based discrimination in the process first names recognition through NER models. 
+We can see that it's fluctuating arround the same value from 1940 to today. Therefore, using different models for a NER task could be a good option in order to avoid age-based discrimination in the process of first names recognition through NER models. 
 
 And finally, we can also check for which years the algorithms were given the best results on average:
 
@@ -332,29 +332,29 @@ And finally, we can also check for which years the algorithms were given the bes
 |:--:| 
 | *Figure n - best average scores depending on the year* |
 
-Yet, we can clearly see that the best results were obtained for years just after WW2 - on average for the four models. 
+We can notice that the best results were obtained for years just after WW2 - on average for the four models. 
 
 
 #### On ethnicity and gender with the NYC dataset
 
-We made the same kind of experimentations on the NYC dataset to check wether or not we could draw the same conclusions as the article, but based on an other dataset. 
+We made the same kind of experimentations on the NYC dataset to check wether or not we could draw the same conclusions as the article, but based on another dataset. 
 We firstly show the results we got on ethnicity:
 
 |![Results ethnicity NYC](images/results/NYC_ethnicity.JPG)|
 |:--:|
 |*Scores of the models depending on ethnicity*|
 
-We notice that for `md` and `lg` models, best results were got for the `White` category, and that for every model the lowest results were on the `Black non hispanic` category, apart from the `sm` where the result for that ethnicity was very close - less than 0.2 points - to the `Hispanic` one. Those results quite confirm the conclusion of the article. Yet, the strange results we can observe, compared to the article, is that for the `sm` and `trf` models, the best results were obtained for  `Asian and pacific islander`. We don't really know how to explain that. This gives, on average on the four models, `Asian and pacific islander` as the best recognized ethnicity, but quite close to `White`, with a 1.5 difference, and `Black non hispanic` as the less recognized one, and by far, with a 5.7 difference. 
+We notice that for `md` and `lg` models, the best results were got for the `White non hispanic` category, and that for every model the lowest results were on the `Black non hispanic` category, apart from the `sm` where the result for that ethnicity was very close - less than 0.2 points - to the `Hispanic` one. Those results quite confirm the conclusion of the article. Yet, the strange results we can observe, compared to the article, is that for the `sm` and `trf` models, the best scores were obtained for  `Asian and pacific islander`. We don't really know how to explain that. This gives, on average on the four models, `Asian and pacific islander` as the best recognized ethnicity, but quite close to `White non hispanic`, with a 1.5 difference, and `Black non hispanic` as the less recognized one, and by far, with a 5.7 difference. 
 Therefore, we can say we can observe the same kind of biases the article had underlined. 
 
-Let's now check for the results over the gender:
+Let's now check the results over gender:
 
-|![Results gender NYC](images/results/NYC_Gender.JPG)|
+|![Results gender NYC](images/results/NYC_gender.JPG)|
 |:--:|
 |*Scores of the models depending on gender*|
 
 
-Here, the results we obtain are very different from what the article had underlined, having only the `sm` model with better score for `male` than for `female`. This gives, on average, a 8.7 difference between `Female` and `Male`, which is quite high. We then can highlight biases, but in the other way around. One could argue that our results are more robust, because we selected the first names automatically from the NYC dataset and nothing was done by hand. 
+Here, the results we obtained are very different from what the article had underlined, having only the `sm` model with a better score for `male` than for `female`. This gives, on average, a 8.7 difference between `Female` and `Male`, which is quite high. We then can highlight the presence of a bias, but in the other way around. One could argue that our results are more robust, because we selected the first names automatically from the NYC dataset and nothing was done by hand. 
 
 
 #### On US states with the US baby names dataset
@@ -380,7 +380,7 @@ We can also compute the list of the best results for each model:
 
 Firstly, we can say that it's interesting, given that companies training and developing those algorithms mainly come from California, that this is for this state that the best results are obtained for most models. Morover, New York and Pennsylvania are often in first positions too. 
 
-We can now see the results for average scores:
+We can now see the best results on average:
 
 |![avg score state](images/results/rank_us_state_avg.JPG)|
 |:--:|
@@ -393,17 +393,17 @@ Then, we can go a bit further in our analysis. This is why **we can also check w
 |OntoNotes 5.0|BBN technologies <br/> University of Colorado <br/> University of Pennsylvania<br/>  University of Southern Californias Information Sciences Institute |Massachusetts <br/> Colorado <br/> Pennsylvania <br/> California |
 |ClearNLP|Emory University|Georgia|
 |WordNet 3.0|Princeton University|New Jersey|
-|Glove| Stanford |**California**|
+|Glove| Stanford |California|
 |roberta-base|huggingface|New York|
 
-The three best results are obtained for three states the companies or universities developping the datasets come from.Moreover, over the 15 best results - of the average score - 6 (California, New York, Pennsylvania, New Jersey, Massachusetts, Georgia) of the 7 states the datasets come from are present, with only Colorado missing. 
+The three best results are obtained for three states the companies or universities developping the datasets come from. Moreover, over the 15 best results - of the average score - 6 (California, New York, Pennsylvania, New Jersey, Massachusetts, Georgia) of the 7 states the datasets come from are present, with only Colorado missing. 
 
 |![avg score state](images/results/15_rank_us_state_avg.JPG)|
 |:--:|
 |*15 best average scores on US states*|
 
 
-We feel that this is quite remarkable, because yes, the texts the datasets were built on come from various places (wikipedia articles for instance), but a NLP dataset is not only made of texts - especially when we talk about NER processes - but it is also made of labels. We could then argue - and actually that's the all point of this paper - that people labelling the datasets have an influence of possible biases. 
+We feel that this is quite remarkable, because yes, the texts the datasets were built on come from various places (wikipedia articles for instance), but a NLP dataset is not only made of texts - especially when we talk about NER processes - but it is also made of labels. We could then argue - and actually that's the all point of this paper - that people labelling the datasets have a great influence on possible biases. 
 
 
 
@@ -445,7 +445,7 @@ Again, we are aware that those correlations are not really robust ones. Yet, it 
 **Conclusion of the first names results:**
 
 
-We observed that the results we obtained on the same first names as in the article were quite different than thos of the paper. Yet, we were able to highligh some other and different biases, especially using other datasets: geographically-based, age-based and ethnically-based biases. Those biases can result in discriminations when using NER models. 
+We observed that the results we obtained on the same first names as in the article were quite different than those of the paper. Yet, we were able to highligh some other and different biases, especially using other datasets: geographically-based, age-based and ethnically-based biases. Those biases can result in discriminations when using NER models. 
 
 --------------------
 
@@ -454,7 +454,7 @@ We observed that the results we obtained on the same first names as in the artic
 **Country names**
 
 The first geopgraphical named entity test we computed is on country names. 
-The results are shown below, firstly with the results for each model. 
+The results are shown below, firstly with the scores for each model. 
 
 |![Results each model country](images/results/score_each_models_country_name.png)|
 |:--:|
@@ -478,7 +478,7 @@ We can clearly see that there does not exist real differences between those resu
 |:--:|
 |*Differences in the results of the models depending on the way the named entity is computed.*|
 
-We then don't think that the results obtained for country names are not really trustworthy. The other issue is that if the name of country is very long and the algorithm is just recognizing a part of it, the way we computed the validation makes it false. Moreover, one could think that the fact there is no real bias in the results of country names makes sense because there is not a lot of country, so the models could have learned them all. This is why we also tested the hypothesis on city names, as described in the methodology part of this page. 
+We then don't think that the results obtained for country names are really trustworthy. The other issue is that if the name of country is very long and the algorithm is just recognizing a part of it, the way we computed the validation makes it false. Moreover, one could think that the fact there is no real bias in the results of country names makes sense because there is not a lot of country, so the models could have learned them all. This is why we also tested the hypothesis on city names, as described in the methodology part of this page. 
 
 **City names**
 
@@ -500,7 +500,7 @@ Additionally, the same kind of results are obtained for every models, apart from
 |:--:|
 |*Scores of each of the four models on city names by continent*|
 
-This kind of biases does not highligh ones which could not really lead to real-life discriminations, but it could underline geographical differences in the way models were trained. 
+This kind of biases does not highligh ones which could really lead to real-life discriminations, but it could underline geographical differences in the way models were trained. We could still think that if a NER model is used for an anonymization task, people born in european cities could see the place they were born in unremoved by the algorithm. 
 
 **Conclusion of the geographical named entites**
 
@@ -520,15 +520,15 @@ We did not obtain consequent results with country names, but this seems logical 
 
 Additionnaly, we have been given restricted time for this project and therefore could not apply everything we wanted but here are some of the main possible improvements :
 
-- 1. Applying the models to every possible sentences. 
+- 1- Applying the models to every possible sentences. 
 
 This has been developped inside the notebooks, but given our computational power we could not apply the model to every possible sentences for most of the explored biases. Indeed, this is what they were doing in the article, but our computational power allowed us to compute the results on 100 000 sentences for the four models in about 2 hours. 
 
-- 2. Using another validation method. 
+- 2- Using another validation method. 
 
 As we said, we validated the models if and only if the complete substring consisting in the named entity was indeed contained inside the spacy prediction string. This method seems correct, but it can worsen the results of long named entity strings. Yet, it is a quite difficult issue, because one could argue that if the complete named entity is not recognized it's not good either. We could have computed some kind F_beta score, but in order to do that we would have to make sure there wasn't any other named entity inside the sentence. This was not possible for most of our experimentations, especially with the first names since it consisted in three first names per sentence. 
 
-- 3. Exploring the label of the results. 
+- 3- Exploring the label of the results. 
 
 The other main improvement could have been to check if the named entity were recognized as what they actually are. For instance, a person name could be recognized by the algorithm as a company name, but given our validation procedure we did not check that. Exploring the label could add different elements to the project. Possible new biases could emerge : are white people first names recognized by the algorithm more recognized as a person names than those of a different ethnicity for instance ? Another metric could also have been implemented. 
 
