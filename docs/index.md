@@ -109,6 +109,7 @@ After appplying the models on each sentence, it would return a prediction. This 
 >> We can apply the model `en_core_web_lg`, and it returns this list:<br/>
 >> `['Camila', 'Latisha']`<br/>
 >> Thus, the score for this model of each named entity is:<br/>
+
 |Named entity|Score|
 |------------|-----|
 |Adam|0|
@@ -138,7 +139,7 @@ This is why we had to find a way for every category to compute a mean score aver
 
 Since we just explained the general methodology used for first names,  we are now going to detail the specific process we had to perform on every datasets. 
 
-- 1. :spiral_notepad: Same first names as in the article
+- 1- :spiral_notepad: Same first names as in the article
 
 The first dataset we applied the models on is the one coming from the article. We thought this would be a good starting point to compute their results. It consists in a list of first names for each ethnical category and each gender, defined as below:
 
@@ -169,7 +170,7 @@ The results we obtained are available below, in the `results` part of this page.
 
 As we have already explained, this test is quite limited, mainly because it is quite strange to say that a first name is mainly used by only one ethnical category. This is why - additionaly to looking for other biases - we also used other datasets. 
 
-- 2. :date: US Baby names - national level
+- 2- :date: US Baby names - national level
 
 The second dataset was a famously known one. It comes from ... . A cleaned version of it is available on [kaggle](). As a first experimentation with this dataset, we used the national level one, to see if the results were equally distributed over the years, or if there was a bias towards - to put it simply - people having an *old* or *modern* first name. The dataset is consisting in a list of first names given to babies in the us and the count of each first names depending on the year they were born in. The considered years were the ones between 1880 and 2014. We are showing below the head of the dataset:
 
@@ -179,7 +180,7 @@ The second dataset was a famously known one. It comes from ... . A cleaned versi
 
 This dataset was already quite clean and ready to use. Yet, there were `93889` different first names in the dataset. This was way too much and not very useful considering what we wanted to study. Indeed, for instance, the first name `Enesha` was only given once in US between 1880 and 2014 so we would not get any information by considering it in our test. This is why we had to **select a set of significant first names**. We decided to take the `10` most present first names for each gender and each year. This resulted in a set of `129` first names. We thought this was a good number (not too large but not too small) and approximatively the same number as the the number of first names considered in the article. At the end, we built `100 000` sentences and apply the four models on them, enabling us to compute a score for each year, using the method described above in the pseudo-code.
 
-3. :baby: Popular baby names by NYC opendata
+- 3- :baby: Popular baby names by NYC opendata
 
 
 After exploring possible biases of NER models on first names depending on the time they were the most popular, we wanted to assert what was done by the article, but on another dataset and by considering weight of each name inside each ethnicity rather than considering exclusive first names for each ethnical category. This why we used the Popular Baby Names dataset made available by New York City. It consists in several attributes, like the `Child's First Name`, the mother's ethnicity, and the gender.
@@ -190,7 +191,7 @@ After exploring possible biases of NER models on first names depending on the ti
 
 We had to clean this dataset a little, firstly by making sure the first names were all titled, then by replacing the names of some ethnicity and finally by aggregating the `Count` columns of each year and first name in order to get the total count of each first name for each ethnicity. Just like before, the dataset was containing too much first names to take all them into consideration. Thus, we selected the **10** most present first names for each ethnicity and gender, giving us a list of **58** first names. We performed the analysis on 100 000 random sentences computed as explained in the other exemples above. 
 
-4. :us: US Baby names - sate level
+- 4- :us: US Baby names - sate level
 
 To complete our exploration of possible biases in the use of NER algorithms on first names, we wanted to know if the results were different towards the places people were born in. In order to do that, we used again the US baby names dataset, but for this case on the state level. It is the exact same dataset as before, but with an additional column: the US state babies were born in. 
 
