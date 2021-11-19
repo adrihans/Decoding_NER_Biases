@@ -172,7 +172,7 @@ As we have already explained, this test is quite limited, mainly because it is q
 
 - 2- :date: US Baby names - national level
 
-The second dataset was a famously known one. It comes from ... . A cleaned version of it is available on [kaggle](). As a first experimentation with this dataset, we used the national level one, to see if the results were equally distributed over the years, or if there was a bias towards - to put it simply - people having an *old* or *modern* first name. The dataset is consisting in a list of first names given to babies in the us and the count of each first names depending on the year they were born in. The considered years were the ones between 1880 and 2014. We are showing below the head of the dataset:
+The second dataset was a famously known one. It comes from Data.gov . A cleaned version of it is available on [kaggle](https://www.kaggle.com/kaggle/us-baby-names). As a first experimentation with this dataset, we used the national level one, to see if the results were equally distributed over the years, or if there was a bias towards - to put it simply - people having an *old* or *modern* first name. The dataset is consisting in a list of first names given to babies in the us and the count of each first names depending on the year they were born in. The considered years were the ones between 1880 and 2014. We are showing below the head of the dataset:
 
 |![US baby names national - head](images/datasets/first_names/US_baby_names_national_head.JPG)|
 |:--:|
