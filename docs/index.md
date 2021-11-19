@@ -73,7 +73,7 @@ For instance, on the test text : `I think Barack Obama met the founder of Facebo
 | *Comparison of basic model performances on a test sentence.* |
 
 
-We can see that only two models -`md` and `trf`- have the same -and the good- results, recognizing `Barack Obama` as a *person* and `Facebook` as an *organization* while for instance `sm` and `md` models have recognized `NLP` as an organization name. This will be detailed in the next parts on the applications, but then the results depend greatly on the kind of model being used. 
+We can see that only two models -`md` and `trf`- have the same -and the correct- results, recognizing `Barack Obama` as a *person* and `Facebook` as an *organization* while for instance `sm` and `md` models have recognized `NLP` as an organization name. This will be detailed in the next parts on the applications, but then the results depend greatly on the kind of model being used. 
 At the end, to get a measure of the average bias - if there is one - we also computed the average score of model on each test. 
 
 
@@ -90,7 +90,7 @@ For instance, this original winogender sentence : `'The $PARTICIPANT left the $O
 Secondly, we wanted to make sure there were three named entities in each sentence to make things simpler, and, at the end, we made sure the `pronoun` was a nominative one, to avoid any english mistakes when building the sentences with real names. This cleaning process was really inspired by the article. We ended up with **89 sentences**, and this was good enough for our experiments. 
 
 
-Having a cleaned and good sentence template, we could then look for datasets containing first names and some atteched information relative to the fields we wanted to study. We used four different datasets:
+Having a cleaned and good sentence template, we could then look for datasets containing first names and some attached information relative to the fields we wanted to study. We used four different datasets:
 - The one of the article, giving, as we said, a list of first names for each gender and ethnical categories. 
 - The US baby names at the national level
 - The made available by the Open Data Website of New York City. 
@@ -99,35 +99,42 @@ Having a cleaned and good sentence template, we could then look for datasets con
 
 With those datasets, we could get a random sentence from the template, and replace `$Occupation`, `$Participant` and the `Pronoun` by three random first names from the dataset for each test. We could repeat that process *n* times in order to make our results significant. 
 
->*note*: At the beginning, we wanted to apply this process to every possible sentences, but as we will explain later, it was not possible given our computanional power. This is why, for most of our test, we ran the test on **100 000 sentences**.
+>*note*: At the beginning, we wanted to apply this process to every possible sentences, but as we will explain later, it was not possible given our computanional power. This is why, for most of our test, we ran them on **100 000 sentences**.
 
 **Validation process**
 
-After appplying the models on each sentence, it would return a prediction. This prediction takes the form of a list. 
+After appplying the models on each sentence, it would return a prediction. This prediction takes the form of a list, like that:
+
+If the named was completely in the prediction, we attributed `1` as a score for the named entity and `0` if it was not in the prediction. This is some kind of accuracy for each first names. 
+
+>**For instance**: 
+>> With this kind of sentence:
+>> `'Adam recommended a new shampoo to Camila because Latisha wanted to be helpful.'`<br/>
+>> We can apply the model `en_core_web_lg`, and it returns this list:<br/>
+>> `['Camila', 'Latisha']`<br/>
+>> Thus, the score for this model of each named entity is:<br/>
+>>|Named entity|Score|
+>>|------------|-----|
+>>|Adam|0|
+>>|Camila|1|
+>>|Latisha|1|
 
 
-We computed kind of a accuracy one. 
+For the article, first names were exclusively associated to one ethnicity and one gender, so it was easy to compute the score of each category by just getting the mean of the results for each first names attributed to that category. Yet, for the other datasets, **the first names were not exclusive to only one category**. 
+>For instance for the NYC dataset, after cleaning, the first name `` was given by ... mothers of ethnicity ``, ... of ethnicity `` and .... of ethnicity ``. 
+This is why we had to find a way for every category to compute a mean score averaged by the weights of the first names inside it.
+>For example, still on the NYC dataset, we used this kind of pseudo-code to compute the score for each ethnicity:
+>>```
+>>for each ethnicity:
+>>  for each name:
+>>    return $$\frac{a}{n}$$
+>>```
 
-
-
-Since first names are not exclusive to each ethnical category or year, we computed a mean score averaged by the weights of the the first names in the considered category. 
-
-For instance, we used this kind of pseudo-code to compute the score for each year:
-
-```
-for each year:
-  for each name:
-    return $$\frac{a}{n}$$
-```
-
-We did this not only for year babies were born in but also for the US states and the ethnical categories. 
-
-Then, we applied the models on several datasets, but given our computational power we were not able to compute the results over every possible sentences. 
-Indeed, it already lasted around two hours for 100 000 exemples. We computed the sentences randomly. Considering that we did not use a lot of first names, we think that it is quite sufficient. 
+Therefore, we just explained the general methodology used for first names. We are now going to detail the specific process we had to perform on every datasets. 
 
 1. :spiral_notepad: Same first names as in the article
 
-The first dataset we applied the models on is the oned coming from the article. We thought this would be a good starting point to compute their results. It consists in a list of first names for each ethnical category and each gender, defined as below:
+The first dataset we applied the models on is the one coming from the article. We thought this would be a good starting point to compute their results. It consists in a list of first names for each ethnical category and each gender, defined as below:
 
 ```yaml
 #Black Female = BF_names
@@ -147,65 +154,103 @@ WF_names = ['Amanda', 'Betsy', 'Colleen', 'Courtney', 'Ellen','Emily', 'Heather'
 #White Male = WM_names
 WM_names = ['Adam', 'Alan', 'Andrew', 'Brad', 'Frank', 'Greg','Harry', 'Jack', 'Josh', 'Justin', 'Matthew', 'Paul', 'Roger','Ryan', 'Stephen']
 ```
-Thus, there are four ethnical and two gender categories, each of them containing around 15 first names.
+Thus, there are four ethnical and two gender categories, each of them containing 15 -or 16 for the first one- first names.
 We could not apply the four models on each possible sentences. 
 Indeed, there are 89 sentences in the template and 121 different first names. This number of first names would have given 1 727 880 three ordered permutations, so at the end 89 * 1 727 880 = 153 781 320 possible sentences. This was not possible given the computational power we had access to. 
 
 We then computed random sentences - the sentence was chosen at random and the three first names for each sentence too. We ran the test on 100 000 sentences. This method already allowed us to apply the four models for a runtime of approximatively 2 hours. This runtime is mainly explained because we had to make a call to the spacy models for each sentence. 
 The results we obtained are available below, in the `results` part of this page. 
 
-The main limit of this experimentation is that it is quite strange to say that a first name is mainly used by only one ethnical category. Furthermore, they don't really explain how they chose those first names. We could then actually think there is a bias in the way they computed them. This is why - additionaly to looking for other biases - we also used other datasets. 
+As we have already explained, this test is quite limited, mainly because it is quite strange to say that a first name is mainly used by only one ethnical category. This is why - additionaly to looking for other biases - we also used other datasets. 
 
-2. :date: US Baby names
+2. :date: US Baby names - national level
 
-The second dataset was a famously known one. As a first experiment with this dataset, we used the nation one, consisting in a list of first names given to babies in the us and the count of each first names depending on the year they were born in. 
+The second dataset was a famously known one. It comes from ... . A cleaned version of it is available on [kaggle](). As a first experimentation with this dataset, we used the national level one, to see if the results were equally distributed over the years, or if there was a bias towards - to put it simply - people having an *old* or *modern* first name. The dataset is consisting in a list of first names given to babies in the us and the count of each first names depending on the year they were born in. The considered years were the ones between 1880 and 2014. We are showing below the head of the dataset:
 
-Then again, the number of possible was too high to compute every models on every sentences so we computed them using a random method as described above. Moreover, it was not very useful to use every first names - for instance if a first name was only given to 10 people on a specific year. This is why for each gender and year we took the `10` most present first names. This resulted in a list of 129 considered first names. This was a good number (not too large but not too small) and approximatively the same number as the experiment with the first names of the article. 
+![US baby names national - head](images/datasets/first_names/US_baby_names_national_head.JPG)
+||
+|:--:|
+|*Head of the US baby names dataset - National level*|
 
-This enabled us to compute a score for each year, using the method described above in the pseudo-code. We wanted to see if depending on the popularity of the name the results would be different. 
+This dataset was already quite clean and ready to use. Yet, there were `93889` different first names in the dataset. This was way too much and not very useful considering what we wanted to study. Indeed, for instance, the first name `Enesha` was only given once in US between 1880 and 2014 so we would not get any information by considering it in our test. This is why we had to **select a set of significant first names**. We decided to take the `10` most present first names for each gender and each year. This resulted in a set of `129` first names. We thought this was a good number (not too large but not too small) and approximatively the same number as the the number of first names considered in the article. At the end, we built `100 000` sentences and apply the four models on them, enabling us to compute a score for each year, using the method described above in the pseudo-code.
+
+3. :baby: Popular baby names by NYC opendata
 
 
-3. :baby: NYC opendata
+After exploring possible biases of NER models on first names depending on the time they were the most popular, we wanted to assert what was done by the article, but on another dataset and by considering weight of each name inside each ethnicity rather than considering exclusive first names for each ethnical category. This why we used the Popular Baby Names dataset made available by New York City. It consists in several attributes, like the `Child's First Name`, the mother's ethnicity, and the gender.
 
-The third dataset we used for this exploration of biases on first names in NER models is one containing ethnical information about babies born in NYC. We thought this was a more correct way to check for ethnical biases than the method they used in the article. 
-Again, we could not compute the results for each first names in the dataset and we thought it was not useful to test names used by very little people to check for biases. 
-Instead, we only used ..... .
+![NYC babies head](images/datasets/first_names/babies_nyc_head_raw.JPG)
 
-4. :us: US Baby names - sates
+||
+|:--:|
+|*Head of the Popular Baby Names dataset - raw*|
 
-Finally for this exploration of biases in the results of NER models over first names we wanted to see if the names were more recognized if people were born in some US sates than if they were born in other states. The possible biases we wanted to check were mainly over GDP, Income, non caucasian presences in the state... 
+We had to clean this dataset a little, firstly by making sure the first names were all titled, then by replacing the names of some ethnicity and finally by aggregating the `Count` columns of each year and first name in order to get the total count of each first name for each ethnicity. Just like before, the dataset was containing too much first names to take all them into consideration. Thus, we selected the **10** most present first names for each ethnicity and gender, giving us a list of **58** first names. We performed the analysis on 100 000 random sentences computed as explained in the other exemples above. 
 
-Then again, we have not used every first names..
+4. :us: US Baby names - sate level
+
+To complete our exploration of possible biases in the use of NER algorithms on first names, we wanted to know if the results were different towards the places people were born in. In order to do that, we used again the US baby names dataset, but for this case on the state level. It is the exact same dataset as before, but with an additional column: the US state babies were born in. 
+
+![head of US baby names - state level](images/datasets/first_names/)
+
+||
+|:--:|
+|*Head of the US baby names dataset - state level*|
+
+Obviously, considering the results of the article, we wanted to check for example if the poorest states had the lower scores and if the richest ones achived the best performances. Since we had already study the impact of the time, we aggregating the count of first names towards time. Then again, we have not used every first names, but the **20** most present ones for each state and gender. This resulted in 117 considered first names. Again, we performed our analysis on **100 000** random sentences. 
+
+
+The results of our tests on the first names are presented in the `Results` part below. We are now going to explain what we did to assess biases towards geographical named entites like city or country names. 
 
 ### :earth_americas: Geographical biases ? 
 
+Then, having studying biases towards first names, we wondered about biases of NER algorithms on other types of named entites like geographical ones. For instance, xe wondered if western geographical named entities were more recognized than non-western ones. Therefore, we applied the same kind of methodology we used for first names but on two other things : **city** and **country** names.
 
-Then, we asked ourseleves if we could find the same kind of results on other applications like geographical named entities. We wondered if western geographical named entities were more recognized by non-western ones for instance. 
-So we applied the same kind of methodology we used for the first names but on two things : City names and Country names. 
+Compared to the first names analysis, our main issue was that there does not exist any sentence templates - like the Winogender Schemas - available for geographical named entities. We then had to build the sentences ourselves. We could have written basic sentences by hand or imagine some, but it would have been quite hard to compute a large ammount of them and maybe our own biases would have had an impact on them. Instead, we decided to use sentences containing some geographical named entities from the summaries of some Wikipedia pages. 
 
-Here, we did not find any available templates for this kind of application. We then had to build them ourselves. 
-Instead of writing basic sentences, we thought it would be more accurate to use real-life sentences. In order to do that, we decided to use sentences containing the named entity from wikipedia pages summaries. 
+*Construction of the sentence templates*
 
-For instance, to get sentences for country names we used Wikipedia API to get wikipedia pages and then summaries. 
+In order to perform that, we used the python version of the wikipedia api. To describe the methodology used to build the templates, we will take the example of country names - but the same one was used for the cities. Firstly, we had to get the list of the country names. Then, we were able to loop over that list to get the associated wikipedia page and more precisely its summary. We splitted each summary into sentences and looping over those sentences we were able to select only the ones containing the country names. 
 
->```Wikipedia Code```
+Only `12` country wikipedia page over the `177` country names we had in the list were not found, giving us at the end `1623` sentences in total. This was a bit too much and not very useful. Moreover, we noticed that the first sentence for each country often was not natural at all. For instance, the first sentence for Fiji is : `bldjdlkjslksdklhsckjhfjkgqdgfqgdfhqdgfkjgqlkgfqjhkjqhdjdhslk`. Hence, we only selected the last sentence of each found country. This would avoid any bias in the selection - some western countries having a large number of sentences comparing to non-western ones - and having unnatural sentences in the template. At the end, we were able to replace the country name of the associated wikipedia page by `$COUNTRY`, providing us with a complete template of **159 sentences** for the country names. 
 
-We split the summaries by sentences. Looping on each sentences we looked for sentences containing the country name - of the wikipedia page - and then we replace the country name by `$COUNTRY` to build the template. 
+Having explained the methodology used to get templates, we will now describe the detailed methodology and datasets we used on country and city names:
 
-This gave for country names ... sentences. 
-Some example of the sentences: 
+**Country names**: 
 
+To have a list of country names, we used the `naturalearth_lowres` dataset available with the `Geopandas` package. It can be accessed through this simple line of code: `world=geopandas.read_file( gpd.datasets.get_path('naturalearth_lowres'))`. 
 
-We used the same kind of method for city names, with ... sentences.
+It consists in a list of countries with some additional information like estimated population or their respective geometry. 
 
 
-We used two different datasets: 
+![Head Geopandas Dataset](images/datasets/geo/head_natural_geopandas.JPG)
 
-**For country names**: 
+||
+|:--:|
+|*Head of the `naturalearth_lowres` dataset of Geopandas*|
 
-world by Geopandas 
 
-**For city names**:
+We have already explained how we built the template, resulting in 159 sentences. Unlike the process with first names, we only have one country name per sentence, and 177 possible countries. Hence, resulting in total of `177`*`159`=`28143` possible sentences. Thus, it was possible to test every one of these possible sentences, and it's what we have done. To get the results of this experimentation, see the `results` part of this page. 
+
+
+**City names**:
+
+
+For city names, we did not use directly a Geopandas dataset but the `World Cities Database` made available by `simplemaps`. We used the basic - and thus free - one. It consists in a set of `37 499` unique cities in `237` countries. The additional information accessible through this dataset can be seen below:
+
+![Head of the World Cities database](images/dataset/geo/)
+
+||
+|:--:|
+|*Head of the World Cities Database by simplemaps*|
+
+
+To build the sentence template, 
+
+
+
+
+
 
 At the end, we applied the 4 models, using the same validation method we used for the first names. 
 Since we are here not really interested in actual results for each city but more global results, we computed the results for country and continent by grouping by the scores. 
@@ -376,6 +421,16 @@ Exploring the label could add different elements to the project. Possible new bi
 --------------------------------------------
 
 ## Technical information
+
+----------------------------------------
+
+### Github and notebooks
+
+The complete code for this project is accessible on the associated Github Repo here. Some data could not have been posted in the repo because they were too large, but the complete list of datasets used for this project is written below. 
+
+The Repo contains four main notebooks:
+
+
 
 ------------------------------------
 
