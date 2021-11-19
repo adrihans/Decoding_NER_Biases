@@ -492,17 +492,19 @@ Possible biases in this field could have great consequences because it would mea
 
 Obtaining results for company names was actually very difficult, for different reasons. Indeed, one should not compare companies which are too different. For instance, just like we saw that californian first names were the most recognized in America, we could think - from who is actually training the models - that tech companies are more recognized than construction ones. The other thing that could bias the search for these biases is the choice of company depending on the size of it. 
 
+----------------------------------------
+
 ### Limits / Possible improvements
 
 Additionnaly, we have been given restricted time for this project and therefore could not apply everything we wanted but here are some of the main possible improvements :
 
-1. Applying the models to every possible sentences. 
+- 1. Applying the models to every possible sentences. 
 
 This has been developped inside the notebooks, but given our computational power we could not apply the model to every possible sentences for most of the explored biases. 
 
 Indeed, this is what they were doing in the article, but our computational power allowed us to compute the results for the four models in about 2 hours. 
 
-2. Using another validation method. 
+- 2. Using another validation method. 
 
 As we said, we validated the models if and only if the complete substring consisting in the named entity was indeed contained inside the spacy prediction string. This method seems correct, but it can worsen the results of long named entity strings. 
 
@@ -510,7 +512,7 @@ But there is a tradeoff because if the complete named entity is not recognized i
 
 We could have computed some kind F_beta score, but in order to do that we would have to make sure there wasn't any other named entity inside the sentence. This was not possible for most of our experimentations, especially with the first names since it consisted in three first names per sentence. 
 
-3. Exploring the label of the results. 
+- 3. Exploring the label of the results. 
 
 The other main improvement could have been to check if the named entity were recognized as what they actually are. 
 
@@ -518,7 +520,27 @@ For instance, a person name could be recognized by the algorithm as a company na
 
 Exploring the label could add different elements to the project. Possible new biases could emerge : are white people first names recognized by the algorithm more recognized as a person names than those of a different ethnicity for instance ? Another metric could also have been implemented. 
 
+
+
+------------------------------------------------------------
+
 ## General conclusion
+
+To conclude, we clearly identified some biases. Those biases could result in strong discriminations, especially with the exemple of first names
+- Anonymization
+- Internet visibility
+- ... 
+
+One answer in trying to avoid thoses biases could be to apply several models - as we seen with age-based discrimination on the US Baby names dataset. 
+
+Yet, more than the biases, what we find interseting in that project is that we could almost guess what - at least the type of - data was used to train the models, just based on the results obtained by NER algorithms on first names recognition, as we did geographically and over time with the US baby names dataset. 
+
+Therefore, one should be very careful when using NER algorithms, and maybe should see what is the best model for its usecase - if it's impossible to use several ones. 
+
+
+
+
+
 
 
 
