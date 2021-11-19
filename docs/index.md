@@ -205,50 +205,53 @@ Obviously, considering the results of the article, we wanted to check for exampl
 The results of our tests on the first names are presented in the `Results` part below. We are now going to explain what we did to assess biases towards geographical named entites like city or country names. 
 
 
-
+-------------------------------------
 ### :earth_americas: Geographical biases ? 
 
-Then, having studying biases towards first names, we wondered about biases of NER algorithms on other types of named entites like geographical ones. For instance, xe wondered if western geographical named entities were more recognized than non-western ones. Therefore, we applied the same kind of methodology we used for first names but on two other things : **city** and **country** names.
+Then, having studying biases towards first names, we wondered about biases of NER algorithms on other types of named entites like geographical ones. For instance, we wondered if western geographical named entities were more recognized than non-western ones. Therefore, we applied the same kind of methodology we used for first names but on two other things: **city** and **country** names.
 
 Compared to the first names analysis, our main issue was that there does not exist any sentence templates - like the Winogender Schemas - available for geographical named entities. We then had to build the sentences ourselves. We could have written basic sentences by hand or imagine some, but it would have been quite hard to compute a large ammount of them and maybe our own biases would have had an impact on them. Instead, we decided to use sentences containing some geographical named entities from the summaries of some Wikipedia pages. 
 
 *Construction of the sentence templates*
 
-In order to perform that, we used the python version of the wikipedia api. To describe the methodology used to build the templates, we will take the example of country names - but the same one was used for the cities. Firstly, we had to get the list of the country names. Then, we were able to loop over that list to get the associated wikipedia page and more precisely its summary. We splitted each summary into sentences and looping over those sentences we were able to select only the ones containing the country names. 
+In order to perform that, we used the python version of the wikipedia api. To describe the methodology used to build the templates, we will take the example of country names - but the same one was used for the cities. Firstly, we had to get a list of country names. Then, we were able to loop over that list to get the associated wikipedia page and more precisely its summary. We splitted each summary into sentences and looping over those sentences we were able to select only the ones containing the country names. 
 
-Only `12` country wikipedia page over the `177` country names we had in the list were not found, giving us at the end `1623` sentences in total. This was a bit too much and not very useful. Moreover, we noticed that the first sentence for each country often was not natural at all. For instance, the first sentence for Fiji is : `'Fiji ( (listen) FEE-jee; Fijian: Viti, [ˈβitʃi]; Fiji Hindi: फ़िजी, Fijī), officially the Republic of Fiji, is an island country in Melanesia, part of Oceania in the South Pacific Ocean'`. Hence, we only selected the last sentence of each found country. This would avoid any bias in the selection - some western countries having a large number of sentences comparing to non-western ones - and having unnatural sentences in the template. At the end, we were able to replace the country name of the associated wikipedia page by `$COUNTRY`, providing us with a complete template of **159 sentences** for the country names. 
+Only `12` country wikipedia page over the `177` country names we had in the list were not found, giving us at the end `1623` sentences in total. This was a bit too much and not very useful. Moreover, we noticed that the first sentence for each country often was not natural at all. For instance, the first sentence for Fiji is : 
+>`'Fiji ( (listen) FEE-jee; Fijian: Viti, [ˈβitʃi]; Fiji Hindi: फ़िजी, Fijī), officially the Republic of Fiji, is an island country in Melanesia, part of Oceania in the South Pacific Ocean'`. 
 
-Having explained the methodology used to get templates, we will now describe the detailed methodology and datasets we used on country and city names:
+Hence, we only selected the last sentence of each found country. This would avoid any bias in the selection - some western countries having a large number of sentences comparing to non-western ones - and having unnatural sentences in the template. At the end, we were able to replace the country name of the associated wikipedia page by `$COUNTRY`, providing us with a complete template of **159 sentences** for country names. 
+
+Having explained the methodology used to get the templates, we will now describe the detailed methodology and datasets we used on country and city names:
 
 **Country names**: 
 
-To have a list of country names, we used the `naturalearth_lowres` dataset available with the `Geopandas` package. It can be accessed through this simple line of code: `world=geopandas.read_file( gpd.datasets.get_path('naturalearth_lowres'))`. 
+To have a list of country names, we used the `naturalearth_lowres` dataset available with the [Geopandas](https://geopandas.org/en/stable/) package. It can be accessed through this simple line of code:
+>`world=geopandas.read_file(gpd.datasets.get_path('naturalearth_lowres'))`. 
 
 It consists in a list of countries with some additional information like estimated population or their respective geometry. 
 
 
 |![Head Geopandas Dataset](images/datasets/geo/head_natural_geopandas.JPG)|
 |:--:|
-|*Head of the `naturalearth_lowres` dataset of Geopandas*|
+|*Head of the `naturalearth_lowres` dataset of `Geopandas`*|
 
 
-We have already explained how we built the template, resulting in 159 sentences. Unlike the process with first names, we only have one country name per sentence, and 177 possible countries. Hence, resulting in total of `177`*`159`=`28143` possible sentences. Thus, it was possible to test every one of these possible sentences, and it's what we have done. To get the results of this experimentation, see the `results` part of this page. 
+We have already explained how we built the template, resulting in 159 sentences. Unlike the process with first names, we only have one country name per sentence, and 177 possible countries. Hence resulting in total of `177`*`159`=`28143` possible sentences. Thus, it was possible to test every one of these possible sentences, and it is what we have done. To get the results of this experimentation, see the `results` part of this page. 
 
 
 **City names**:
 
 
-For city names, we did not use directly a Geopandas dataset but the `World Cities Database` made available by `simplemaps`. We used the basic - and thus free - one. It consists in a set of `37 499` unique cities in `237` countries. The additional information accessible through this dataset can be seen below:
+For city names, we did not use directly a Geopandas dataset but the [`World Cities Database`](https://simplemaps.com/data/world-cities) made available by  [`simplemaps`](https://simplemaps.com/). We used the basic - and thus free - one. It consists in a set of `37 499` unique cities in `237` countries. The additional information accessible through this dataset can be seen below:
 
 |![Head of the World Cities database](images/datasets/geo/head_worldcities.JPG)|
 |:--:|
 |*Head of the World Cities Database by simplemaps*|
 
 
-We noticed that some countries were only containing one city. This was the case for `Monaco` for instance. We decided not to use those kind of cities because we wanted to compare the results of countries or continents. Thus, we only selected countries with more than 50 cities in the dataset, in order to have significant results. We now had 76 countries - over the 237 initially. Then, for each country we took 10 cities with the largest population. Therefore, we now had 760 cty names.    
+We noticed that some countries were only containing one city. This was the case for `Monaco` for instance. We decided not to use those kind of cities because we wanted to compare the results of countries or continents. Thus, we only selected countries with more than 50 cities in the dataset, in order to have significant results. We now had 76 countries - over the 237 initially. Then, for each country we took the 10 cities with the largest population. Therefore, we now had 760 city names.    
 
-To build the sentence template, we did not use the whole 760 city names. Instead, we randomly selected 100 city names, and looked for their wikipedia pages in order to use the exact same method we used with country names. We ended up with 64 sentences in the template. Thus, we had access to 760*64 = **48 640** possible sentences. We were then able the apply the four models on the whole set of sentences. We used the same validation method we used for first names. We were not really intersted in the actual results for each city but in more global results so we computed the results for country and continent by grouping by the scores. 
-This enabled us top plot some maps we are detailing in the `Results` part of this page. 
+To build the sentence template, we did not use the whole 760 city names. Instead, we randomly selected 100 city names, and looked for their wikipedia pages in order to use the exact same method we used with country names. We ended up with 64 sentences in the template. Thus, we had access to 760*64 = **48 640** possible sentences. We were then able to apply the four models on the whole set of sentences. We used the same validation method we used for first names. We were not really intersted in the actual results for each city but in more global results so grouped the results by country and continent. This enabled us top plot some maps we are detailing in the `Results` part of this page. 
 
 ### :convenience_store: Company names 
 
