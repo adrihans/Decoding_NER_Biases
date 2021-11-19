@@ -254,20 +254,39 @@ This enabled us top plot some maps we are detailing in the `Results` part of thi
 ### :convenience_store: Company names 
 
 
-![In prgress](images/gifs/work-in-progress-gif-12.gif)
+![In progress](images/gifs/work-in-progress-gif-12.gif)
 
 
 ---------------------
 
 ## :bar_chart: Results
 
-
-
-
+Since we already detailed the methodology for each application, we are now going to get into the results, following the same programme: we will begin with the first names, then the geographical named entities and finally the company names. 
 
 ### First names
 
-#### On the same first names than the article
+We are recalling that firstly we wanted to check the results of the article and then going a bit further by testing other potential biases on other datasets. 
+
+#### On the first names of the article
+
+We are showing below the results we got on **100 000** random sentences, which seemed quite significant already. Note that `avg_score` corresponds to the average score of the four models on each category, in order to have kind of the general bias of NER models. 
+
+![Results first names article - raw](images/results/)
+
+We can also detail the results for each category:
+
+
+![Results ethnicity](images/results/)
+
+![Results gender](images/results/)
+
+
+
+We can observe that the results are quite different than the one got in the article. 
+
+
+
+
 
 
 #### On the year with US baby names dataset
@@ -315,24 +334,50 @@ The last plot we can perform is one giving the age in 2021 instead of the year o
 
 We can also compute the list of the best results:
 
-Firstly, we can say that it's interesting, given that companies training and developing those algorithms mainly come from California, that this is for this state that the best results are obtained. Secondly, we could say that the best states are kind of the richest ones. 
-
-Indeed, we could find some similarities with this kind of map([^source_map]): 
+Firstly, we can say that it's interesting, given that companies training and developing those algorithms mainly come from California, that this is for this state that the best results are obtained. 
 
 
-We tried to compute the correlation coefficient with two things : median income and GDP per capita depending on the state. 
-Those two datasets come respectively from ...... and from .... . 
+**We can also check where the datasets the models were trained on come from**.
+
+|Dataset|University/company|State|
+|-------|----------|-----|
+|OntoNotes 5.0|BBN technologies <br/> University of Colorado <br/> University of Pennsylvania<br/>  University of Southern Californias Information Sciences Institute |Massachusetts <br/> Colorado <br/> Pennsylvania <br/> California |
+|ClearNLP|Emory University|Georgia|
+|WordNet 3.0|Princeton University|New Jersey|
+|Glove| Stanford |**California**|
+|roberta-base|huggingface|New York|
+
+The three best results are obtained for three states the companies or universities developping the datasets come from.
+
+
+
+ Moreover, over the 15 best results - of the average score - 6 (California, New York, Pennsylvania, New Jersey, Massachusetts, Georgia) of the 7 states the datasets come from are present, with only Colorado missing. 
+
+We feel that this is quite remarkable, because yes, the texts the datasets were built on to come from various places (wikipedia articles for instance), but a NLP dataset is not only made of texts - especially when we talk about NER processes - but it is also made of labels. We could then argue - and actually that's the all point of this paper - that people labelling the datasets have an influence of possible biases. 
+
+
+
+Yet, one could say that these states are also the most influent ones traditionally. Thus, secondly, we wanted to check wether or not those results were correlated with state wealth. This was encouraged considering our hypothesis, but also by the fact California and New York where the states with the best results. Moreover, we could find some similarities with this kind of map([^source_map]):  This is why we ran simple linear correlation with two datasets: 
+
+- median income per state. The dataset comes from 
+
+
+- GDP per capita per state. The dataset comes from 
+
+
+We were then able to get correlation coefficient between our results and both datasets. We firstly show the table of the correlation with GDP per capita:
 
 |![Correlation with GDP per capita](images/results/correlation_score_states_gdp_per_capita_2015.JPG)|
 |:---:|
 |*Correlation coefficients between the scores of the models and the GDP per capita in 2015 for each US state*|
 
+Secondly, we plot the table of correlation with median incomes:
 
 |![Correlation with Income](images/results/correlation_score_states_median_income_2020.JPG)|
 |:---:|
 |*Correlation coefficients between the scores of the models and the median income in 2020 for each US state*|
 
-The results of the correlation coefficient were not really interpretable. Yet, the sm model gives a quite interesting correlation coefficient, giving a coorelation coefficient of 0.33 for GDP and 0.40 for median income. We now this is not a really good result from a scientific standpoint and we can not really draw a conclusion from that. Yet, one could argue that this is already quite surprising that this coefficient is that high, given the fact that scores from a NER algorithm and GDP per capita are very different things. Additionally to those correlation coefficients, we can also plot the data: 
+The results of the correlation coefficient were not really interpretable, and we are aware of that. Yet, the sm model gives a quite interesting correlation coefficient, with a correlation coefficient of 0.33 for GDP and 0.40 for median income. We know this is not a really good result from a scientific standpoint and we can not really draw a conclusion from that. Yet, one could argue that this is already quite surprising that this coefficient is that high, given the fact that scores from a NER algorithm and GDP per capita are very different things. Additionally to those correlation coefficients, we can also plot the scatterplot along with the regression line: 
 
 |![Plot correlation GDP - SM](images/results/plot_correlation_sm_GDP_per_capita.png)|
 |:---:|
@@ -344,27 +389,54 @@ The results of the correlation coefficient were not really interpretable. Yet, t
 |*Correlation bewteen the sm model score and the median income in 2020 for each US state*|
 
 
+
+
+**Conclusion of the first names results:**
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ### Geographical named entities
+
+**Country names**
+
 The first geopgraphical named entity test we computed is on country names. 
-The results are shown below, with average results on country names by country and by continent. 
+The results are shown below, firstly with the results for each model. Then with average results on country names by country and by continent. 
+
+
+
 
 ![Results on country names by country](images/results/avg_score_country_names.png)
 
+||
+|:--:|
+|*Average results on country names by country*|
+
 ![Results on country names by continent](images/results/avg_score_country_names_by_continent.png)
 
-We can clearly see that there does not exist a real difference between those results.  
+||
+|:--:|
+|*Average results on country names by continent*|
 
-Moreover, we are not completly sure about these results from a scientifical standpoint. 
-
-Indeed, the main issue we had with country names is that there is not only one name for each country. For instance, in the `world` dataset from geopandas, the name of USA was 'United States of America', but running a simple test we can clearly see that the results are quite different depending on how the name is implemented. 
+We can clearly see that there does not exist real differences between those results. Moreover, we are not completly sure about these results from a scientifical standpoint. Indeed, the main issue we had with country names is that there is not only one name for each country. For instance, in the `world` dataset from geopandas, the name of the USA was 'United States of America', but running a simple test we can clearly see that the results are quite different depending on how the name is implemented. 
 
 ![Image of different results depending on the way the country name is computed](images/results/score_us_america_usa.JPG)
 
-We then don't think that the results obtained for country names are not really ... 
+We then don't think that the results obtained for country names are not really trustworthy. The other issue is that if the name of country is very long and the algorithm is just recognizing a part of it, the way we computed the validation makes it false. Moreover, one could think that the fact there is no real bias in the results of country names makes sense because there is not a lot of country, so the models could have learned them all. This is why we also tested the hypothesis on city names, as described in the methodology part of this page. 
 
-This comes mainly from the fact there exists several names for countries, depending on the fact it is the official one, its abbreviate form... The other issue is that if the name of country is very long and the algorithm is just recognizing a part of it, the way we computed the validation makes it false. 
-
-This is why we also tested the hypothesis on city names, as described in the methodology part of this page. 
+**City names**
 
 The results on city names are quite convincing that there exists a bias. 
 Indeed, if we plot the mean scores by continent, we can clearly see that the best results are obtained for North America, with around 5 points better than Africa, South America and Europe. 
@@ -373,15 +445,19 @@ Indeed, if we plot the mean scores by continent, we can clearly see that the bes
 
 Additionally, the same kind of results are obtained for every models : 
 
+![Results for each model on city names by continent](images/results/)
+
+
+
 
 **Conclusion of the geographical named entites**
 
-We did not obtain consequent results with country names, but this seems logical because the models can have learned every country names since there is a few of them and this seems like a very basic thing.
-
-At the opposite, we were able to see that there were real biases with city names. 
+We did not obtain consequent results with country names, but this seems logical because the models can have learned every country names since there is a few of them and it seems like a very basic thing. At the opposite, we were able to see that there were real biases with city names. 
 
 
 ### Company names
+
+![In progress](images/gifs/work-in-progress-gif-12.gif)
 
 The same kind of method has been used on company names. 
 
