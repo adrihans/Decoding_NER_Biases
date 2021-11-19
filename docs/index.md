@@ -168,6 +168,7 @@ As we have already explained, this test is quite limited, mainly because it is q
 The second dataset was a famously known one. It comes from ... . A cleaned version of it is available on [kaggle](). As a first experimentation with this dataset, we used the national level one, to see if the results were equally distributed over the years, or if there was a bias towards - to put it simply - people having an *old* or *modern* first name. The dataset is consisting in a list of first names given to babies in the us and the count of each first names depending on the year they were born in. The considered years were the ones between 1880 and 2014. We are showing below the head of the dataset:
 
 ![US baby names national - head](images/datasets/first_names/US_baby_names_national_head.JPG)
+
 ||
 |:--:|
 |*Head of the US baby names dataset - National level*|
@@ -238,34 +239,31 @@ We have already explained how we built the template, resulting in 159 sentences.
 
 For city names, we did not use directly a Geopandas dataset but the `World Cities Database` made available by `simplemaps`. We used the basic - and thus free - one. It consists in a set of `37 499` unique cities in `237` countries. The additional information accessible through this dataset can be seen below:
 
-![Head of the World Cities database](images/dataset/geo/)
+![Head of the World Cities database](images/dataset/geo/head_worldcities.JPG)
 
 ||
 |:--:|
 |*Head of the World Cities Database by simplemaps*|
 
 
-To build the sentence template, 
+We noticed that some countries were only containing one city. This was the case for `Monaco` for instance. We decided not to use those kind of cities because we wanted to compare the results of countries or continents. Thus, we only selected countries with more than 50 cities in the dataset, in order to have significant results. We now had 76 countries - over the 237 initially. Then, for each country we took 10 cities with the largest population. Therefore, we now had 760 cty names.    
 
-
-
-
-
-
-At the end, we applied the 4 models, using the same validation method we used for the first names. 
-Since we are here not really interested in actual results for each city but more global results, we computed the results for country and continent by grouping by the scores. 
+To build the sentence template, we did not use the whole 760 city names. Instead, we randomly selected 100 city names, and looked for their wikipedia pages in order to use the exact same method we used with country names. We ended up with 64 sentences in the template. Thus, we had access to 760*64 = **48 640** possible sentences. We were then able the apply the four models on the whole set of sentences. We used the same validation method we used for first names. We were not really intersted in the actual results for each city but in more global results so we computed the results for country and continent by grouping by the scores. 
 This enabled us top plot some maps we are detailing in the `Results` part of this page. 
 
 ### :convenience_store: Company names 
 
-The same kind of methodology that we described for city and country names have been used for company names. 
 
-The templates have been built up using the same method. 
+![In prgress](images/gifs/work-in-progress-gif-12.gif)
 
 
 ---------------------
 
 ## :bar_chart: Results
+
+
+
+
 
 ### First names
 
