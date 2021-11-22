@@ -5,15 +5,13 @@ This repository is used for a Sciences Po group project for the course '*Decodin
 **Group Members:**
 > Eleanora BONEL, Ryan HACHEM, Adrien HANS, Sara KEMPPAINEN, Pablo PIGUET
 
-
 ---------------------------
 
 ## Methodology and application
 
+The main inspiration for this project comes from an article entitled *Assessing Demographic Bias in Named Entity Recognition*, written by *Shubhanshu Mishra*, *Sijun He*, *Luca Belli*. In that paper, researchers, based on a set of first names for each ethnical group and a set of template sentences, are applying different NER models and are trying to see whether or not some ethnical or gender groups are less recognized by the algorithms than others. It can be found [here](https://arxiv.org/pdf/2008.03415.pdf).
 
-The main inspiration for this project comes from an article entitled *Assessing Demographic Bias in Named Entity Recognition*, written by *Shubhanshu Mishra*, *Sijun He*, *Luca Belli*. In that paper, researchers, based of a set of first names for each ethnical group and a set of template sentences, are applying different NER models and are trying to see wether or not some ethnical or gender groups are less recognized by the algorithms than others. It can be found [here](https://arxiv.org/pdf/2008.03415.pdf).
-
-The conclusion of the paper is mainly that white first names are oftenly the best recognized ones and that the less recognized are black ones. We show below some more results described in this article. 
+The conclusion of the paper is mainly that white first names are often the best recognized ones and that the less recognized are black ones. We show below some more results described in this article. 
 
 |![Some results of the article](images/results_article.JPG)|
 |:--:| 
@@ -21,7 +19,7 @@ The conclusion of the paper is mainly that white first names are oftenly the bes
 
 Based on that, we wanted to compute the same kind of results, but going further because we thought that some of the methodology they used was not really good enough. For instance, they are defining some first names associated exclusively to specific ethical groups, while it is obviously quite different in real life - and actually they explain that in the article.[^limits_article]
 
-Thus, we thought of testing biases firstly one first names, with the dataset they used to begin, but then with other datasets, from the US governement or the open data website of the city of New York. Then, we wanted to see if we could get the same kind of results, which is to say identifying biases in the results of the algorithms, but on other types of named entities : geographical named entites like city or country names, and company names. While there are little possible discriminations if the models are biased towards some geographical named entities, with company names it could end up discriminating some companies based on the fact their names do not soud western - at least that's what we want to check - because NER models are used sometimes to tag articles for example. 
+Thus, we thought of testing biases firstly one first names, with the dataset they used to begin, but then with other datasets, from the US government or the open data website of the city of New York. Then, we wanted to see if we could get the same kind of results, which is to say identifying biases in the results of the algorithms, but on other types of named entities: geographical named entities like city or country names, and company names. While there are little possible discriminations if the models are biased towards some geographical named entities, with company names it could end up discriminating some companies based on the fact their names do not sound western - at least that's what we want to check - because NER models are used sometimes to tag articles for example. 
 
 In order to look for biases and to test the fairness of NER algorithms, we had to get two main things for each application: 
 - a dataset containing what we had to test with detailed information when useful (i.e first names, city names ... with their respective ethnicity, birth year, population...)
@@ -39,10 +37,9 @@ With a template and a dataset, we could then replace the named entities by the o
 >We can build this sentence by replacing `$OCCUPATION`, `$PARTICIPANT`, `NOM_PRONOUN` by the first names: 
 >```Adam recommended a new shampoo to Camila because Latisha wanted to be helpful.```
 
->At the end, we can get the result of the algorithm by applying the model on that sentence. We can score the result based on a simple evaluation - is the name in the prediction of the model ?
+>At the end, we can get the result of the algorithm by applying the model on that sentence. We can score the result based on a simple evaluation - is the name in the prediction of the model?
 
-Thus, by doing so on a lot of sentences and a lot of first names, we can compute the scores of each categories (gender, ethicity....) we are interested in and compare the results. We are describing below a more detailed methodology for each application, after explaining what models we are testing the hypothesis on and why we are testing several ones. 
-
+Thus, by doing so on a lot of sentences and a lot of first names, we can compute the scores of each category (gender, ethnicity....) we are interested in and compare the results. We are describing below a more detailed methodology for each application, after explaining what models we are testing the hypothesis on and why we are testing several ones. 
 
 ### Models: 
 
@@ -55,11 +52,10 @@ For this project, we are testing the hypothesis of biases for [different models]
 |`en_core_web_lg`|741 Mb|[OntoNotes 5](https://catalog.ldc.upenn.edu/LDC2013T19) (Ralph Weischedel, Martha Palmer, Mitchell Marcus, Eduard Hovy, Sameer Pradhan, Lance Ramshaw, Nianwen Xue, Ann Taylor, Jeff Kaufman, Michelle Franchini, Mohammed El-Bachouti, Robert Belvin, Ann Houston), [ClearNLP Constituent-to-Dependency Conversion](https://github.com/clir/clearnlp-guidelines/blob/master/md/components/dependency_conversion.md) (Emory University), [WordNet 3.0](https://wordnet.princeton.edu/) (Princeton University), [GloVe Common Crawl](https://nlp.stanford.edu/projects/glove/) (Jeffrey Pennington, Richard Socher, and Christopher D. Manning)|
 |`en_core_web_trf`|438 Mb|[OntoNotes 5](https://catalog.ldc.upenn.edu/LDC2013T19) (Ralph Weischedel, Martha Palmer, Mitchell Marcus, Eduard Hovy, Sameer Pradhan, Lance Ramshaw, Nianwen Xue, Ann Taylor, Jeff Kaufman, Michelle Franchini, Mohammed El-Bachouti, Robert Belvin, Ann Houston), [ClearNLP Constituent-to-Dependency Conversion](https://github.com/clir/clearnlp-guidelines/blob/master/md/components/dependency_conversion.md) (Emory University), [WordNet 3.0](https://wordnet.princeton.edu/) (Princeton University), [roberta-base](https://github.com/pytorch/fairseq/tree/master/examples/roberta) (Yinhan Liu and Myle Ott and Naman Goyal and Jingfei Du and Mandar Joshi and Danqi Chen and Omer Levy and Mike Lewis and Luke Zettlemoyer and Veselin Stoyanov)|
 
-
 **Why do we need to test all of these models?**
 
-Firstly, as said above, the models are not trained using the exact same method and moreover using the same datasets, so we can expect different results. Additionnaly, if we perform a simple test on all of these models, we can clearly see that the results are quite different. 
-For instance, on the test text : `I think Barack Obama met the founder of Facebook at the occasion of a release of a new NLP algorithm.`, we obtain the results below for each model: 
+Firstly, as said above, the models are not trained using the exact same method and moreover using the same datasets, so we can expect different results. Additionally, if we perform a simple test on all these models, we can clearly see that the results are quite different. 
+For instance, on the test text: `I think Barack Obama met the founder of Facebook at the occasion of a release of a new NLP algorithm.`, we obtain the results below for each model: 
 
 |Model name|Result of the test|Correct result ?|
 |-----|------|------|
@@ -72,21 +68,18 @@ For instance, on the test text : `I think Barack Obama met the founder of Facebo
 |:--:|
 | *Comparison of basic model performances on a test sentence.* |
 
-
 We can see that only two models -`md` and `trf`- have the same -and the correct- results, recognizing `Barack Obama` as a *person* and `Facebook` as an *organization* while for instance `sm` and `md` models have recognized `NLP` as an organization name. This will be detailed in the next parts on the applications, but then the results depend greatly on the kind of model being used. 
 At the end, to get a measure of the average bias - if there is one - we also computed the average score of the four models for each test. 
-
 
 ### :passport_control: First names 
 
 Firstly, since we were really inspired by [the article](https://arxiv.org/pdf/2008.03415.pdf), but also because, as we explained, we thought they were not going far enough, we tested our hypothesis of existing biases in NER models on first names. 
 
-We used the same template as in the article: the [Winogender Schemas](https://github.com/rudinger/winogender-schemas). It is a quite famous one, developped at the beginning to *"test for the presence of gender bias in automated coreference resolution systems."* It consists of 120 sentences with possible named entites: `Participant`, `Occupation` and a `Pronoun`. Yet, we have to clean the sentences, firstly by deleting the possible `the` before `Participant` or `Occupation`. 
+We used the same template as in the article: the [Winogender Schemas](https://github.com/rudinger/winogender-schemas). It is a quite famous one, developed at the beginning to *"test for the presence of gender bias in automated coreference resolution systems."* It consists of 120 sentences with possible named entities: `Participant`, `Occupation` and a `Pronoun`. Yet, we must clean the sentences, firstly by deleting the possible `the` before `Participant` or `Occupation`. 
 
-For instance, this original winogender sentence : `'The $PARTICIPANT left the $OCCUPATION a big tip because $NOM_PRONOUN had made the drink very strong.'` was replaced by this one: `$PARTICIPANT left $OCCUPATION a big tip because $NOM_PRONOUN had made the drink very strong.`. 
+For instance, this original winogender sentence: `'The $PARTICIPANT left the $OCCUPATION a big tip because $NOM_PRONOUN had made the drink very strong.'` was replaced by this one: `$PARTICIPANT left $OCCUPATION a big tip because $NOM_PRONOUN had made the drink very strong.`. 
 
-Secondly, we wanted to make sure there were three named entities in each sentence to make things simpler, and, at the end, we made sure the `pronoun` was a nominative one, to avoid any english mistakes when building the sentences with real names. This cleaning process was really inspired by the article. We ended up with **89 sentences**, and this was good enough for our experiments. 
-
+Secondly, we wanted to make sure there were three named entities in each sentence to make things simpler, and, at the end, we made sure the `pronoun` was a nominative one, to avoid any English mistakes when building the sentences with real names. This cleaning process was really inspired by the article. We ended up with **89 sentences**, and this was good enough for our experiments. 
 
 Having a cleaned and good sentence template, we could then look for datasets containing first names and some attached information relative to the fields we wanted to study. We used four different datasets:
 - The one of the article, giving, as we said, a list of first names for each gender and ethnical categories. 
@@ -94,14 +87,13 @@ Having a cleaned and good sentence template, we could then look for datasets con
 - The `Popular Baby Names` dataset made available by the Open Data Website of New York City. 
 - The US baby names dataset at the state level. 
 
-
 With those datasets, we could get a random sentence from the template, and replace `$Occupation`, `$Participant` and `$NOM_PRONOUN` by three random first names from the dataset for each test. We could repeat that process *n* times in order to make our results significant. 
 
->*note*: At the beginning, we wanted to apply this process to every possible sentences, but as we will explain later, it was not possible given our computational power. This is why, for most of our test, we ran them on **100 000 sentences**.
+>*note*: At the beginning, we wanted to apply this process to every possible sentence, but as we will explain later, it was not possible given our computational power. Therefore, for most of our test, we ran them on **100 000 sentences**.
 
 **Validation process**
 
-After appplying the models on each sentence, it would return a prediction. This prediction takes the form of a list. If the named entity was completely contained inside the prediction, we attributed `1` as a score for the named entity and `0` if it was not in the prediction. This gave a score close to the accuracy for each first name. 
+After applying the models on each sentence, it would return a prediction. This prediction takes the form of a list. If the named entity was completely contained inside the prediction, we attributed `1` as a score for the named entity and `0` if it was not in the prediction. This gave a score close to the accuracy for each first name. 
 
 >**For instance**: 
 >> With this kind of sentence:
@@ -116,14 +108,12 @@ After appplying the models on each sentence, it would return a prediction. This 
 |Camila|1|
 |Latisha|1|
 
-
 For the article, first names were exclusively associated to one ethnicity and one gender, so it was easy to compute the score of each category by just getting the mean of the results for each first names attributed to that category. Yet, for the other datasets, **the first names were not exclusive to only one category**. 
->For instance for the NYC dataset, after cleaning, the first name `Ethan` was given by 4324 mothers of ethnicity `Hispanic` but also by 2270 of ethnicity `Black non hispanic`. 
+>For instance, for the NYC dataset, after cleaning, the first name `Ethan` was given by 4324 mothers of ethnicity `Hispanic` but also by 2270 of ethnicity `Black non hispanic`. 
 
 |![Description of Ethan](images/datasets/first_names/Ethan_NYC.JPG)|
 |:--:|
 |*`Ethan` was given by various ethnicities*|
-
 
 This is why we had to find a way for every category to compute a mean score averaged by the weights of the first names inside it.
 >For example, still on the NYC dataset, we used this kind of pseudo-code to compute the score for each ethnicity:
@@ -137,7 +127,7 @@ This is why we had to find a way for every category to compute a mean score aver
 >>  score_ethnicity = sum_score/n_people
 >>```
 
-Since we just explained the general methodology used for first names,  we are now going to detail the specific process we had to perform on every datasets. 
+Since we just explained the general methodology used for first names, we are now going to detail the specific process we had to perform on every datasets. 
 
 - 1- :spiral_notepad: Same first names as in the article
 
@@ -162,13 +152,13 @@ WF_names = ['Amanda', 'Betsy', 'Colleen', 'Courtney', 'Ellen','Emily', 'Heather'
 WM_names = ['Adam', 'Alan', 'Andrew', 'Brad', 'Frank', 'Greg','Harry', 'Jack', 'Josh', 'Justin', 'Matthew', 'Paul', 'Roger','Ryan', 'Stephen']
 ```
 Thus, there are four ethnical and two gender categories, each of them containing 15 -or 16 for the first one- first names.
-We could not apply the four models on each possible sentences. 
+We could not apply the four models on each possible sentence. 
 Indeed, there are 89 sentences in the template and 121 different first names. This number of first names would have given 1 727 880 three ordered permutations, so at the end 89 * 1 727 880 = 153 781 320 possible sentences. This was not possible given the computational power we had access to. 
 
 We then computed random sentences - the sentence was chosen at random and the three first names for each sentence too. We ran the test on 100 000 sentences. This method already allowed us to apply the four models for a runtime of approximatively 2 hours. This runtime is mainly explained because we had to make a call to the spacy models for each sentence. 
 The results we obtained are available below, in the `results` part of this page. 
 
-As we have already explained, this test is quite limited, mainly because it is quite strange to say that a first name is mainly used by only one ethnical category. This is why - additionaly to looking for other biases - we also used other datasets. 
+As we have already explained, this test is quite limited, mainly because it is quite strange to say that a first name is mainly used by only one ethnical category. This is why - additionally to looking for other biases - we also used other datasets. 
 
 - 2- :date: US Baby names - national level
 
@@ -182,14 +172,13 @@ This dataset was already quite clean and ready to use. Yet, there were `93889` d
 
 - 3- :baby: Popular baby names by NYC opendata
 
-
 After exploring possible biases of NER models on first names depending on the time they were the most popular, we wanted to assert what was done by the article, but on another dataset and by considering weight of each name inside each ethnicity rather than considering exclusive first names for each ethnical category. This why we used the Popular Baby Names dataset made available by New York City. It consists in several attributes, like the `Child's First Name`, the mother's ethnicity, and the gender.
 
 |![NYC babies head](images/datasets/first_names/babies_nyc_head_raw.JPG)|
 |:--:|
 |*Head of the Popular Baby Names dataset - raw*|
 
-We had to clean this dataset a little, firstly by making sure the first names were all titled, then by replacing the names of some ethnicity and finally by aggregating the `Count` columns of each year and first name in order to get the total count of each first name for each ethnicity. Just like before, the dataset was containing too much first names to take all them into consideration. Thus, we selected the **10** most present first names for each ethnicity and gender, giving us a list of **58** first names. We performed the analysis on 100 000 random sentences computed as explained in the other exemples above. 
+We had to clean this dataset a little, firstly by making sure the first names were all titled, then by replacing the names of some ethnicity and finally by aggregating the `Count` columns of each year and first name in order to get the total count of each first name for each ethnicity. Just like before, the dataset was containing too much first names to take all of them into consideration. Thus, we selected the **10** most present first names for each ethnicity and gender, giving us a list of **58** first names. We performed the analysis on 100 000 random sentences computed as explained in the other examples above. 
 
 - 4- :us: US Baby names - sate level
 
@@ -199,27 +188,25 @@ To complete our exploration of possible biases in the use of NER algorithms on f
 |:--:|
 |*Head of the US baby names dataset - state level*|
 
-Obviously, considering the results of the article, we wanted to check for example if the poorest states had the lower scores and if the richest ones achived the best performances. Since we had already study the impact of the time, we aggregating the count of first names towards time. Then again, we have not used every first names, but the **20** most present ones for each state and gender. This resulted in 117 considered first names. Again, we performed our analysis on **100 000** random sentences. 
+Obviously, considering the results of the article, we wanted to check for example if the poorest states had the lower scores and if the richest ones achieved the best performances. Since we had already studied the impact of the time, we aggregating the count of first names towards time. Then again, we have not used every first names, but the **20** most present ones for each state and gender. This resulted in 117 considered first names. Again, we performed our analysis on **100 000** random sentences. 
 
-
-The results of our tests on the first names are presented in the `Results` part below. We are now going to explain what we did to assess biases towards geographical named entites like city or country names. 
-
+The results of our tests on the first names are presented in the `Results` part below. We are now going to explain what we did to assess biases towards geographical named entities like city or country names. 
 
 -------------------------------------
 ### :earth_americas: Geographical biases ? 
 
-Then, having studying biases towards first names, we wondered about biases of NER algorithms on other types of named entites like geographical ones. For instance, we wondered if western geographical named entities were more recognized than non-western ones. Therefore, we applied the same kind of methodology we used for first names but on two other things: **city** and **country** names.
+Then, having studying biases towards first names, we wondered about biases of NER algorithms on other types of named entities like geographical ones. For instance, we wondered if western geographical named entities were more recognized than non-western ones. Therefore, we applied the same kind of methodology we used for first names but on two other things: **city** and **country** names.
 
-Compared to the first names analysis, our main issue was that there does not exist any sentence templates - like the Winogender Schemas - available for geographical named entities. We then had to build the sentences ourselves. We could have written basic sentences by hand or imagine some, but it would have been quite hard to compute a large ammount of them and maybe our own biases would have had an impact on them. Instead, we decided to use sentences containing some geographical named entities from the summaries of some Wikipedia pages. 
+Compared to the first names analysis, our main issue was that there does not exist any sentence templates - like the Winogender Schemas - available for geographical named entities. We then had to build the sentences ourselves. We could have written basic sentences by hand or imagine some, but it would have been quite hard to compute a large amount of them and maybe our own biases would have had an impact on them. Instead, we decided to use sentences containing some geographical named entities from the summaries of some Wikipedia pages. 
 
 *Construction of the sentence templates*
 
-In order to perform that, we used the python version of the wikipedia api. To describe the methodology used to build the templates, we will take the example of country names - but the same one was used for the cities. Firstly, we had to get a list of country names. Then, we were able to loop over that list to get the associated wikipedia page and more precisely its summary. We splitted each summary into sentences and looping over those sentences we were able to select only the ones containing the country names. 
+In order to perform that, we used the python version of the wikipedia api. To describe the methodology used to build the templates, we will take the example of country names - but the same one was used for the cities. Firstly, we had to get a list of country names. Then, we were able to loop over that list to get the associated wikipedia page and more precisely its summary. We split each summary into sentences and looping over those sentences we were able to select only the ones containing the country names. 
 
-Only `12` country wikipedia page over the `177` country names we had in the list were not found, giving us at the end `1623` sentences in total. This was a bit too much and not very useful. Moreover, we noticed that the first sentence for each country often was not natural at all. For instance, the first sentence for Fiji is : 
+Only `12` country wikipedia page over the `177` country names we had in the list were not found, giving us at the end `1623` sentences in total. This was a bit too much and not very useful. Moreover, we noticed that the first sentence for each country often was not natural at all. For instance, the first sentence for Fiji is: 
 >`'Fiji ( (listen) FEE-jee; Fijian: Viti, [ˈβitʃi]; Fiji Hindi: फ़िजी, Fijī), officially the Republic of Fiji, is an island country in Melanesia, part of Oceania in the South Pacific Ocean'`. 
 
-Hence, we only selected the last sentence of each found country. This would avoid any bias in the selection - some western countries having a large number of sentences comparing to non-western ones - and having unnatural sentences in the template. At the end, we were able to replace the country name of the associated wikipedia page by `$COUNTRY`, providing us with a complete template of **159 sentences** for country names. 
+Hence, we only selected the last sentence of each found country. This would avoid any bias in the selection - some western countries having many sentences compared to non-western ones - and having unnatural sentences in the template. At the end, we were able to replace the country name of the associated wikipedia page by `$COUNTRY`, providing us with a complete template of **159 sentences** for country names. 
 
 Having explained the methodology used to get the templates, we will now describe the detailed methodology and datasets we used on country and city names:
 
@@ -230,17 +217,13 @@ To have a list of country names, we used the `naturalearth_lowres` dataset avail
 
 It consists in a list of countries with some additional information like estimated population or their respective geometry. 
 
-
 |![Head Geopandas Dataset](images/datasets/geo/head_natural_geopandas.JPG)|
 |:--:|
 |*Head of the `naturalearth_lowres` dataset of `Geopandas`*|
 
-
 We have already explained how we built the template, resulting in 159 sentences. Unlike the process with first names, we only have one country name per sentence, and 177 possible countries. Hence resulting in total of `177`*`159`=`28143` possible sentences. Thus, it was possible to test every one of these possible sentences, and it is what we have done. To get the results of this experimentation, see the `results` part of this page. 
 
-
 **City names**:
-
 
 For city names, we did not use directly a Geopandas dataset but the [`World Cities Database`](https://simplemaps.com/data/world-cities) made available by  [`simplemaps`](https://simplemaps.com/). We used the basic - and thus free - one. It consists in a set of `37 499` unique cities in `237` countries. The additional information accessible through this dataset can be seen below:
 
@@ -248,16 +231,13 @@ For city names, we did not use directly a Geopandas dataset but the [`World Citi
 |:--:|
 |*Head of the World Cities Database by simplemaps*|
 
+We noticed that some countries were only containing one city. This was the case for `Monaco` for instance. We decided not to use those kinds of cities because we wanted to compare the results of countries or continents. Thus, we only selected countries with more than 50 cities in the dataset, in order to have significant results. We now had 76 countries - over the 237 initially. Then, for each country we took the 10 cities with the largest population. Therefore, we now had 760 city names.    
 
-We noticed that some countries were only containing one city. This was the case for `Monaco` for instance. We decided not to use those kind of cities because we wanted to compare the results of countries or continents. Thus, we only selected countries with more than 50 cities in the dataset, in order to have significant results. We now had 76 countries - over the 237 initially. Then, for each country we took the 10 cities with the largest population. Therefore, we now had 760 city names.    
-
-To build the sentence template, we did not use the whole 760 city names. Instead, we randomly selected 100 city names, and looked for their wikipedia pages in order to use the exact same method we used with country names. We ended up with 64 sentences in the template. Thus, we had access to 760*64 = **48 640** possible sentences. We were then able to apply the four models on the whole set of sentences. We used the same validation method we used for first names. We were not really intersted in the actual results for each city but in more global results so grouped the results by country and continent. This enabled us top plot some maps we are detailing in the `Results` part of this page. 
+To build the sentence template, we did not use the whole 760 city names. Instead, we randomly selected 100 city names, and looked for their wikipedia pages in order to use the exact same method we used with country names. We ended up with 64 sentences in the template. Thus, we had access to 760*64 = **48 640** possible sentences. We were then able to apply the four models on the whole set of sentences. We used the same validation method we used for first names. We were not really interested in the actual results for each city but in more global results so grouped the results by country and continent. This enabled us top plot some maps we are detailing in the `Results` part of this page. 
 
 ### :convenience_store: Company names 
 
-
 ![In progress](images/gifs/work-in-progress-gif-12.gif)
-
 
 ---------------------
 
@@ -279,12 +259,11 @@ We are showing below the results we got on **100 000** random sentences, which s
 
 We can also detail the results for each category - ethnicity and gender:
 
-
 |![Results ethnicity](images/results/article_ethnicity.JPG)|
 |:--:|
 |*Results for each ethnicity for the first names of the article*|
 
-We can observe that the results are quite different than the one got in the article. For instance, `sm` scores are way higher in our test that in their. Yet, if we only compare each ethnicity, we can see that for `sm` the best results were obtained with `white` first names, and the lowest score for `black` first names. On average, `Muslim`, `Hispanic` and `White` performances were very close, and `Black` ones were quite lower, with at least a 3 points drop down. **Therefore, our test quite moderates the results obtained in the article**. This difference can be explained by the fact we could not apply the models on every possible sentences, but also maybe because the models were trained a bit more since it was published in 2020.  
+We can observe that the results are quite different than the one got in the article. For instance, `sm` scores are way higher in our test that in their. Yet, if we only compare each ethnicity, we can see that for `sm` the best results were obtained with `white` first names, and the lowest score for `black` first names. On average, `Muslim`, `Hispanic` and `White` performances were very close, and `Black` ones were quite lower, with at least 3 points drop down. **Therefore, our test quite moderates the results obtained in the article**. This difference can be explained by the fact we could not apply the models on every possible sentence, but also maybe because the models were trained a bit more since it was published in 2020.  
 
 |![Results gender](images/results/article_gender.JPG)|
 |:--:|
@@ -294,7 +273,6 @@ Apart from that, we can notice the same kind of gender-based biases as they did 
 
 Anyway, given the limits of this experimentation we highlighted before, we are now going to perform the same kind of tests on over datasets. 
 
-
 #### On the year with US baby names dataset
 
 Then, we wanted to check if popularity of the names along the years could have an impact on the results of the NER models. We used the US baby names dataset at the national level. We show below the results for each model:
@@ -303,20 +281,17 @@ Then, we wanted to check if popularity of the names along the years could have a
 |:--:|
 |*Results of each models over time*|
 
-
 We can notice large differences depending on the years people were born in, but we can also see that those results depend vastly on the model used for the NER tasks. This confirms that depending on the year people were born in, on average, they would get very different recognition by this type of algorithm. Hence confirming a potential age-based discrimination. 
 
+Maybe the most interesting graph is the one of the `trf` model, because we can there clearly notice a bias on the recognition of first names towards the years, with an all-time high around 1980. We can therefore take a closer look on what datasets this model was trained on. The `trf` model was mainly trained on [roberta-base](https://huggingface.co/roberta-base). On the website, they are saying that *'The RoBERTa model was pretrained on the reunion of five datasets'*. Yet, in those 5 datasets, most of them are quite modern ones, for instance: 
 
-Maybe the most interesting graph is the one of the `trf` model, because we can there clearly notice a bias on the recognition of first names towards the years, with an all time high arround 1980. We can therefore take a closer look on what datasets this model was trained on. The `trf` model was mainly trained on [roberta-base](https://huggingface.co/roberta-base). On the website, they are saying that *'The RoBERTa model was pretrained on the reunion of five datasets'*. Yet, in those 5 datasets, most of them are quite modern ones, for instance: 
-
-- **Bookcorpus** is a collection of 11 038 open books from [Smashwords](https://www.smashwords.com/about), a plateform launched in **2008**.
+- **Bookcorpus** is a collection of 11 038 open books from [Smashwords](https://www.smashwords.com/about), a platform launched in **2008**.
 - **CC-News** is *'a dataset containing 63 millions English news articles crawled between September **2016** and February **2019**.'*
 - **OpenWebText** consists mainly in **reddit** posts. 
 
-Therefore, this is very intersting to see how the choice of datasets can have a great impact on the results of such a quite simple test, which is to say recognizing first names through NER models.
+Therefore, this is very interesting to see how the choice of datasets can have a great impact on the results of such a quite simple test, which is to say recognizing first names through NER models.
 
-On the other hand, the `sm` model for instance was mainly trained on `OntoNotes 5`, and looking at its complete [documentation](https://catalog.ldc.upenn.edu/docs/LDC2013T19/OntoNotes-Release-5.0.pdf), and especially pages 5 and 6, we can clearly notice it was mainly trained on older datasets, which can explain the differences in the scores we got between `sm` and `trf`. Moreover, the increase from 1990 could be explained by the fact `OntoNotes 5` also contains a small ammount of web texts. 
-
+On the other hand, the `sm` model for instance was mainly trained on `OntoNotes 5`, and looking at its complete [documentation](https://catalog.ldc.upenn.edu/docs/LDC2013T19/OntoNotes-Release-5.0.pdf), and especially pages 5 and 6, we can clearly notice it was mainly trained on older datasets, which can explain the differences in the scores we got between `sm` and `trf`. Moreover, the increase from 1990 could be explained by the fact `OntoNotes 5` also contains a small amount of web texts. 
 
 We can also plot the same graph giving there the average result of the four algorithms for each year:
 
@@ -324,7 +299,7 @@ We can also plot the same graph giving there the average result of the four algo
 |:--:|
 |*Average results of the results over time*|
 
-We can see that it's fluctuating arround the same value from 1940 to today. Therefore, using different models for a NER task could be a good option in order to avoid age-based discrimination in the process of first names recognition through NER models. 
+We can see that it's fluctuating around the same value from 1940 to today. Therefore, using different models for a NER task could be a good option in order to avoid age-based discrimination in the process of first names recognition through NER models. 
 
 And finally, we can also check for which years the algorithms were given the best results on average:
 
@@ -334,10 +309,9 @@ And finally, we can also check for which years the algorithms were given the bes
 
 We can notice that the best results were obtained for years just after WW2 - on average for the four models. 
 
-
 #### On ethnicity and gender with the NYC dataset
 
-We made the same kind of experimentations on the NYC dataset to check wether or not we could draw the same conclusions as the article, but based on another dataset. 
+We made the same kind of experimentations on the NYC dataset to check whether or not we could draw the same conclusions as the article, but based on another dataset. 
 We firstly show the results we got on ethnicity:
 
 |![Results ethnicity NYC](images/results/NYC_ethnicity.JPG)|
@@ -353,9 +327,7 @@ Let's now check the results over gender:
 |:--:|
 |*Scores of the models depending on gender*|
 
-
 Here, the results we obtained are very different from what the article had underlined, having only the `sm` model with a better score for `male` than for `female`. This gives, on average, a 8.7 difference between `Female` and `Male`, which is quite high. We then can highlight the presence of a bias, but in the other way around. One could argue that our results are more robust, because we selected the first names automatically from the NYC dataset and nothing was done by hand. 
-
 
 #### On US states with the US baby names dataset
 
@@ -364,7 +336,6 @@ The final experimentation we conducted on first names was also on the US baby na
 |![MAP of the scores US states](images/results/score_each_models_first_names_us_state.png)|
 |:---:|
 |*Map of the scores for each model depending on the US states*|
-
 
 We can plot the average score map too:
 
@@ -378,7 +349,7 @@ We can also compute the list of the best results for each model:
 |-----|---|---|---|---|
 |Best 5 scores|![best sm](images/results/rank_us_state_sm.JPG)|![best md](images/results/rank_us_state_md.JPG)|![best lg](images/results/rank_us_state_lg.JPG)|![best trf](images/results/rank_us_state_trf.JPG)|
 
-Firstly, we can say that it's interesting, given that companies training and developing those algorithms mainly come from California, that this is for this state that the best results are obtained for most models. Morover, New York and Pennsylvania are often in first positions too. 
+Firstly, we can say that it's interesting, given that companies training and developing those algorithms mainly come from California, that this is for this state that the best results are obtained for most models. Moreover, New York and Pennsylvania are often in first positions too. 
 
 We can now see the best results on average:
 
@@ -396,15 +367,13 @@ Then, we can go a bit further in our analysis. This is why **we can also check w
 |Glove| Stanford |California|
 |roberta-base|huggingface|New York|
 
-The three best results are obtained for three states the companies or universities developping the datasets come from. Moreover, over the 15 best results - of the average score - 6 (California, New York, Pennsylvania, New Jersey, Massachusetts, Georgia) of the 7 states the datasets come from are present, with only Colorado missing. 
+The three best results are obtained for three states the companies or universities developing the datasets come from. Moreover, over the 15 best results - of the average score - 6 (California, New York, Pennsylvania, New Jersey, Massachusetts, Georgia) of the 7 states the datasets come from are present, with only Colorado missing. 
 
 |![avg score state](images/results/15_rank_us_state_avg.JPG)|
 |:--:|
 |*15 best average scores on US states*|
 
-
 We feel that this is quite remarkable, because yes, the texts the datasets were built on come from various places (wikipedia articles for instance), but a NLP dataset is not only made of texts - especially when we talk about NER processes - but it is also made of labels. We could then argue - and actually that's the all point of this paper - that people labelling the datasets have a great influence on possible biases. 
-
 
 
 Yet, one could say that these states are also the most influent ones traditionally. Thus, secondly, we wanted to check wether or not those results were correlated with state wealth. This was encouraged considering our hypothesis, but also by the fact California and New York where the states with the best results. Moreover, we could find some similarities with this kind of map([^source_map]):  This is why we ran simple linear correlation with two datasets: 
@@ -426,26 +395,23 @@ Secondly, we plot the table of correlation with median incomes:
 |:---:|
 |*Correlation coefficients between the scores of the models and the median income in 2020 for each US state*|
 
-The results of the correlation coefficient were not really interpretable, and we are aware of that. Yet, the sm model gives a quite interesting correlation coefficient, with a correlation coefficient of 0.33 for GDP and 0.40 for median income. We know this is not a really good result from a scientific standpoint and we can not really draw a conclusion from that. Yet, one could argue that this is already quite surprising that this coefficient is that high, given the fact that scores from a NER algorithm and GDP per capita are very different things. 
+The results of the correlation coefficient were not really interpretable, and we are aware of that. Yet, the sm model gives a quite interesting correlation coefficient, with a correlation coefficient of 0.33 for GDP and 0.40 for median income. We know this is not a really good result from a scientific standpoint and we cannot really draw a conclusion from that. Yet, one could argue that this is already quite surprising that this coefficient is that high, given the fact that scores from a NER algorithm and GDP per capita are very different things. 
 
 <!---Additionally to those correlation coefficients, we can also plot the scatterplot along with the regression line: 
 
 |![Plot correlation GDP - SM](images/results/plot_correlation_sm_GDP_per_capita.png)|
 |:---:|
-|*Correlation bewteen the sm model score and the GDP per capita in 2015 for each US state*|
-
+|*Correlation between the sm model score and the GDP per capita in 2015 for each US state*|
 
 |![Plot correlation Income - SM](images/results/plot_correlation_sm_median_income.png)|
 |:---:|
-|*Correlation bewteen the sm model score and the median income in 2020 for each US state*|
+|*Correlation between the sm model score and the median income in 2020 for each US state*|
 
 Again, we are aware that those correlations are not really robust ones. Yet, it is quite -->
 
-
 **Conclusion of the first names results:**
 
-
-We observed that the results we obtained on the same first names as in the article were quite different than those of the paper. Yet, we were able to highligh some other and different biases, especially using other datasets: geographically-based, age-based and ethnically-based biases. Those biases can result in discriminations when using NER models. 
+We observed that the results we obtained on the same first names as in the article were quite different than those of the paper. Yet, we were able to highlight some other and different biases, especially using other datasets: geographically-based, age-based and ethnically-based biases. Those biases can result in discriminations when using NER models. 
 
 --------------------
 
@@ -453,7 +419,7 @@ We observed that the results we obtained on the same first names as in the artic
 
 **Country names**
 
-The first geopgraphical named entity test we computed is on country names. 
+The first geographical named entity test we computed is on country names. 
 The results are shown below, firstly with the scores for each model. 
 
 |![Results each model country](images/results/score_each_models_country_name.png)|
@@ -472,7 +438,7 @@ By continent:
 |:--:|
 |*Average results on country names by continent*|
 
-We can clearly see that there does not exist real differences between those results. Moreover, we are not completly sure about these results from a scientifical standpoint. Indeed, the main issue we had with country names is that there is not only one name for each country. For instance, in the `world` dataset from geopandas, the name of the USA was 'United States of America', but running a simple test we can clearly see that the results are quite different depending on how the name is implemented. 
+We can clearly see that there does not exist real differences between those results. Moreover, we are not completely sure about these results from a scientifical standpoint. Indeed, the main issue we had with country names is that there is not only one name for each country. For instance, in the `world` dataset from geopandas, the name of the USA was 'United States of America', but running a simple test we can clearly see that the results are quite different depending on how the name is implemented. 
 
 |![Image of different results depending on the way the country name is computed](images/results/score_us_america_usa.JPG)|
 |:--:|
@@ -489,7 +455,6 @@ Indeed, if we plot the mean scores by continent, we can clearly see that the bes
 |:--:|
 |*Average score of the four models on city names by continent*|
 
-
 |![](images/results/rank_city_names_continent_avg.JPG)|
 |:--:|
 |*Average scores for each continent on city names*|
@@ -500,29 +465,28 @@ Additionally, the same kind of results are obtained for every models, apart from
 |:--:|
 |*Scores of each of the four models on city names by continent*|
 
-This kind of biases does not highligh ones which could really lead to real-life discriminations, but it could underline geographical differences in the way models were trained. We could still think that if a NER model is used for an anonymization task, people born in european cities could see the place they were born in unremoved by the algorithm. 
+This kind of biases does not highlight ones which could really lead to real-life discriminations, but it could underline geographical differences in the way models were trained. We could still think that if a NER model is used for an anonymization task, people born in European cities could see the place they were born in unremoved by the algorithm. 
 
-**Conclusion of the geographical named entites**
+**Conclusion of the geographical named entities**
 
 We did not obtain consequent results with country names, but this seems logical because the models can have learned every country names since there is a few of them and it seems like a very basic thing. At the opposite, we were able to see that there were real biases with city names. Even if they don't really lead to discriminations, it is still interesting because this could lead to invisibilizing some places if NER algorithms are used on some websites - to tag cities automatically for instance. 
-
 
 ### Company names
 
 ![In progress](images/gifs/work-in-progress-gif-12.gif)
 
-<!-------The same kind of method has been used on company names. Possible biases in this field could have great consequences because it would mean that if non-western company names are less recognized by these algorithms than western ones, those companies could end up being less tagged on press article for instance. Obtaining results for company names was actually very difficult, for different reasons. Indeed, one should not compare companies which are too different. For instance, just like we saw that californian first names were the most recognized in America, we could think - from who is actually training the models - that tech companies are more recognized than construction ones. The other thing that could bias the search for these biases is the choice of company depending on the size of it. 
+<!-------The same kind of method has been used on company names. Possible biases in this field could have great consequences because it would mean that if non-western company names are less recognized by these algorithms than western ones, those companies could end up being less tagged on press article for instance. Obtaining results for company names was actually very difficult, for different reasons. Indeed, one should not compare companies which are too different. For instance, just like we saw that Californian first names were the most recognized in America, we could think - from who is actually training the models - that tech companies are more recognized than construction ones. The other thing that could bias the search for these biases is the choice of company depending on the size of it. 
 --->
 
 ----------------------------------------
 
 ### Limits / Possible improvements
 
-Additionnaly, we have been given restricted time for this project and therefore could not apply everything we wanted but here are some of the main possible improvements :
+Additionally, we have been given restricted time for this project and therefore could not apply everything we wanted but here are some of the main possible improvements:
 
 - 1- Applying the models to every possible sentences. 
 
-This has been developped inside the notebooks, but given our computational power we could not apply the model to every possible sentences for most of the explored biases. Indeed, this is what they were doing in the article, but our computational power allowed us to compute the results on 100 000 sentences for the four models in about 2 hours. 
+This has been developed inside the notebooks but given our computational power we could not apply the model to every possible sentences for most of the explored biases. Indeed, this is what they were doing in the article, but our computational power allowed us to compute the results on 100 000 sentences for the four models in about 2 hours. 
 
 - 2- Using another validation method. 
 
@@ -530,23 +494,22 @@ As we said, we validated the models if and only if the complete substring consis
 
 - 3- Exploring the label of the results. 
 
-The other main improvement could have been to check if the named entity were recognized as what they actually are. For instance, a person name could be recognized by the algorithm as a company name, but given our validation procedure we did not check that. Exploring the label could add different elements to the project. Possible new biases could emerge : are white people first names recognized by the algorithm more recognized as a person names than those of a different ethnicity for instance ? Another metric could also have been implemented. 
+The other main improvement could have been to check if the named entity were recognized as what they actually are. For instance, a person name could be recognized by the algorithm as a company name, but given our validation procedure we did not check that. Exploring the label could add different elements to the project. Possible new biases could emerge: are white people first names recognized by the algorithm more recognized as a person name than those of a different ethnicity for instance? Another metric could also have been implemented. 
 
 ------------------------------------------------------------
 
 ## General conclusion
 
-To conclude, we clearly identified some biases. Those biases could result in strong discriminations, especially with the exemple of first names
+To conclude, we clearly identified some biases. Those biases could result in strong discriminations, especially with the example of first names
 - Anonymization
 - Internet visibility
 - ... 
 
-One answer in trying to avoid thoses biases could be to apply several models - as we seen with age-based discrimination on the US Baby names dataset. 
+One answer in trying to avoid these biases could be to apply several models - as we seen with age-based discrimination on the US Baby names dataset. 
 
-Yet, more than the biases, what we find interseting in that project is that we could almost guess what - at least the type of - data was used to train the models, just based on the results obtained by NER algorithms on first names recognition, as we did geographically and over time with the US baby names dataset. 
+Yet, more than the biases, what we find interesting in that project is that we could almost guess what - at least the type of - data was used to train the models, just based on the results obtained by NER algorithms on first names recognition, as we did geographically and over time with the US baby names dataset. 
 
-Therefore, one should be very careful when using NER algorithms, and maybe should see what is the best model for its usecase - if it's impossible to use several ones. 
-
+Therefore, one should be very careful when using NER algorithms, and maybe should see what the best model for its use case is - if it's impossible to use several ones. 
 
 
 
@@ -567,14 +530,13 @@ The complete code for this project is accessible on the associated Github Repo h
 The Repo contains four main notebooks:
 
 
-
 ------------------------------------
 
 ### Installations
 
 |Package name|Description and ways to install it|Doc link|
 |------------|----------------------------------|--------|
-|Spacy (v3.0 or superior)|Spacy v3.1 is used to complete the task. Following the [Spacy installation guide](https://spacy.io/usage), this is the lines you need to enter to install Spacy: <br/>```pip install -U pip setuptools wheel``` <br/> ```pip install -U spacy ```<br/>Note that version 3.0 or superior is needed to use the transformer model.To install the models inside spacy: <br/> ```python -m spacy download en_core_web_sm```<br/>You just have to replace the model name by the one you want to install. <br/> A list of the models avaiblable in Sapcy is available [here](https://spacy.io/usage/models).|[Spacy Documentation](https://spacy.io/)|
+|Spacy (v3.0 or superior)|Spacy v3.1 is used to complete the task. Following the [Spacy installation guide](https://spacy.io/usage), this is the lines you need to enter to install Spacy: <br/>```pip install -U pip setuptools wheel``` <br/> ```pip install -U spacy ```<br/>Note that version 3.0 or superior is needed to use the transformer model.To install the models inside spacy: <br/> ```python -m spacy download en_core_web_sm```<br/>You just have to replace the model name by the one you want to install. <br/> A list of the models available in Sapcy is available [here](https://spacy.io/usage/models).|[Spacy Documentation](https://spacy.io/)|
 |Wikipedia|To install the wikipedia package, you cas use pip, following this [installation guide](https://pypi.org/project/wikipedia/).<br/>```pip install wikipedia```<br/>This package is helping us to build templates for the sentences, in order to use real sentences to test the model.|[Wikipedia API documentation for Python](https://pypi.org/project/wikipedia/)|
 |Geopandas|Geopandas is useful when dealing with geographic datasets.<br/>It is used inside this project :<br/>1) To plot some maps <br/>2) To access geo datasets - made available inside the package. <br/>You can also use pip to install it : <br/>```!pip install --upgrade geopandas```<br/>If using Google collab, you may want to add these lines - and these packages - to make it work : <br/>```!pip install --upgrade pyshp```<br/>```!pip install --upgrade shapely```<br/>```!pip install --upgrade descartes```<br/>|[Geopandas Documentation](https://geopandas.org/)|
 
@@ -584,9 +546,7 @@ We also used other packages available in Python, but quite common ones.
 
 For instance, we used `tqdm` to be able to check the process and its final time. 
 
-
 -------------------------
-
 
 ### :file_cabinet: Datasets used for this project: 
 
@@ -606,6 +566,6 @@ For instance, we used `tqdm` to be able to check the process and its final time.
 
 -------------------
 
-[^limits_article] *"We are aware that our work is limited by the availability of names from various demographics and we acknowledge that individuals will not-necessarily identity themselves with the demographics attached to their first name, as done in this work."* - [article](https://arxiv.org/pdf/2008.03415.pdf)
+[^limits_article] *"We are aware that our work is limited by the availability of names from various demographics, and we acknowledge that individuals will not-necessarily identity themselves with the demographics attached to their first name, as done in this work."* - [article](https://arxiv.org/pdf/2008.03415.pdf)
 
 [^source_map] Article 
