@@ -5,6 +5,72 @@ This repository is used for a Sciences Po group project for the course '*Decodin
 **Group Members:**
 > Eleanora BONEL, Ryan HACHEM, Adrien HANS, Sara KEMPPAINEN, Pablo PIGUET
 
+--------------------------
+
+## Introduction 
+
+**In the 21st Century it is difficult to imagine a world without instant answers. With Google search, we have become accustomed to having all the world’s information literally on our fingertips. But, rarely do we stop to think how search engines manage to provide answers in just milliseconds to our various questions we direct at them “Who is Grace Hopper”, “What books did Chimamanda Ngozi Adichie write?”, “In what city is Microsoft headquartered?”. For those instant and often accurate answers, we can thank an algorithm called Named Entity Recognition (NER).** This is an algorithm that identifies from a string of words or sentences names of different entities e.g people, places, companies. The algorithm’s ability to identify the correct entity (Seattle) when we ask for a city where Microsoft is headquartered is also a key towards generating automated knowledge bases from a raw text (Mishra et alt.). Knowledge bases are databases containing information about various entities, and they are most commonly used by various search engines to produce quick answers to our straightforward questions. Companies such as Google and Microsoft scrape various sources by utilizing the NER in building these repositories of information.
+
+But what happens when your name or city you were born in isn’t recognized by the NER algorithm as a name or a city? NER has been considered a huge success in the world of computing, but in recent years certain academics have raised the question whether NER, trained and developed primarily in the western hemisphere, might be biased towards certain linguistic and geographic contexts. In 2020, three twitter employees published an article titled “Assessing Demographic Bias in Named Entity Recognition'' that revealed that NER models performed better at identifying names from specific demographic groups (Mishra et alt). For example, the researchers found out that the NER CNET model was able to recognize “white male” names with 96 percent accuracy, in comparison to only 89 percent accuracy for African American female names (Misra et alt). This finding has severe consequences for automated knowledge bases. If NER algorithms systematically fail to recognize the names of certain demographics we run the risk of excluding and mislabeling people that belong to these demographic groups when searching information. Take the example of celebrated Nigerian novelist Chimamanda Ngozi Adichie. What if we googled her book ‘Americannah’ and the search engine would fail to recognize her name and link it to the book she has written. Purely on the basis of her ethnic background, the algorithm would have discredited her and excluded her from being discovered. In other words, writing her out of history. 
+
+For this and numerous other everyday applications of the NER, this project has decided to examine the following question “Are there differences in the results of NER algorithms which may indicate biases?”. The project will build on the work of Shubhanshu Mishra, Sijun He and Luca Belli, the three twitter researchers who flagged the first instances of bias in the NER algorithm. On the basis of literature review outlined in the section X, we have identified three hypotheses regarding potential biases in NER models: 
+
+#1 Hypothesis: The NER algorithm will perform the best when identifying western, male names over any other demographic group. 
+
+#2 Hypothesis: The NER algorithm will perform better in identifying western city names in comparison to non-western city names. 
+
+#3 Hypothesis: The NER algorithm will perform better when identifying X company names. 
+
+Before jumping into testing the aforementioned hypothesis, it is essentially to outline how these hypotheses were derived. The project begins with a larger literature review on the existing debates on NPL and how NER fits in it. By examining examples of named entity recognition applications, and reviewing potential biases in its user, we have identified gaps in the literature for example company name recognition, which we will later test against. This will be followed by more in depth analysis of existing literature on biases, specifically gender, race and ableism.
+
+Following the literature review, we will begin
+
+[let’s go through the structure and then I’ll write the final version]
+
+
+
+--------------------------
+
+
+## Literature review 
+
+Named Entity Recognition (NER) is deemed a form of Natural Language Processing, a subfield of artificial intelligence interested in the computer processing and analysis of language. NER is often used when a high-level overview of a large quantity of data is needed. For example, some use cases include supporting Human Resources practices, such as applicants’ CVs being summarised to speed up the hiring process; Customer support by categorizing the type of requests or complaints; Search Engines or Academic Paper classification (Marshall, 2019). In order for them to work appropriately, the training of the data ought to be highly relevant, which increases the accuracy of the model. An example Marshall (2019) provides is: “train your model on Victorian gothic literature, and it will probably struggle to navigate Twitter”. It is therefore paramount for this project to understand better how NER categorization operates, together with selecting the adequate dataset for training of our model. In order to do so, the next sections will briefly review the literature, identifying a literature gap for investigating NER and the possibility for algorithmic bias. 
+
+​​1. **Named Entity**
+NER Algorithms are expected to be increasingly used in a context of alleviating the burden of search and discovery of information, while placing structure on unstructured data. Some disagreement exists on the exact definition of the “Named Entity” part of NER, as Petasis et al. (2002) and Nadeau et al. (2007) provide differing versions, for which however Marrero et al. (2013) give a concrete example, as shown in Table 1.
+
+
+ 
+|Named Entity|Proper Noun|Unique identifier|Example of domain|Source and NE type|
+|------------|-----------|-----------------|-----------------|------------------|
+|water|No|(Sparkling or still)|Chemistry|SH: natur.obj-minéral|
+|$10million|No|(American dollars or Mexican pesos?|Finances|MUC-7: Money|
+|whale|No|(orca or minke)|Biology|SH: sea animal|
+|Bédouins|No|(specific people)|Army/News|CoNN 03: Miscellanea|
+|Airbus A310|Yes|(specific airplane)|Army/Tech watch|CoNN 03: Miscellanea|
+|Batman|Yes|(people disguised)|Movies/Costumes|ACE: Person|
+
+||
+|:--:|
+|TABLE 1: Example of NE, where the unique identifier varies according to the context. Adapted from Marrero et al. (2013)|
+ 
+NER become particularly relevant in ‘Knowledge databases’ which are databases about entities (whether people, places, objects), such as Google’s or Microsoft’s knowledge bases. The article by Wiggers (2020) underlines how the embeddings that are often used in such databases, that in turn may help inform users about frequently asked questions, how-to-guides or glossaries. As suggest, understanding if there is potential bias in NER systems is useful because it may help identify other biases in Knowledge bases, seeing as NER are often the first step for their construction (Mishra et al. 2020).
+ 
+(Intro : Algo theoretical framework) – Readings + https://aclanthology.org/2020.acl-main.468v2.pdf
+
+
+2. **Algorithmic bias** 
+
+While several NLP ethics research papers focus on identifying and researching biases in their embeddings (Caliskan et al. 2017; Culotta & McCallum, 2004; Devlin et al. 2019; Bolukbasi et al. 2016), there is not much attention on bias in NER systems. Indeed, the possibility for algorithmic bias occurs when machine learning based on textual data can reproduce stereotyped biases that exist in human societies and historic cultural associations (Caliskan et al., 2017). The way this may take place is through word-embedding algorithms, that process information without any representation of semantics, but only through co-occurrence statistical metrics (ibid). Several scholars have demonstrated systematic replications of gender-based biases across numerous models and datasets (Garrido-Munoz et al., 2021), as well as racial biases (Manzini et al., 2019) or even ones related to ableism (Hutchinson et al., 2019). 
+Examples of such biases may be the disproportionate prevalence of male or white people occurrences through word association (Johns & Dye, 2019), uneven sentiment intensity predictions (Kiritchenko & Mohammed, 2018), or simply better recognition and efficiency from the model (Mishra et al., 2020). They are exhibited in the various stages of the NLP process, from the training data to the algorithm itself (Sun et al., 2019). As a consequence, a considerable effort has been driven towards “mitigating” these systematic discriminations within NLP algorithms. Proposed methods include data augmentation, gender tagging and bias fine-tuning when it comes to the training process, as well as adversarial learning and constraining predictions for the algorithms themselves (ibid).
+For the purpose of this paper, having reviewed some of the identified bias in NPL, we will focus on testing the variations in accuracy for NER algorithms across race and gender. We wish to test the validity of the claims made by Mishra et al. by expanding their study on other datasets (Mishra et al., 2020).  Indeed, the authors provide a criticism of name attribution algorithms, as they produced a framework studying bias in NER, specifically looking at whether it presents bias in first names according to demographics. They find that white names across all datasets are identified with more confidence compared to Black names. This paper provides one of the few insights into NER algorithms, for which we wish to contribute.
+In particular, it appears that the vast majority of the conducted studies have focused on biases related to people, with a really limited corpus on other cultural elements such as city names or company names. Therefore, as mentioned in our hypothesis section, we will take a step further and testing a different model, accounting for first names, city names and variation in identification according to demographics and ethnicity.
+
+
+
+
+
+
 ---------------------------
 
 ## Methodology and application
@@ -513,6 +579,24 @@ Therefore, one should be very careful when using NER algorithms, and maybe shoul
 
 
 
+
+
+----------------------------------------------------------------
+
+## Bibliography
+
+(Caliskan et al., 2017)
+
+M. Marrero, J. Urbano, S. Sánchez-Cuadrado, J. Morato and J. M. Gómez-Berbís (2013). “Named Entity Recognition: Fallacies, Challenges and Opportunities. 
+Journal of Computer Standards and Interfaces, 35(5), pp. 482-489.
+
+Mishra, S., He, S., Belli, L. (2020). “Assessing Demographic Bias in Named Entity Recognition”. Virtual, available [here](https://arxiv.org/pdf/2008.03415.pdf).
+ 
+G. Petasis, A. Cucchiarelli, P. Velardi, G. Paliouras, V. Karkaletsis, and C. D. Spyropoulos. (2000) “Automatic adaptation of Proper Noun Dictionaries through cooperation of machine learning and probabilistic methods,” in 23rd annual international ACM SIGIR conference on Research and development in information retrieval. pp. 128-135. 
+
+D. Nadeau and S. Sekine. (2007). “A survey of named entity recognition and classification”. Linguisticae Investigationes, 30(7).
+
+Wiggers, K. (2020). “Researchers claim bias in AI named entity recognition models”. Venture Beat: Making sense of Ai. Available from [here](https://venturebeat.com/2020/08/12/researchers-claim-bias-in-ai-named-entity-recognition-models/). 
 
 
 
