@@ -16,11 +16,11 @@ NER algorithms are swiftly becoming ubiquitous due to their versatility, scalabi
 Beyond the commercial use, a malfunctioning NER algorithm could go as far as damaging a career, in the case of citations automatization in academia, since an author and its publication could go unrecognized and ultimately unnoticed, similarly to the aforementioned example. Perhaps the most damaging occurences of  NER biases happen in the legal field, where such algorithms are wielded to classify content such as case number or court name, and most importantly to anonymize the involved parties (Leitner & Rehm, 2019). In that context, the missing or erroneous recognition of a Name Entity could expose someone to direct harm, on top of breaching privacy.
  For this and numerous other everyday applications of the NER, this project has decided to examine the following question “Are there differences in the results of NER algorithms which may indicate biases?”. The project will build on the work of Shubhanshu Mishra, Sijun He and Luca Belli (2020), the three twitter researchers who flagged the first instances of bias in the NER algorithm. On the basis of literature review outlined in the section X, we have identified three hypotheses regarding potential biases in NER models: 
 
-#1 Hypothesis: The NER algorithm will perform the best when identifying western, male names over any other demographic group. 
+**#1 Hypothesis**: The NER algorithm will perform the best when identifying western, male names over any other demographic group. 
 
-#2 Hypothesis: The NER algorithm will perform better in identifying western city names in comparison to non-western city names. 
+**#2 Hypothesis**: The NER algorithm will perform better in identifying western city names in comparison to non-western city names. 
 
-#3 Hypothesis: The NER algorithm will perform better when identifying company names with western origin.
+**#3 Hypothesis**: The NER algorithm will perform better when identifying company names with western origin.
 
 Before jumping into testing the aforementioned hypotheses, it is essentially to outline how these hypotheses were derived. The project begins with a larger literature review on the existing debates on NPL and how NER fits in it. By examining examples of named entity recognition applications, and reviewing potential biases in its user, we have identified gaps in the literature for example company name recognition, which we will later test against. This will be followed by more in depth analysis of existing literature on biases, specifically gender, race and ableism. Following the literature review, we will do an in depth explanation of the methodology and application of the project. The essay will explore the results before drawing the final conclusion in relation to our aforementioned hypothesis. 
 
