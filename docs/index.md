@@ -3,7 +3,7 @@
 This repository is used for a Sciences Po group project for the course '*Decoding Biases in AI*'.
 
 **Group Members:**
-> Eleanora BONEL, Ryan HACHEM, Adrien HANS, Sara KEMPPAINEN, Pablo PIGUET
+> Eleonora BONEL, Ryan HACHEM, Adrien HANS, Sara KEMPPAINEN, Pablo PIGUET
 
 --------------------------
 
