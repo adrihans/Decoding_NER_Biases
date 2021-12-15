@@ -4,6 +4,6 @@ plugins:
 markdown: kramdown
 
 
-logo: images/log_page.jpeg
+logo: images/logo_page.jpg
 title: "Decoding NER Biases"
 description: "This project tries to explore potential biases in NER algorithms."
