@@ -508,7 +508,7 @@ Again, we are aware that those correlations are not really robust ones. Yet, it 
 
 We show below the results of this exploration. The row `False` is for first names of people in the general population and the row `True` is for first names of HuggingFace team members. 
 
-|![Results hugging face](results_hugg_first_names.JPG)|
+|![Results hugging face](images/results/results_hugg_first_names.JPG)|
 |:---:|
 |*scores for sm and trf models on huggingface team members first names (or not)*|
 
