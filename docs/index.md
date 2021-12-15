@@ -161,6 +161,7 @@ Having cleaned the sentence template, we could then look for datasets containing
 - The US baby names at the national level.
 - The `Popular Baby Names` dataset made available by the Open Data Website of New York City. 
 - The US baby names dataset at the state level. 
+- Comparing results for first names of the [huggingface](https://huggingface.co/) team members and of the general population
 
 With those datasets, we could get a random sentence from the template, and replace `$Occupation`, `$Participant` and `$NOM_PRONOUN` by three random first names from the dataset for each test. We could repeat that process *n* times in order to make our results significant. 
 
@@ -265,6 +266,18 @@ To complete our exploration of possible biases in the use of NER algorithms on f
 
 Obviously, considering the results of the article, we wanted to check if the poorest states had the lower scores and if the richest ones achieved the best performances. Since we had already studied the impact of time, we aggregated the count of first names towards time. Then again, we have not used every first name, but the **20** most present ones for each state and gender. This resulted in **117** considered first names. Again, we performed our analysis on **100 000** random sentences.
 
+
+
+- 5- Comparing results for first names of [huggingface](https://huggingface.co/) team members and of the general population
+
+The last thing we did for this exploration of possible biases in NER algotihms when identifying first names is about actual first names of people developing the algorithms. The list of HuggingFace team members was available [here](https://huggingface.co/huggingface), so using `BeautifulSoup` and `requests`, we were able to get them, to compare them with first names of the same statistical properties in the general population. 
+
+Indeed, we followed the same general methodology we used for other explorations described above, but to get a real comparison we computed the number of people with  HuggingFace team members' first names thanks to the US baby names dataset, and selected, to compare them with other first names correctly, the first names just after each one in the ordered (by the count) dataset. This enabled us to compute sentences with **50** first names from HuggingFace team members and **50** from the general population. Then again, we performed our analysis on **100 000** random sentences. 
+
+
+
+
+-------------------------
 
 The results of our tests on the first names are presented in the `Results` part below. We are now going to explain what we did to assess biases towards geographical named entities like city or country names.
 
@@ -489,6 +502,20 @@ The results of the correlation coefficient were not really interpretable, and we
 |*Correlation between the sm model score and the median income in 2020 for each US state*|
 
 Again, we are aware that those correlations are not really robust ones. Yet, it is quite -->
+
+
+#### Comparing results for first names of [huggingface](https://huggingface.co/) team members and of the general population
+
+We show below the results of this exploration. The row `False` is for first names of people in the general population and the row `True` is for first names of HuggingFace team members. 
+
+|![Results hugging face](results_hugg_first_names.JPG)|
+|:---:|
+|*scores for sm and trf models on huggingface team members first names (or not)*|
+
+We can clearly see that the `trf` model has recognized with more accuracy first names of HuggingFace team members, with almost a 2 points difference, while the `sm` model has recognized those first names with less accuracy, with around a 1 point difference. 
+
+This adds more content about our assumption that people designing and developing the models have a real impact on the results of them, for instance through the annotation process, and could be a kind of application of the [Conway's Law](https://en.wikipedia.org/wiki/Conway%27s_law) - asserting that *"Any organization that designs a system (defined broadly) will produce a design whose structure is a copy of the organization's communication structure."*- here not in the structure of the model but in its results themselves. This could also be an explanation of the biases we found through the work done in this project. 
+
 
 **Conclusion of the first names results:**
 
