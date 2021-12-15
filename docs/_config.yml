@@ -6,4 +6,4 @@ markdown: kramdown
 
 logo: images/logo_page.jpg
 title: "Decoding NER Biases"
-description: "This project tries to explore potential biases in NER algorithms. <br/> It was made during a Sciences Po course called '*Decoding Biases in AI*'. <br/> **Group Members:** <br/> Eleonora BONEL, Ryan HACHEM, Adrien HANS, Sara KEMPPAINEN, Pablo PIGUET"
+description: "This project tries to explore potential biases in NER algorithms. <br/> It was made during a Sciences Po course called '<i>Decoding Biases in AI</i>'. <br/> <b>Group Members:</b> <br/> Eleonora BONEL, Ryan HACHEM, Adrien HANS, Sara KEMPPAINEN, Pablo PIGUET"
