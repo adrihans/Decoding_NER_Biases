@@ -6,7 +6,7 @@ The associated github page can be accessed [here](https://adrihans.github.io/Dec
 
 ## Group Members:
 
->Eleanora BONEL, Ryan HACHEM, Adrien HANS, Sara KEMPPAINEN, Pablo PIGUET
+>Eleonora BONEL, Ryan HACHEM, Adrien HANS, Sara KEMPPAINEN, Pablo PIGUET
 
 ## Goals of the project: 
 
