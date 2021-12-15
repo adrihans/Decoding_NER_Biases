@@ -2,3 +2,6 @@ theme: jekyll-theme-minimal
 plugins:
   - jemoji
 markdown: kramdown
+
+title: [Deconding_NER_Biases]
+description: [A short description of your site's purpose]
