@@ -34,7 +34,9 @@ Before jumping into testing the aforementioned hypotheses, it is essentially to 
 
 Named Entity Recognition (NER) is deemed a form of Natural Language Processing, a subfield of artificial intelligence interested in the computer processing and analysis of language. NER is often used when a high-level overview of a large quantity of data is needed. For example, some use cases include supporting Human Resources practices, such as applicants’ CVs being summarized to speed up the hiring process; Customer support by categorizing the type of requests or complaints; Search Engines or Academic Paper classification (Marshall, 2019). In order for them to work appropriately, the training of the data ought to be highly relevant, which increases the accuracy of the model. An example Marshall (2019) provides is: “train your model on Victorian gothic literature, and it will probably struggle to navigate Twitter”. It is therefore paramount for this project to understand better how NER categorization operates, together with selecting the adequate dataset for training our model. In order to do so, the next sections will briefly review the literature, identifying a literature gap for investigating NER and the possibility for algorithmic bias. 
 
-​​1. **Named Entity**
+​​- 1. **Named Entity**
+
+
 NER Algorithms are expected to be increasingly used in a context of alleviating the burden of search and discovery of information, while placing structure on unstructured data. Some disagreement exists on the exact definition of the “Named Entity” part of NER, as Petasis et al. (2002) and Nadeau et al. (2007) provide differing versions, for which however Marrero et al. (2013) give a concrete example, as shown in Table 1.
 
 
@@ -57,7 +59,7 @@ NER becomes particularly relevant in ‘Knowledge databases’ which are databas
 
 
 
-2. **Algorithmic bias and use cases** 
+- 2. **Algorithmic bias and use cases** 
 
 While several NLP ethics research papers focus on identifying and researching biases in their embeddings (Caliskan et al. 2017; Culotta & McCallum, 2004; Devlin et al. 2019; Bolukbasi et al. 2016), there is not much attention on bias in NER systems. Indeed, the possibility for algorithmic bias occurs when machine learning based on textual data can reproduce stereotyped biases that exist in human societies and historic cultural associations (Caliskan et al., 2017). The way this may take place is through word-embedding algorithms, that process information without any representation of semantics, but only through co-occurrence statistical metrics (ibid). Several scholars have demonstrated systematic replications of gender-based biases across numerous models and datasets (Garrido-Munoz et al., 2021), as well as racial biases (Manzini et al., 2019) or even ones related to ableism (Hutchinson et al., 2019). 
 
