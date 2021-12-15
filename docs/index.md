@@ -1,10 +1,4 @@
 # Decoding_NER_Biases
-
-This repository is used for a Sciences Po group project for the course '*Decoding Biases in AI*'.
-
-**Group Members:**
-> Eleonora BONEL, Ryan HACHEM, Adrien HANS, Sara KEMPPAINEN, Pablo PIGUET
-
 --------------------------
 
 ## Introduction 
