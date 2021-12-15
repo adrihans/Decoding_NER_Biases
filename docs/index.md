@@ -1,8 +1,5 @@
 # decoding_ner_biases
 
-
-
-
 --------------------------
 
 ## Introduction 
@@ -319,7 +316,9 @@ To build the sentence template, we did not use the whole 760 city names. Instead
 
 ### :convenience_store: Company names 
 
-![In progress](images/gifs/work-in-progress-gif-12.gif)
+A first exploration of the possible biases in NER models based on the hypothesis explained in the introduction was done in a notebook available on githup repository of the project. This exploration was using a dataset called the `7+ Million Company Dataset`, made available on [kaggle](https://www.kaggle.com/peopledatalabssf/free-7-million-company-dataset) by `people data labs`. Yet, due to time constraints, we are not really able to draw some serious conclusions about this exploration. 
+
+Our main concern and difficulty was to identify some comparable companies to get serious results. Indeed, even if we could apply the same method we used for first names or city and country names, it was way more difficult to say the differences in the results were really based either on the country the company was registered in, its industrial field or even its size, because they could also come from the length of the company names or obviously the words they were using in them. For instance, there were some company registered in non-western countries using western names, or the other way around, because contrary to first names and city names, company names are not always linked to a cultural background. Moreover, we can think, considering the results we obtained for instance for first names that technological companies were more recognized than those of any other field, and it was difficult to take into consideration all of these aspects, especially with the time constraints we had to deal with. 
 
 ---------------------
 
@@ -552,13 +551,6 @@ This kind of bias does not highlight other ones which could really lead to real-
 **Conclusion of the geographical named entities**
 
 We did not obtain consequent results with country names, but this seems logical because the models may have learned every country names, since there is a limited amount of them. On the other hand, we were able to see that there were real biases with city names. Even if they don't really lead to discriminations, it is still interesting because this could lead to invisibilizing some places if NER algorithms are used on some websites - to tag cities automatically for instance. 
-
-### Company names
-
-![In progress](images/gifs/work-in-progress-gif-12.gif)
-
-<!-------The same kind of method has been used on company names. Possible biases in this field could have great consequences because it would mean that if non-western company names are less recognized by these algorithms than western ones, those companies could end up being less tagged on press article for instance. Obtaining results for company names was actually very difficult, for different reasons. Indeed, one should not compare companies which are too different. For instance, just like we saw that Californian first names were the most recognized in America, we could think - from who is actually training the models - that tech companies are more recognized than construction ones. The other thing that could bias the search for these biases is the choice of company depending on the size of it. 
---->
 
 ----------------------------------------
 
