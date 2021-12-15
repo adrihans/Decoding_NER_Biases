@@ -3,7 +3,7 @@ plugins:
   - jemoji
 markdown: kramdown
 
-title: [Deconding_NER_Biases]
+title: [Decoding NER Biases]
 description: [This project tries to explore potential biases in NER algorithms.
 It was made during a Sciences Po course called '*Decoding Biases in AI*'.
 **Group Members:**
