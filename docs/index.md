@@ -1,8 +1,6 @@
 # Decoding_NER_Biases
 
-It was made during a Sciences Po course called '*Decoding Biases in AI*'.
-**Group Members:**
-> Eleonora BONEL, Ryan HACHEM, Adrien HANS, Sara KEMPPAINEN, Pablo PIGUET
+
 
 
 --------------------------
